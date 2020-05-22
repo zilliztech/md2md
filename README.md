@@ -1,4 +1,4 @@
-# Markdown2Markdown [![Weekly downloads](https://img.shields.io/npm/dw/markdown2markdown.svg)](https://github.com/talentAN/markdown2markdown) [![Yearly downloads](https://img.shields.io/npm/dy/markdown2markdown.svg)](https://github.com/talentAN/markdown2markdown)
+# Markdoc [![Weekly downloads](https://img.shields.io/npm/dw/markdoc.svg)](https://github.com/talentAN/markdoc) [![Yearly downloads](https://img.shields.io/npm/dy/markdoc.svg)](https://github.com/talentAN/markdoc)
 
 ## Why
 
@@ -20,7 +20,7 @@ Auto generater target markdowns with use of easy template and variable. Good to 
 
 ## 5min Quick Start
 
-try [Demo Repo](https://github.com/talentAN/markdown2markdown-demo) directely
+try [Demo Repo](https://github.com/talentAN/markdoc-demo) directely
 
 ## Examples
 
@@ -93,11 +93,7 @@ try [Demo Repo](https://github.com/talentAN/markdown2markdown-demo) directely
 ## API
 
 ```javascript
-const {
-  setDirWatcher,
-  setFileWatcher,
-  clearWatcher
-} = require("markdown2markdown");
+const { setDirWatcher, setFileWatcher, clearWatcher } = require("markdoc");
 
 // watch directory configed in m2m.config.js.
 const watcher_dir = setDirWatcher();
