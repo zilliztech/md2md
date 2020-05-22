@@ -38,7 +38,6 @@ function convert(
     const path_template = _getAbsPath(target, template);
     const version = _getVersion();
     const tabLinks = {};
-    // console.log(jsons);
     jsons.forEach(path_jsonFile => {
       path_jsonFile = path_jsonFile.split(
         path.resolve(__dirname, name_dir_from)
@@ -50,7 +49,6 @@ function convert(
       _path = _path.slice(0, _path.length - 4) + "md";
       tabLinks[key] = _path;
     });
-    // console.log(tabLinks);
     jsons.forEach(path_jsonFile => {
       _genPageFromTemplate(
         path_jsonFile,
@@ -65,7 +63,6 @@ function convert(
       _reWriteFile(file, map_fragment, map_variable);
     });
   }
-  // rewrite directories
   directories.forEach(directory => {
     convert(directory, map_fragment, map_variable);
   });
@@ -84,7 +81,6 @@ const _replaceVariable = (content = "", variable) => {
   const regex = /\{\{var\..{0,1000}\}\}/gi;
   const matches = content.match(regex);
   if (matches) {
-    // console.log(matches);
     matches.forEach(name_dir_fragment => {
       const keyChain = name_dir_fragment
         .split(" ")
@@ -99,7 +95,6 @@ const _replaceVariable = (content = "", variable) => {
         i++;
       }
       content = replaceContent(name_dir_fragment, target, content);
-      // console.log(content);
     });
   }
   return content;
@@ -128,7 +123,6 @@ const _genPageFromTemplate = (
   map_variable,
   tabLinks
 ) => {
-  // console.log("xxx", path_jsonFile, path_template);
   const language = path_jsonFile
     .split(`${__dirname}/${name_dir_from}/`)[1]
     .split("/")[0];
@@ -141,13 +135,11 @@ const _genPageFromTemplate = (
   content = _replaceVariable(content, map_variable);
   // replace tab
   content = _replaceTab(content, tabLinks);
-  // console.log(content);
   const path_target = _getTargetPathFromJson(path_jsonFile);
   return fs.writeFileSync(path_target, content);
 };
 const _parseVariable = (path_abs, map_variable = {}) => {
   const obj = JSON.parse(fs.readFileSync(path_abs).toString());
-  // console.log({ ...map_variable, ...obj});
   return merge(map_variable, obj);
 };
 const _mapDir = (path_dir, fileMap = {}) => {

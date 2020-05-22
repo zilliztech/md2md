@@ -175,28 +175,3 @@ module.exports = {
 
   markdownToString
 };
-/**
- * TODO:
- * - variable in .md (top) consider
- * - testcase
- * - tab标签属于非标准功能, 移除,之后用注册的方式加入
- *
- * * DONE:
- * - watch filtered file
- * - 支持全局变量,局部变量
- * - 支持fragment片段
- * - support fragment in fragment
- * - support template
- * - 支持tab标签
- * - 源文件监控, 目标文件自动生成
- * - 不相关的文件不要移动和复制
- * - Readme
- * - 新增/删除/改动哪个文件 就更改哪个文件及其关联文件,不要全局改动;
- * - bash in src, markdown in doc
- * - split helper
- * - 目前fragment会被遍历多次, 如确认每个folder有且仅有一个fragent根目录, 记得修改;
- * - refactor template
- * - fragment is not correctly change
- * - stability, what if no fragment/, no template/ or others
- * - move ignore, fragment, template to .m2mignore in root
- */

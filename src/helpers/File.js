@@ -22,12 +22,10 @@ const parseJsonFile = path_abs => {
 const _getVariable = path_abs => {
   let res = {};
   const paths_child = path_abs.split(path_dir_root + "/")[1].split("/");
-  //   console.log(paths_child);
   let path_pre = path_dir_root;
   let i = 0;
   while (i < paths_child.length) {
     path_pre = `${path_pre}/${paths_child[i]}`;
-    // console.log("xxx, path_start is : ", path_pre);
     const path_var_next = path_pre + "/" + name_file_variable;
     if (fs.existsSync(path_var_next)) {
       const var_next = parseJsonFile(path_var_next);
@@ -116,7 +114,6 @@ const _replaceVariable = (content = "", map_variable) => {
   const regex = /\{\{var\..{0,1000}\}\}/gi;
   const matches = content.match(regex);
   if (matches) {
-    // console.log(matches);
     matches.forEach(name_dir_fragment => {
       const keyChain = name_dir_fragment
         .split(" ")
