@@ -1,4 +1,4 @@
-# Markdown2Markdown [![Weekly downloads](https://img.shields.io/npm/dw/markdown2markdown.svg)](https://github.com/talentAN/markdown2markdown) [![Yearly downloads](https://img.shields.io/npm/dy/markdown2markdown.svg)](https://github.com/talentAN/markdown2markdown)
+# Mk2mk [![Weekly downloads](https://img.shields.io/npm/dw/mk2mk.svg)](https://github.com/talentAN/mk2mk) [![Yearly downloads](https://img.shields.io/npm/dy/mk2mk.svg)](https://github.com/talentAN/mk2mk)
 
 ## Why
 
@@ -20,7 +20,7 @@ Auto generater target markdowns with use of easy template and variable. Good to 
 
 ## 5min Quick Start
 
-try [Demo Repo](https://github.com/talentAN/markdown2markdown-demo) directely
+try [Demo Repo](https://github.com/talentAN/mk2mk-demo) directely
 
 ## Examples
 
@@ -97,7 +97,7 @@ const {
   setDirWatcher,
   setFileWatcher,
   clearWatcher
-} = require("markdown2markdown");
+} = require("mk2mk");
 
 // watch directory configed in m2m.config.js.
 const watcher_dir = setDirWatcher();

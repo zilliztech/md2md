@@ -1,8 +1,8 @@
 {
-  "name": "markdown2markdown",
+  "name": "mk2mk",
   "version": "0.2.1",
   "main": "index.js",
-  "repository": "git@github.com:talentAN/markdown2markdown.git",
+  "repository": "git@github.com:talentAN/mk2mk.git",
   "author": "zhen.an <adam_an02@163.com>",
   "license": "MIT",
   "scripts": {
