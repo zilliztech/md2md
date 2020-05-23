@@ -7,22 +7,22 @@ const {
   name_dir_template,
   name_dir_fragment,
   name_file_variable,
-  FileType
+  FileType,
 } = require("../Consts");
 const { getTargetPath, getChildrenPath } = require("./Path");
 const path_dir_root = process.cwd();
 
-const getLanguage = path_abs => {
-  return path_abs.split(`${path_dir_root}/${name_dir_from}/`)[1].split("/")[0];
+const getLanguage = (path_abs, path_root = path_dir_root) => {
+  return path_abs.split(`${path_root}/${name_dir_from}/`)[1].split("/")[0];
 };
-const isDirectory = path_abs => fs.lstatSync(path_abs).isDirectory();
-const parseJsonFile = path_abs => {
+const isDirectory = (path_abs) => fs.lstatSync(path_abs).isDirectory();
+const parseJsonFile = (path_abs) => {
   return JSON.parse(fs.readFileSync(path_abs).toString() || "{}");
 };
-const _getVariable = path_abs => {
+const _getVariable = (path_abs, path_root = path_dir_root) => {
   let res = {};
-  const paths_child = path_abs.split(path_dir_root + "/")[1].split("/");
-  let path_pre = path_dir_root;
+  const paths_child = path_abs.split(path_root + "/")[1].split("/");
+  let path_pre = path_root;
   let i = 0;
   while (i < paths_child.length) {
     path_pre = `${path_pre}/${paths_child[i]}`;
@@ -35,11 +35,11 @@ const _getVariable = path_abs => {
   }
   return res;
 };
-const classifyFileAndDir = paths_cdd => {
+const classifyFileAndDir = (paths_cdd) => {
   const directories = [];
   const markdowns = [];
   const jsons = [];
-  paths_cdd.forEach(path_cdd => {
+  paths_cdd.forEach((path_cdd) => {
     const isMarkdownFile = path_cdd.indexOf(".md") === path_cdd.length - 3;
     const isJsonFile = path_cdd.indexOf(".json") === path_cdd.length - 5;
     if (isDirectory(path_cdd)) {
@@ -56,27 +56,27 @@ const _parseFragment = (path_fragment, map_fragment = {}) => {
   const paths_child = getChildrenPath(path_fragment);
   const { directories, markdowns } = classifyFileAndDir(paths_child);
   if (markdowns.length) {
-    markdowns.forEach(path_abs => {
+    markdowns.forEach((path_abs) => {
       const content = fs.readFileSync(path_abs).toString();
       map_fragment[path_abs] = content;
     });
   }
   if (directories.length) {
-    directories.forEach(d => {
+    directories.forEach((d) => {
       map_fragment = _parseFragment(d, map_fragment);
     });
   }
   return map_fragment;
 };
-const _getFragment = path_abs => {
+const _getFragment = (path_abs, path_root = path_dir_root) => {
   // get path
-  const path_doc = `${path_dir_root}/${name_dir_from}/`;
+  const path_doc = `${path_root}/${name_dir_from}/`;
   const lang = path_abs.split(path_doc)[1].split("/")[0];
-  const path_fragment = `${path_dir_root}/${name_dir_from}/${lang}/${name_dir_fragment}`;
+  const path_fragment = `${path_root}/${name_dir_from}/${lang}/${name_dir_fragment}`;
   // parse fragment
   return _parseFragment(path_fragment);
 };
-const fileToString = path_abs => {
+const fileToString = (path_abs) => {
   return fs.readFileSync(path_abs).toString() || "";
 };
 const replaceContent = (match, target = "", content) => {
@@ -92,7 +92,7 @@ const replaceFragment = (content, map_fragment, language) => {
   const regex = new RegExp(str, "ig");
   let matches = content.match(regex);
   while (matches && matches.length) {
-    matches.forEach(name_dir_fragment => {
+    matches.forEach((name_dir_fragment) => {
       const key = name_dir_fragment
         .split(" ")
         .join("")
@@ -114,7 +114,7 @@ const _replaceVariable = (content = "", map_variable) => {
   const regex = /\{\{var\..{0,1000}\}\}/gi;
   const matches = content.match(regex);
   if (matches) {
-    matches.forEach(name_dir_fragment => {
+    matches.forEach((name_dir_fragment) => {
       const keyChain = name_dir_fragment
         .split(" ")
         .join("")
@@ -133,7 +133,7 @@ const _replaceVariable = (content = "", map_variable) => {
   }
   return content;
 };
-const ensureDirExist = path_abs => {
+const ensureDirExist = (path_abs) => {
   var dirname = path.dirname(path_abs);
   if (fs.existsSync(dirname)) {
     return true;
@@ -141,7 +141,7 @@ const ensureDirExist = path_abs => {
   ensureDirExist(dirname);
   fs.mkdirSync(dirname);
 };
-const writeMarkDown = path_from => {
+const writeMarkDown = (path_from) => {
   const path_to = getTargetPath(path_from);
   const map_variable = _getVariable(path_from);
   const map_fragment = _getFragment(path_from);
@@ -152,16 +152,15 @@ const writeMarkDown = path_from => {
   ensureDirExist(path_to);
   fs.writeFileSync(path_to, content);
 };
-const markdownToString = path_from => {
-  const path_to = getTargetPath(path_from);
-  const map_variable = _getVariable(path_from);
-  const map_fragment = _getFragment(path_from);
+const markdownToString = (path_from, path_root = path_dir_root) => {
+  const map_variable = _getVariable(path_from, path_root);
+  const map_fragment = _getFragment(path_from, path_root);
   let content = fileToString(path_from);
-  const language = getLanguage(path_from);
+  const language = getLanguage(path_from, path_root);
   content = replaceFragment(content, map_fragment, language);
   return _replaceVariable(content, map_variable);
 };
-const writeTemplate = path_from => {
+const writeTemplate = (path_from) => {
   const json_var = parseJsonFile(path_from);
   if (json_var.useTemplate) {
     const variable = json_var.var || {};
@@ -192,7 +191,7 @@ const isTypeFile = (path_from, file_name) => {
   const regex = new RegExp(reg, "i");
   return regex.test(path_from);
 };
-const getFileType = path_from => {
+const getFileType = (path_from) => {
   const is_template = isDirChild(path_from, name_dir_template);
   if (is_template) {
     return FileType.template;
@@ -223,5 +222,5 @@ module.exports = {
   isDirChild,
   isTypeFile,
   getFileType,
-  markdownToString
+  markdownToString,
 };
