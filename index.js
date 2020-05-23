@@ -131,7 +131,6 @@ const onDirRemove = (path_from) => {
 const map_watcher = {};
 
 const _setDirWatcher = (path_from) => {
-  console.log("xxx", JSON.stringify(process.env));
   const watcher = chokidar.watch(path_from);
   watcher
     .on("ready", initialScan)
@@ -169,7 +168,6 @@ const clearAllWatcher = () => {
   });
 };
 
-setDirWatcher();
 module.exports = {
   setDirWatcher,
   setFileWatcher,

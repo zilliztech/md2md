@@ -1,5 +1,5 @@
 module.exports = {
-  name_dir_from: "doc",
+  name_dir_from: "doc_from",
   name_dir_to: "doc_to",
 
   name_dir_fragment: "fragment",
