@@ -124,6 +124,7 @@ const _replaceVariable = (content = "", map_variable) => {
       let target = map_variable[keyChain[0]];
       let i = 1;
       while (i < keyChain.length && target) {
+        const key = keyChain[i];
         target = target[key];
         i++;
       }
