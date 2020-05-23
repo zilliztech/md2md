@@ -1,8 +1,8 @@
 # Md2md [![Weekly downloads](https://img.shields.io/npm/dw/md2md.svg)](https://github.com/talentAN/md2md) [![Yearly downloads](https://img.shields.io/npm/dy/md2md.svg)](https://github.com/talentAN/md2md)
-
 ## Why
 
 Auto generater target markdowns with use of easy template and variable. Good to use with [Gatsby](https://www.gatsbyjs.org/) or other markdown to html generater.
+![Demo](./Assets/demo.gif)
 
 ## Recommended For
 
