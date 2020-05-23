@@ -1,4 +1,4 @@
-# Mk2mk [![Weekly downloads](https://img.shields.io/npm/dw/md2md.svg)](https://github.com/talentAN/md2md) [![Yearly downloads](https://img.shields.io/npm/dy/md2md.svg)](https://github.com/talentAN/md2md)
+# Md2md [![Weekly downloads](https://img.shields.io/npm/dw/md2md.svg)](https://github.com/talentAN/md2md) [![Yearly downloads](https://img.shields.io/npm/dy/md2md.svg)](https://github.com/talentAN/md2md)
 
 ## Why
 
