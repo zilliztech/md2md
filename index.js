@@ -7,7 +7,6 @@ const {
   name_dir_from,
   all_filtered,
   FileType,
-  path_dir_root,
 } = require("./src/Consts");
 const {
   writeMarkDown,
@@ -18,7 +17,11 @@ const {
   isTypeFile,
   getFileType,
 } = require("./src/helpers/File");
-const { getChildrenPath, getTargetPath } = require("./src/helpers/Path");
+const {
+  getChildrenPath,
+  getTargetPath,
+  getRootPath,
+} = require("./src/helpers/Path");
 
 // helpers
 const _genID = () => Math.random().toString().substring(2, 32);
@@ -53,7 +56,7 @@ const _copyDir = (path_from) => {
 };
 // callbacks
 const initialScan = () => {
-  const path_from = path.resolve(path_dir_root, `${name_dir_from}/`);
+  const path_from = path.resolve(getRootPath(), `${name_dir_from}/`);
   const path_to = getTargetPath(path_from);
   if (!fs.existsSync(path_to)) {
     fs.mkdirSync(path_to);
@@ -128,6 +131,7 @@ const onDirRemove = (path_from) => {
 const map_watcher = {};
 
 const _setDirWatcher = (path_from) => {
+  console.log("xxx", JSON.stringify(process.env));
   const watcher = chokidar.watch(path_from);
   watcher
     .on("ready", initialScan)
@@ -141,7 +145,7 @@ const _setDirWatcher = (path_from) => {
   return id;
 };
 const setDirWatcher = () => {
-  return _setDirWatcher(path.resolve(path_dir_root, `${name_dir_from}/`));
+  return _setDirWatcher(path.resolve(getRootPath(), `${name_dir_from}/`));
 };
 const setFileWatcher = (path_from) => {
   const watcher = chokidar.watch(path_from);

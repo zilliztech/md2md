@@ -10,4 +10,7 @@ const getChildrenPath = (path_father) => {
   return fs.readdirSync(path_father).map((item) => `${path_father}/${item}`);
 };
 
-module.exports = { getTargetPath, getChildrenPath };
+const getRootPath = () =>
+  (process.env && process.env.PATH_ROOT) || process.cwd();
+
+module.exports = { getTargetPath, getChildrenPath, getRootPath };
