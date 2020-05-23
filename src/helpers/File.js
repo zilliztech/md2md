@@ -1,4 +1,3 @@
-const process = require("process");
 const fs = require("fs");
 const path = require("path");
 const merge = require("lodash/merge");
@@ -9,20 +8,20 @@ const {
   name_file_variable,
   FileType,
 } = require("../Consts");
-const { getTargetPath, getChildrenPath } = require("./Path");
-const path_dir_root = process.cwd();
+const { getTargetPath, getChildrenPath, getRootPath } = require("./Path");
 
-const getLanguage = (path_abs, path_root = path_dir_root) => {
-  return path_abs.split(`${path_root}/${name_dir_from}/`)[1].split("/")[0];
+const getLanguage = (path_abs) => {
+  return path_abs.split(`${getRootPath()}/${name_dir_from}/`)[1].split("/")[0];
 };
 const isDirectory = (path_abs) => fs.lstatSync(path_abs).isDirectory();
 const parseJsonFile = (path_abs) => {
   return JSON.parse(fs.readFileSync(path_abs).toString() || "{}");
 };
-const _getVariable = (path_abs, path_root = path_dir_root) => {
+const _getVariable = (path_abs) => {
   let res = {};
-  const paths_child = path_abs.split(path_root + "/")[1].split("/");
-  let path_pre = path_root;
+  const path_dir_root = getRootPath();
+  const paths_child = path_abs.split(path_dir_root + "/")[1].split("/");
+  let path_pre = path_dir_root;
   let i = 0;
   while (i < paths_child.length) {
     path_pre = `${path_pre}/${paths_child[i]}`;
@@ -68,11 +67,12 @@ const _parseFragment = (path_fragment, map_fragment = {}) => {
   }
   return map_fragment;
 };
-const _getFragment = (path_abs, path_root = path_dir_root) => {
+const _getFragment = (path_abs) => {
   // get path
-  const path_doc = `${path_root}/${name_dir_from}/`;
+  const path_dir_root = getRootPath();
+  const path_doc = `${path_dir_root}/${name_dir_from}/`;
   const lang = path_abs.split(path_doc)[1].split("/")[0];
-  const path_fragment = `${path_root}/${name_dir_from}/${lang}/${name_dir_fragment}`;
+  const path_fragment = `${path_dir_root}/${name_dir_from}/${lang}/${name_dir_fragment}`;
   // parse fragment
   return _parseFragment(path_fragment);
 };
@@ -98,7 +98,7 @@ const replaceFragment = (content, map_fragment, language) => {
         .join("")
         .slice(2, name_dir_fragment.length - 2);
       const path_abs = path.resolve(
-        path_dir_root,
+        getRootPath(),
         name_dir_from,
         language,
         key
@@ -152,11 +152,12 @@ const writeMarkDown = (path_from) => {
   ensureDirExist(path_to);
   fs.writeFileSync(path_to, content);
 };
-const markdownToString = (path_from, path_root = path_dir_root) => {
-  const map_variable = _getVariable(path_from, path_root);
-  const map_fragment = _getFragment(path_from, path_root);
+const markdownToString = (path_from) => {
+  const path_dir_root = getRootPath();
+  const map_variable = _getVariable(path_from, path_dir_root);
+  const map_fragment = _getFragment(path_from, path_dir_root);
   let content = fileToString(path_from);
-  const language = getLanguage(path_from, path_root);
+  const language = getLanguage(path_from, path_dir_root);
   content = replaceFragment(content, map_fragment, language);
   return _replaceVariable(content, map_variable);
 };
@@ -167,7 +168,9 @@ const writeTemplate = (path_from) => {
     const map_variable = merge(_getVariable(path_from), variable);
     const map_fragment = _getFragment(path_from);
     const language = getLanguage(path_from);
-    const path_template = `${path_dir_root}/${name_dir_from}/${language}/${json_var.path}`;
+    const path_template = `${getRootPath()}/${name_dir_from}/${language}/${
+      json_var.path
+    }`;
     let content = fileToString(path_template);
     content = replaceFragment(content, map_fragment, language);
     content = _replaceVariable(content, map_variable);

@@ -1,13 +1,12 @@
-const process = require("process");
 const fs = require("fs");
-const path_dir_root = process.cwd();
-const path_config = `${path_dir_root}/m2m.config.js`;
+const { getRootPath } = require("./helpers/Path");
+const path_config = `${getRootPath()}/m2m.config.js`;
 let config = {};
 if (fs.existsSync(path_config)) {
   config = require(path_config);
 }
-const name_dir_from = config.name_dir_from || "doc";
-const name_dir_to = config.name_dir_to || "site";
+const name_dir_from = config.name_dir_from || "doc_from";
+const name_dir_to = config.name_dir_to || "doc_to";
 const name_dir_fragment = config.name_dir_fragment || "fragment";
 const name_dir_template = config.name_dir_template || "template";
 const name_file_variable = config.name_file_variable || "variables.json";
@@ -18,7 +17,7 @@ const file_filtered = [name_file_variable, ...ignore_files];
 const dir_filtered = [
   name_dir_fragment,
   name_dir_template,
-  ...ignore_directories
+  ...ignore_directories,
 ];
 const all_filtered = [...file_filtered, ...dir_filtered];
 
@@ -27,7 +26,7 @@ const FileType = {
   fragment: "fragment",
   variable: "variable",
   normalDoc: "normalDoc",
-  templateVar: "templateVar"
+  templateVar: "templateVar",
 };
 
 module.exports = {
@@ -41,5 +40,5 @@ module.exports = {
   dir_filtered,
   all_filtered,
 
-  FileType
+  FileType,
 };
