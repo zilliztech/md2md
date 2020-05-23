@@ -5,6 +5,12 @@
   "repository": "git@github.com:talentAN/md2md.git",
   "author": "zhen.an <adam_an02@163.com>",
   "license": "MIT",
+  "keywords": [
+    "markdown",
+    "markdown converter",
+    "markdown to html",
+    "template markdown"
+  ],
   "scripts": {
     "test": "jest",
     "start": "node index.js"

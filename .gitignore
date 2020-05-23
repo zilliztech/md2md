@@ -2,3 +2,5 @@ node_modules/
 site/
 site_config/
 yarn.lock
+doc/
+doc_to/

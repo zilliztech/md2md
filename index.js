@@ -6,7 +6,8 @@ const {
   dir_filtered,
   name_dir_from,
   all_filtered,
-  FileType
+  FileType,
+  path_dir_root,
 } = require("./src/Consts");
 const {
   writeMarkDown,
@@ -15,29 +16,25 @@ const {
   classifyFileAndDir,
   isDirChild,
   isTypeFile,
-  getFileType
+  getFileType,
 } = require("./src/helpers/File");
 const { getChildrenPath, getTargetPath } = require("./src/helpers/Path");
-const path_dir_root = process.cwd();
 
 // helpers
-const _genID = () =>
-  Math.random()
-    .toString()
-    .substring(2, 32);
+const _genID = () => Math.random().toString().substring(2, 32);
 const _logStart = () => console.log(`Documents convention Start`, "\n\n\n");
 const _logEnd = () => console.log(`Documents convention Finish`, "\n\n\n");
 
-const _isFiltered = path_abs => {
-  const self_filtered = all_filtered.some(name_f =>
+const _isFiltered = (path_abs) => {
+  const self_filtered = all_filtered.some((name_f) =>
     isTypeFile(path_abs, name_f)
   );
-  const father_filtered = dir_filtered.some(name_d =>
+  const father_filtered = dir_filtered.some((name_d) =>
     isDirChild(path_abs, name_d)
   );
   return self_filtered || father_filtered;
 };
-const _copyDir = path_from => {
+const _copyDir = (path_from) => {
   if (_isFiltered(path_from)) {
     return false;
   }
@@ -49,7 +46,7 @@ const _copyDir = path_from => {
   const children = getChildrenPath(path_from) || [];
   const { directories } = classifyFileAndDir(children);
   if (directories.length) {
-    directories.forEach(d => {
+    directories.forEach((d) => {
       _copyDir(d);
     });
   }
@@ -63,7 +60,7 @@ const initialScan = () => {
   }
   _logStart();
   const res = fs.readdirSync(path_from) || [];
-  const paths_langs = res.map(item => `${path_from}/${item}`);
+  const paths_langs = res.map((item) => `${path_from}/${item}`);
   if (paths_langs.length) {
     _copyDir(path_from);
     _logEnd();
@@ -71,7 +68,7 @@ const initialScan = () => {
     console.warn(`Documents is Empty`);
   }
 };
-const onFileAdd = path_from => {
+const onFileAdd = (path_from) => {
   const type_file = getFileType(path_from);
   if (_isFiltered(path_from)) {
     switch (type_file) {
@@ -95,20 +92,20 @@ const onFileAdd = path_from => {
     }
   }
 };
-const onFileRemove = path_from => {
+const onFileRemove = (path_from) => {
   const path_target = getTargetPath(path_from);
   if (fs.existsSync(path_target)) {
     fs.unlinkSync(path_target);
   }
 };
-const onAddDir = path_from => {
+const onAddDir = (path_from) => {
   if (!_isFiltered(path_from)) {
     const path_to = getTargetPath(path_from);
     !fs.existsSync(path_to) &&
-      fs.mkdirSync(path_to, { recursive: true }, err => {});
+      fs.mkdirSync(path_to, { recursive: true }, (err) => {});
   }
 };
-const _rmDir = path_target => {
+const _rmDir = (path_target) => {
   if (fs.existsSync(path_target)) {
     let files = fs.readdirSync(path_target);
     for (var i = 0; i < files.length; i++) {
@@ -123,14 +120,14 @@ const _rmDir = path_target => {
     fs.rmdirSync(path_target);
   }
 };
-const onDirRemove = path_from => {
+const onDirRemove = (path_from) => {
   const path_target = getTargetPath(path_from);
   _rmDir(path_target);
 };
 // exports
 const map_watcher = {};
 
-const _setDirWatcher = path_from => {
+const _setDirWatcher = (path_from) => {
   const watcher = chokidar.watch(path_from);
   watcher
     .on("ready", initialScan)
@@ -146,7 +143,7 @@ const _setDirWatcher = path_from => {
 const setDirWatcher = () => {
   return _setDirWatcher(path.resolve(path_dir_root, `${name_dir_from}/`));
 };
-const setFileWatcher = path_from => {
+const setFileWatcher = (path_from) => {
   const watcher = chokidar.watch(path_from);
   watcher
     .on("ready", () => console.log(`start wartch file : ${path_from}`))
@@ -158,20 +155,22 @@ const setFileWatcher = path_from => {
   return id;
 };
 
-const clearWatcher = key => {
+const clearWatcher = (key) => {
   const watcher = map_watcher[key];
   watcher.close().then(() => console.log("watcher closed"));
 };
 const clearAllWatcher = () => {
-  Object.keys(map_watcher).forEach(key => {
+  Object.keys(map_watcher).forEach((key) => {
     clearWatcher(key);
   });
 };
+
+setDirWatcher();
 module.exports = {
   setDirWatcher,
   setFileWatcher,
   clearWatcher,
   clearAllWatcher,
 
-  markdownToString
+  markdownToString,
 };
