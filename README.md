@@ -22,76 +22,108 @@ Auto generater target markdowns with use of easy template and variable. Good to 
 
 try [Demo Repo](https://github.com/talentAN/md2md-demo) directely
 
-## Examples
-
-1. use variables;
-
+## Main Concepts
+### Variable
+Defined in variables.json, can be used in markdownfile, fragments and templates.
 ```javascript
-// origin(src/test.md):
+// variabeFile (doc_from/en/variables.json)
+{"name":"md2md"}
+
+// origin docFile (doc_from/en/test.md):
 ### This is {{var.name}};
 
-// variableFile(src/variables.json)
-{"name":"Tom"}
+// turn to target(doc_to/en/test.md)
+### This is md2md;
+```
+### Fragment
+Defined in fragment directory. Fragment let you split the markdown into independent, reusable pieces, and think about each piece in isolation. you can use fragment in fragment.
 
-// will turn to target(site/test.md)
-### This is Tom;
+```javascript
+// root variableFile (doc_from/en/variables.json)
+{
+  "auth":{
+    "name":"talentAN", 
+    "email":"adam_an02@163.com"
+    }
+}
+
+// fragment file (doc_from/en/fragment/repo_info.md)
+RepoName: {{var.name}}
+github: {{var.github}}
+Auth: {{var.auth.name}}
+Email: {{var.auth.email}}
+
+// child variableFile (doc_from/en/md2md/variables.json)
+{
+  "name":"md2md",
+  "github":"https://github.com/talentAN/md2md"
+}
+
+// origin docFile  (doc_from/en/md2md/index.md)
+{{fragment/repo_info.md}}
+
+## belows are custom info
+## !@#$%^&*()......
+
+// turn to target (doc_to/en/md2md/index.md)
+RepoName: md2md
+github: https://github.com/talentAN/md2md
+Auth: talentAN
+Email: adam_an02@163.com
+
+## belows are custom info
+## !@#$%^&*()......
 ```
 
-2. use fragment and variables;
-
+### Template
+Defined in template directory. Template is used to generate markdown file from json file directely;
 ```javascript
-// origin(src/test.md):
-### This is {{var.name}};
-{{fragment/card.md}}
-{{fragment/warn.md}}
+// templateFile (doc_from/en/template/introduce.md)
+the name is : {{var.name}};
+the keyWords is : {{var.keyWords}}
+num of weeklyDownoad : {{var.weeklyDownoad}}
 
-// variableFile (src/variables.json)
-{"name":"Tom", "info":{ "phone":"1234567", "email":"xxx@gmail.com"}}
+// origin jsonFile  (doc_from/en/md2md/introduction.json)
+{
+  "useTemplate":true, 
+  "path":"template/introduce.md", 
+  "var":{
+    "name":"md2md", 
+    "keyWords":["markdown", "converter", "easy use"], 
+    "weeklyDownoad":300
+}}
 
-// fragmentFile (src/fragment/card.json)
-###### name:{{var.name}}
-###### email:{{var.email}}
-
-// fragmentFile (src/fragment/warn.json)
-###### the info should keep confidential
-
-// will turn to target(site/test.md)
-### This is Tom ;
-###### name:Tom
-###### email:xxx@gmail.com
-###### the info should keep confidential
+// turn to target (doc_to/en/md2md/introduction.md)
+the name is : md2md;
+the keyWords is : ["markdown", "converter", "easy use"]
+num of weeklyDownoad : 300
 ```
+## Catalog
+```bash
+├── root_dir
+│   ├── doc_from
+│   │   ├── en
+│   │   ├── zh-CN
+│   │   │── ......  
+│   ├── doc_to
+│   ├── m2m.config.js
+```
+- doc_from: where you edit your origin doc files in. it's First-level subdirectory must be language;
+- doc_to: the final doc file you need will be here; the level of subdirectory will be same as doc_from. you don't need to edit this directory.
+- m2m.config.js : config to set for markdown transfer. use the default is just fine ~
 
-3. use multilayer variables
-
-```javascript
-// origin(src/user/info.md):
-### This is {{var.name}};
-{{fragment/card.md}}
-{{fragment/warn.md}}
-
-// variableFile (src/variables.json)
-{"name":"Tom", "info":{"phone":"1234567", "email":"xxx@gmail.com"}}
-
-// variableFile (src/user/variables.json)
-{"name":"Alex", "info":{"phone":"9876543"}}
-
-// fragmentFile (src/fragment/card.json)
-###### name:{{var.name}}
-###### email:{{var.email}}
-
-// fragmentFile (src/fragment/warn.json)
-###### the info should keep confidential
-
-// will turn to target(site/test.md)
-### This is Alex;
-###### name:Alex
-###### email:xxx@gmail.com
-###### the info should keep confidential
+```bash
+├── en
+│   ├── fragment
+│   ├── template
+│   ├── variables.json
+│   ├── [doc directories]
+│   ├── ...
+│   ├── [doc files]
+│   ├── ...
 ```
 
 ## API
-
 ```javascript
 const {
   setDirWatcher,
