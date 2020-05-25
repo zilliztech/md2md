@@ -75,31 +75,6 @@ const classifyFileAndDir = (paths_cdd) => {
   });
   return { directories, markdowns, jsons };
 };
-const _parseFragment = (path_fragment, map_fragment = {}) => {
-  const paths_child = getChildrenPath(path_fragment);
-  const { directories, markdowns } = classifyFileAndDir(paths_child);
-  if (markdowns.length) {
-    markdowns.forEach((path_abs) => {
-      const content = fs.readFileSync(path_abs).toString();
-      map_fragment[path_abs] = content;
-    });
-  }
-  if (directories.length) {
-    directories.forEach((d) => {
-      map_fragment = _parseFragment(d, map_fragment);
-    });
-  }
-  return map_fragment;
-};
-const _getFragment = (path_abs) => {
-  // get path
-  const path_dir_root = getRootPath();
-  const path_doc = `${path_dir_root}/${name_dir_from}/`;
-  const lang = path_abs.split(path_doc)[1].split("/")[0];
-  const path_fragment = `${path_dir_root}/${name_dir_from}/${lang}/${name_dir_fragment}`;
-  // parse fragment
-  return _parseFragment(path_fragment);
-};
 const fileToString = (path_abs) => {
   return fs.readFileSync(path_abs).toString() || "";
 };
@@ -110,10 +85,10 @@ const replaceContent = (match, target = "", content) => {
   const c_after = content.slice(i + len, content.length);
   return c_before + target + c_after;
 };
-const replaceFragment = (content, map_fragment, language) => {
+const _replaceFragment = (content, language) => {
   // TODO: 默认一级菜单是语言, 这部分日后决定是否修改.
-  const str = `\{\{${name_dir_fragment}\/.{0,1000}\}\}`;
-  const regex = new RegExp(str, "ig");
+  const str_declare_fragment = `\{\{${name_dir_fragment}\/.{0,1000}\}\}`;
+  const regex = new RegExp(str_declare_fragment, "ig");
   let matches = content.match(regex);
   while (matches && matches.length) {
     matches.forEach((name_dir_fragment) => {
@@ -127,10 +102,10 @@ const replaceFragment = (content, map_fragment, language) => {
         language,
         key
       );
-      const content_f = map_fragment[path_abs];
+      const content_f = fileToString(path_abs);
       content = replaceContent(name_dir_fragment, content_f, content);
-      matches = content.match(regex);
     });
+    matches = content.match(regex);
   }
   return content;
 };
@@ -168,10 +143,9 @@ const ensureDirExist = (path_abs) => {
 const writeMarkDown = (path_from) => {
   const path_to = getTargetPath(path_from);
   const map_variable = _getVariable(path_from);
-  const map_fragment = _getFragment(path_from);
   let content = fileToString(path_from);
   const language = getLanguage(path_from);
-  content = replaceFragment(content, map_fragment, language);
+  content = _replaceFragment(content, language);
   content = _replaceVariable(content, map_variable);
   ensureDirExist(path_to);
   fs.writeFileSync(path_to, content);
@@ -179,10 +153,9 @@ const writeMarkDown = (path_from) => {
 const markdownToString = (path_from) => {
   const path_dir_root = getRootPath();
   const map_variable = _getVariable(path_from, path_dir_root);
-  const map_fragment = _getFragment(path_from, path_dir_root);
   let content = fileToString(path_from);
   const language = getLanguage(path_from, path_dir_root);
-  content = replaceFragment(content, map_fragment, language);
+  content = _replaceFragment(content, language);
   return _replaceVariable(content, map_variable);
 };
 const writeTemplate = (path_from) => {
@@ -190,13 +163,12 @@ const writeTemplate = (path_from) => {
   if (json_var.useTemplate) {
     const variable = json_var.var || {};
     const map_variable = merge(_getVariable(path_from), variable);
-    const map_fragment = _getFragment(path_from);
     const language = getLanguage(path_from);
     const path_template = `${getRootPath()}/${name_dir_from}/${language}/${
       json_var.path
     }`;
     let content = fileToString(path_template);
-    content = replaceFragment(content, map_fragment, language);
+    content = _replaceFragment(content, language);
     content = _replaceVariable(content, map_variable);
     const path_to = getTargetPath(path_from).replace(".json", ".md");
     ensureDirExist(path_to);
@@ -242,7 +214,6 @@ module.exports = {
   writeTemplate,
   classifyFileAndDir,
   getLanguage,
-  replaceFragment,
   replaceContent,
   fileToString,
 
@@ -251,9 +222,8 @@ module.exports = {
   getFileType,
   markdownToString,
 
-
   // for test use
   _getMarkdownVariable,
   _getVariable,
-  _getFragment
+  _replaceFragment,
 };
