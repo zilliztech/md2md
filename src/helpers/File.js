@@ -110,7 +110,7 @@ const replaceContent = (match, target = "", content) => {
   const c_after = content.slice(i + len, content.length);
   return c_before + target + c_after;
 };
-const replaceFragment = (content, map_fragment, language) => {
+const _replaceFragment = (content, map_fragment, language) => {
   // TODO: 默认一级菜单是语言, 这部分日后决定是否修改.
   const str = `\{\{${name_dir_fragment}\/.{0,1000}\}\}`;
   const regex = new RegExp(str, "ig");
@@ -171,7 +171,7 @@ const writeMarkDown = (path_from) => {
   const map_fragment = _getFragment(path_from);
   let content = fileToString(path_from);
   const language = getLanguage(path_from);
-  content = replaceFragment(content, map_fragment, language);
+  content = _replaceFragment(content, map_fragment, language);
   content = _replaceVariable(content, map_variable);
   ensureDirExist(path_to);
   fs.writeFileSync(path_to, content);
@@ -182,7 +182,7 @@ const markdownToString = (path_from) => {
   const map_fragment = _getFragment(path_from, path_dir_root);
   let content = fileToString(path_from);
   const language = getLanguage(path_from, path_dir_root);
-  content = replaceFragment(content, map_fragment, language);
+  content = _replaceFragment(content, map_fragment, language);
   return _replaceVariable(content, map_variable);
 };
 const writeTemplate = (path_from) => {
@@ -196,7 +196,7 @@ const writeTemplate = (path_from) => {
       json_var.path
     }`;
     let content = fileToString(path_template);
-    content = replaceFragment(content, map_fragment, language);
+    content = _replaceFragment(content, map_fragment, language);
     content = _replaceVariable(content, map_variable);
     const path_to = getTargetPath(path_from).replace(".json", ".md");
     ensureDirExist(path_to);
@@ -242,7 +242,6 @@ module.exports = {
   writeTemplate,
   classifyFileAndDir,
   getLanguage,
-  replaceFragment,
   replaceContent,
   fileToString,
 
@@ -251,9 +250,8 @@ module.exports = {
   getFileType,
   markdownToString,
 
-
   // for test use
   _getMarkdownVariable,
   _getVariable,
-  _getFragment
+  _getFragment,
 };

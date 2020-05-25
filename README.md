@@ -169,6 +169,10 @@ age 11
 ### This is {{var.name}}, his age is {{var.age}};
 
 // target docFile (doc_from/en/test.md)
+---
+name Tom
+age 11
+---
 ### This is Tom, his age is 11;
 
 ```

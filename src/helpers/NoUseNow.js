@@ -8,7 +8,7 @@ function convert(
   const res = fs.readdirSync(path_from) || [];
   const paths_child = [];
   let variableFile;
-  res.forEach(name => {
+  res.forEach((name) => {
     const isContent = name !== name_dir_fragment && name !== name_file_variable;
     if (isContent) {
       paths_child.push(_getAbsPath(target, name));
@@ -38,7 +38,7 @@ function convert(
     const path_template = _getAbsPath(target, template);
     const version = _getVersion();
     const tabLinks = {};
-    jsons.forEach(path_jsonFile => {
+    jsons.forEach((path_jsonFile) => {
       path_jsonFile = path_jsonFile.split(
         path.resolve(__dirname, name_dir_from)
       )[1];
@@ -49,7 +49,7 @@ function convert(
       _path = _path.slice(0, _path.length - 4) + "md";
       tabLinks[key] = _path;
     });
-    jsons.forEach(path_jsonFile => {
+    jsons.forEach((path_jsonFile) => {
       _genPageFromTemplate(
         path_jsonFile,
         path_template,
@@ -59,11 +59,11 @@ function convert(
       );
     });
   } else {
-    markdowns.forEach(file => {
+    markdowns.forEach((file) => {
       _reWriteFile(file, map_fragment, map_variable);
     });
   }
-  directories.forEach(directory => {
+  directories.forEach((directory) => {
     convert(directory, map_fragment, map_variable);
   });
 }
@@ -73,7 +73,7 @@ const _getVersion = () => {
   }`;
 };
 
-const _getTargetPathFromJson = path_abs => {
+const _getTargetPathFromJson = (path_abs) => {
   path_abs = path_abs.replace(name_dir_from, name_dir_to);
   return path_abs.slice(0, path_abs.length - 4) + "md";
 };
@@ -81,7 +81,7 @@ const _replaceVariable = (content = "", variable) => {
   const regex = /\{\{var\..{0,1000}\}\}/gi;
   const matches = content.match(regex);
   if (matches) {
-    matches.forEach(name_dir_fragment => {
+    matches.forEach((name_dir_fragment) => {
       const keyChain = name_dir_fragment
         .split(" ")
         .join("")
@@ -102,7 +102,7 @@ const _replaceVariable = (content = "", variable) => {
 const _replaceTab = (content = "", tabLinks) => {
   const tabRegx = /\{\{tab\}\}/i;
   const html = `<div>${Object.keys(tabLinks)
-    .map(key => {
+    .map((key) => {
       return `<a href="${tabLinks[key]}">${key}</a>`;
     })
     .join("")}</div>`;
@@ -146,13 +146,13 @@ const _mapDir = (path_dir, fileMap = {}) => {
   const res = getChildrenPath(path_dir) || [];
   const { directories, markdowns } = classifyFileAndDir(res);
   if (markdowns.length) {
-    markdowns.forEach(path_markdown => {
+    markdowns.forEach((path_markdown) => {
       const content = fs.readFileSync(path_markdown).toString();
       fileMap[path_markdown] = content;
     });
   }
   if (directories.length) {
-    directories.forEach(d => {
+    directories.forEach((d) => {
       fileMap = _mapDir(d, fileMap);
     });
   }
