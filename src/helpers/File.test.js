@@ -1,13 +1,16 @@
 const cases = require("jest-in-case");
 const fs = require("fs");
+const { name_dir_fragment } = require("../Consts");
+
 const {
   _getMarkdownVariable,
   _getVariable,
   getLanguage,
-  _getFragment,
+  _replaceFragment,
 } = require("./File.js");
 
 const getAbsPath = (relativePath) => process.cwd() + relativePath;
+
 cases(
   "_getMarkdownVariable",
   (opts) => {
@@ -62,22 +65,25 @@ cases(
   ]
 );
 
+const _isFragmentExit = (content) => {
+  const str_declare_fragment = `\{\{${name_dir_fragment}\/.{0,1000}\}\}`;
+  const regex = new RegExp(str_declare_fragment, "ig");
+  return regex.test(content);
+};
 cases(
-  "_getFragment",
+  "_replaceFragment",
   (opts) => {
-    expect(_getFragment(opts.path_abs)).toStrictEqual(opts.res);
+    expect(
+      _isFragmentExit(_replaceFragment(opts.content, opts.lang))
+    ).toStrictEqual(opts.res);
   },
   [
     {
-      path_abs: getAbsPath("/test/en/test_fragment.md"),
-      res: {
-        [getAbsPath("/test/en/fragment/head.md")]: fs
-          .readFileSync(getAbsPath("/test/en/fragment/head.md"))
-          .toString(),
-        [getAbsPath("/test/en/fragment/tail.md")]: fs
-          .readFileSync(getAbsPath("/test/en/fragment/tail.md"))
-          .toString(),
-      },
+      content: fs
+        .readFileSync(getAbsPath("/test/en/compose_fragment.md"))
+        .toString(),
+      lang: "en",
+      res: false,
     },
   ]
 );
