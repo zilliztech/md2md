@@ -134,10 +134,16 @@ num of weeklyDownoad : 300
 │   ├── ...
 ```
 
-## API
+## API for F2E Developers
 
 ```javascript
-const { setDirWatcher, setFileWatcher, clearWatcher } = require("md2md");
+const {
+  setDirWatcher,
+  setFileWatcher,
+  clearWatcher,
+  markdownToString,
+  templateToString,
+} = require("md2md");
 
 // watch directory configed in m2m.config.js.
 const watcher_dir = setDirWatcher();
@@ -147,6 +153,12 @@ const watcher_file = setFileWatcher(absolute_path);
 
 // clearWatcher
 clearWatcher(watcher_file);
+
+// get transfered markdownFile from markdown
+const target_md = markdownToString(path_from);
+
+// get transfered markdownFile from json file use template
+const target_json = templateToString(path_from);
 ```
 
 ## FAQ
@@ -155,10 +167,10 @@ clearWatcher(watcher_file);
 
 ## Change Log
 
-### 20200525 v0.2.10
+### 20200525 v0.2.11
 
-- Support variables in markdown file. use variables in key-value format.
-- Add test cases
+- Add api templateToString
+- Support parse variables in markdown file. You should use variables in key-value format.
 
 ```javascript
 // origin docFile (doc_from/en/test.md):
@@ -176,3 +188,6 @@ age 11
 ### This is Tom, his age is 11;
 
 ```
+
+- Add test cases
+- bugfix parse fragment in fragment

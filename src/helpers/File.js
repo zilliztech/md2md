@@ -8,7 +8,7 @@ const {
   name_file_variable,
   FileType,
 } = require("../Consts");
-const { getTargetPath, getChildrenPath, getRootPath } = require("./Path");
+const { getRootPath } = require("./Path");
 
 const getLanguage = (path_abs) => {
   return path_abs.split(`${getRootPath()}/${name_dir_from}/`)[1].split("/")[0];
@@ -132,33 +132,26 @@ const _replaceVariable = (content = "", map_variable) => {
   }
   return content;
 };
-const ensureDirExist = (path_abs) => {
+const _ensureDirExist = (path_abs) => {
   var dirname = path.dirname(path_abs);
   if (fs.existsSync(dirname)) {
     return true;
   }
-  ensureDirExist(dirname);
+  _ensureDirExist(dirname);
   fs.mkdirSync(dirname);
 };
-const writeMarkDown = (path_from) => {
-  const path_to = getTargetPath(path_from);
+const writeFile = (path_to, content) => {
+  _ensureDirExist(path_to);
+  fs.writeFileSync(path_to, content);
+};
+const markdownToString = (path_from) => {
   const map_variable = _getVariable(path_from);
   let content = fileToString(path_from);
   const language = getLanguage(path_from);
   content = _replaceFragment(content, language);
-  content = _replaceVariable(content, map_variable);
-  ensureDirExist(path_to);
-  fs.writeFileSync(path_to, content);
-};
-const markdownToString = (path_from) => {
-  const path_dir_root = getRootPath();
-  const map_variable = _getVariable(path_from, path_dir_root);
-  let content = fileToString(path_from);
-  const language = getLanguage(path_from, path_dir_root);
-  content = _replaceFragment(content, language);
   return _replaceVariable(content, map_variable);
 };
-const writeTemplate = (path_from) => {
+const templateToString = (path_from) => {
   const json_var = parseJsonFile(path_from);
   if (json_var.useTemplate) {
     const variable = json_var.var || {};
@@ -169,11 +162,9 @@ const writeTemplate = (path_from) => {
     }`;
     let content = fileToString(path_template);
     content = _replaceFragment(content, language);
-    content = _replaceVariable(content, map_variable);
-    const path_to = getTargetPath(path_from).replace(".json", ".md");
-    ensureDirExist(path_to);
-    fs.writeFileSync(path_to, content);
+    return _replaceVariable(content, map_variable);
   }
+  return "";
 };
 const isDirChild = (path_from, dir_name) => {
   const reg = `\/${dir_name}\/`;
@@ -209,18 +200,18 @@ const getFileType = (path_from) => {
 };
 module.exports = {
   isDirectory,
+  isDirChild,
+  isTypeFile,
   parseJsonFile,
-  writeMarkDown,
-  writeTemplate,
+  writeFile,
   classifyFileAndDir,
   getLanguage,
   replaceContent,
   fileToString,
 
-  isDirChild,
-  isTypeFile,
   getFileType,
   markdownToString,
+  templateToString,
 
   // for test use
   _getMarkdownVariable,
