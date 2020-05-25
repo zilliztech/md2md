@@ -157,7 +157,8 @@ clearWatcher(watcher_file);
 
 ### 20200525 v0.2.10
 
-support variables in markdown file. use variables in key-value format.
+- Support variables in markdown file. use variables in key-value format.
+- Add test cases
 
 ```javascript
 // origin docFile (doc_from/en/test.md):

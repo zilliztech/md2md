@@ -250,4 +250,10 @@ module.exports = {
   isTypeFile,
   getFileType,
   markdownToString,
+
+
+  // for test use
+  _getMarkdownVariable,
+  _getVariable,
+  _getFragment
 };
