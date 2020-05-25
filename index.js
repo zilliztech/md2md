@@ -11,6 +11,7 @@ const {
   writeMarkDown,
   writeTemplate,
   markdownToString,
+  templateToString,
   classifyFileAndDir,
   isDirChild,
   isTypeFile,
@@ -174,4 +175,5 @@ module.exports = {
   clearAllWatcher,
 
   markdownToString,
+  templateToString,
 };
