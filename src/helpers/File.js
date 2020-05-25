@@ -14,8 +14,28 @@ const getLanguage = (path_abs) => {
   return path_abs.split(`${getRootPath()}/${name_dir_from}/`)[1].split("/")[0];
 };
 const isDirectory = (path_abs) => fs.lstatSync(path_abs).isDirectory();
+const _isMarkdownFile = (path_abs) => {
+  const regex = new RegExp(/\.md$/i);
+  return fs.existsSync(path_abs) && regex.test(path_abs);
+};
 const parseJsonFile = (path_abs) => {
   return JSON.parse(fs.readFileSync(path_abs).toString() || "{}");
+};
+const _getMarkdownVariable = (path_abs) => {
+  const res = {};
+  const content = fs.readFileSync(path_abs).toString();
+  const regex = /^\-\-\-[\s\S]*\-\-\-/gi;
+  const arr = content.match(regex);
+  if (arr) {
+    const str_var = arr[0].split("---")[1];
+    str_var.split("\n").forEach((str_key_value) => {
+      if (str_key_value) {
+        const [key, value] = str_key_value.split(" ");
+        res[key] = value;
+      }
+    });
+  }
+  return res;
 };
 const _getVariable = (path_abs) => {
   let res = {};
@@ -31,6 +51,10 @@ const _getVariable = (path_abs) => {
       res = merge(res, var_next);
     }
     i++;
+  }
+  // if is markdownfile, get variables in itself
+  if (_isMarkdownFile(path_abs)) {
+    res = merge(res, _getMarkdownVariable(path_abs));
   }
   return res;
 };
@@ -226,4 +250,10 @@ module.exports = {
   isTypeFile,
   getFileType,
   markdownToString,
+
+
+  // for test use
+  _getMarkdownVariable,
+  _getVariable,
+  _getFragment
 };

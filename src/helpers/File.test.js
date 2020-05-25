@@ -1,13 +1,83 @@
-import cases from "jest-in-case";
+const cases = require("jest-in-case");
+const fs = require("fs");
+const {
+  _getMarkdownVariable,
+  _getVariable,
+  getLanguage,
+  _getFragment,
+} = require("./File.js");
 
+const getAbsPath = (relativePath) => process.cwd() + relativePath;
 cases(
-  "add(augend, addend)",
-  opts => {
-    expect(add(opts.augend, opts.addend)).toBe(opts.total);
+  "_getMarkdownVariable",
+  (opts) => {
+    expect(_getMarkdownVariable(opts.path_abs)).toStrictEqual(opts.res);
   },
   [
-    { name: "1 + 1 = 2", augend: 1, addend: 1, total: 2 },
-    { name: "2 + 1 = 3", augend: 2, addend: 1, total: 3 },
-    { name: "3 + 1 = 4", augend: 3, addend: 1, total: 4 }
+    {
+      path_abs: process.cwd() + "/test/en/normal.md",
+      res: { a: "aha", b: "bha" },
+    },
+    {
+      path_abs: process.cwd() + "/test/en/test_fragment.md",
+      res: {
+        a: "lalala",
+        b: "hahaha",
+      },
+    },
+  ]
+);
+
+cases(
+  "_getMarkdownVariable",
+  (opts) => {
+    expect(_getVariable(opts.path_abs)).toStrictEqual(opts.res);
+  },
+  [
+    {
+      path_abs: getAbsPath("/test/en/test_fragment.md"),
+      res: {
+        a: "lalala",
+        b: "hahaha",
+        content: "write whatever you like here ~",
+        auth: {
+          name: "talentAN",
+          github: "https://github.com/talentAN/md2md",
+        },
+      },
+    },
+  ]
+);
+
+cases(
+  "getLanguage",
+  (opts) => {
+    expect(getLanguage(opts.path_abs)).toBe(opts.res);
+  },
+  [
+    {
+      path_abs: getAbsPath("/test/en/test_fragment.md"),
+      res: "en",
+    },
+  ]
+);
+
+cases(
+  "_getFragment",
+  (opts) => {
+    expect(_getFragment(opts.path_abs)).toStrictEqual(opts.res);
+  },
+  [
+    {
+      path_abs: getAbsPath("/test/en/test_fragment.md"),
+      res: {
+        [getAbsPath("/test/en/fragment/head.md")]: fs
+          .readFileSync(getAbsPath("/test/en/fragment/head.md"))
+          .toString(),
+        [getAbsPath("/test/en/fragment/tail.md")]: fs
+          .readFileSync(getAbsPath("/test/en/fragment/tail.md"))
+          .toString(),
+      },
+    },
   ]
 );
