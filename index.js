@@ -26,7 +26,8 @@ const {
 const _genID = () => Math.random().toString().substring(2, 32);
 const _logStart = () => console.log(`Documents convention Start`, "\n\n\n");
 const _logEnd = () => console.log(`Documents convention Finish`, "\n\n\n");
-
+// consts
+const map_watcher = {};
 const _isFiltered = (path_abs) => {
   const self_filtered = all_filtered.some((name_f) =>
     isTypeFile(path_abs, name_f)
@@ -130,8 +131,6 @@ const onDirRemove = (path_from) => {
   _rmDir(path_target);
 };
 // exports
-const map_watcher = {};
-
 const _setDirWatcher = (path_from) => {
   const watcher = chokidar.watch(path_from);
   watcher
@@ -159,7 +158,6 @@ const setFileWatcher = (path_from) => {
   map_watcher[id] = watcher;
   return id;
 };
-
 const clearWatcher = (key) => {
   const watcher = map_watcher[key];
   watcher.close().then(() => console.log("watcher closed"));
