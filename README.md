@@ -169,7 +169,8 @@ const target_json = templateToString(path_from);
 
 ### 20200525 v0.2.10
 
-- Support variables in markdown file. use variables in key-value format.
+- Add api templateToString
+- Add parse variables in markdown file. use variables in key-value format.
 
 ```javascript
 // origin docFile (doc_from/en/test.md):

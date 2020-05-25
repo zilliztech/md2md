@@ -8,8 +8,7 @@ const {
   FileType,
 } = require("./src/Consts");
 const {
-  writeMarkDown,
-  writeTemplate,
+  writeFile,
   markdownToString,
   templateToString,
   classifyFileAndDir,
@@ -83,16 +82,19 @@ const onFileAdd = (path_from) => {
         break;
     }
   } else {
+    const path_to = getTargetPath(path_from);
+    let content = "";
     switch (type_file) {
       case FileType.normalDoc:
-        writeMarkDown(path_from);
+        content = markdownToString(path_from);
         break;
       case FileType.templateVar:
-        writeTemplate(path_from);
+        content = templateToString(path_from);
         break;
       default:
         break;
     }
+    writeFile(path_to, content);
   }
 };
 const onFileRemove = (path_from) => {
