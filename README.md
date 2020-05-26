@@ -176,8 +176,12 @@ const target_json = templateToString(path_from);
 ```
 
 ## FAQ
+#### Q: Why don't let all language use one fragment, one template folder?
+
+#### A: We've tried about that. But the gramma of each language might be different, which can lead to the postions of variables to be a total mess. Consider that, we think each language has its own fragment folder and template folder is better.
 
 ## Forward
+- support register custom rule, like {{tab}}
 
 ## Change Log
 
