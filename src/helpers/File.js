@@ -174,7 +174,7 @@ const isTypeFile = (path_from, file_name) => {
   let reg;
   if (file_name.indexOf(".") !== -1) {
     const [left, right] = file_name.split(".");
-    reg = `/${left}\\.${right}$/`;
+    reg = `${left}\\.${right}$`;
   } else {
     reg = `\/${file_name}\$`;
   }
