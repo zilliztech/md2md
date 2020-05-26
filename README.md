@@ -27,17 +27,25 @@ try [Demo Repo](https://github.com/talentAN/md2md-demo) directely
 
 ### Variable
 
-Defined in variables.json, can be used in markdownfile, fragments and templates.
+Defined in variables.json or on the top of markdown, can be used in markdownfile, fragments and templates.
 
 ```javascript
 // variabeFile (doc_from/en/variables.json)
 {"name":"md2md"}
 
 // origin docFile (doc_from/en/test.md):
+---
+link https://github.com/talentAN/md2md
+---
 ### This is {{var.name}};
+### Visit {{var.link}} for more details;
 
 // turn to target(doc_to/en/test.md)
+---
+link https://github.com/talentAN/md2md
+---
 ### This is md2md;
+### Visit https://github.com/talentAN/md2md for more details;
 ```
 
 ### Fragment
@@ -98,13 +106,13 @@ num of weeklyDownoad : {{var.weeklyDownoad}}
   "var":{
     "name":"md2md",
     "keyWords":["markdown", "converter", "easy use"],
-    "weeklyDownoad":300
+    "weeklyDownoad":500
 }}
 
 // turn to target (doc_to/en/md2md/introduction.md)
 the name is : md2md;
 the keyWords is : ["markdown", "converter", "easy use"]
-num of weeklyDownoad : 300
+num of weeklyDownoad : 500
 ```
 
 ## Catalog
@@ -126,7 +134,13 @@ num of weeklyDownoad : 300
 ```bash
 ├── en
 │   ├── fragment
+│   │   ├── fragment1.md
+│   │   ├── fragment2.md
+│   │   ├── ...
 │   ├── template
+│   │   ├── template1.md
+│   │   ├── template2.md
+│   │   ├── ...
 │   ├── variables.json
 │   ├── [doc directories]
 │   ├── ...
@@ -143,6 +157,7 @@ const {
   clearWatcher,
   markdownToString,
   templateToString,
+  register,
 } = require("md2md");
 
 // watch directory configed in m2m.config.js.
@@ -159,17 +174,36 @@ const target_md = markdownToString(path_from);
 
 // get transfered markdownFile from json file use template
 const target_json = templateToString(path_from);
+
+// register your own rule like var and fragment
+register(key, fn);
+/**
+ * key is the mark you use as {{key}} to mark the position in markdown file
+ * fn: (content, path_from)=> target
+ * @param {String} content: the content converted by default rules
+ * @param {String}  path_from: the absolute path of original file, offen used to get variables and fragments
+ * @return {string} target: the final content converted by custom rules
+ */
 ```
 
 ## FAQ
-#### Q: Why don't let all language use one fragment, one template folder?
 
-#### A: We've tried about that. But the gramma of each language might be different, which can lead to the postions of variables to be a total mess. Consider that, we think each language has its own fragment folder and template folder is better.
+##### Q: Why don't let all language use one fragment, one template folder?
+
+A: We've tried about that. But the gramma of each language might be different, which can lead to the postions of variables to be a total mess. Consider that, we think each language has its own fragment folder and template folder is better.
 
 ## Forward
+
 - support register custom rule, like {{tab}}
 
 ## Change Log
+
+### 20200526 v0.2.12@alpha.1
+
+- support register custom rule
+- bugfix
+  - filter variables.json
+  - invalid type when convert template
 
 ### 20200525 v0.2.11
 
