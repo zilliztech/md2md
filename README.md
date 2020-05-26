@@ -27,17 +27,25 @@ try [Demo Repo](https://github.com/talentAN/md2md-demo) directely
 
 ### Variable
 
-Defined in variables.json, can be used in markdownfile, fragments and templates.
+Defined in variables.json or on the top of markdown, can be used in markdownfile, fragments and templates.
 
 ```javascript
 // variabeFile (doc_from/en/variables.json)
 {"name":"md2md"}
 
 // origin docFile (doc_from/en/test.md):
+---
+link https://github.com/talentAN/md2md
+---
 ### This is {{var.name}};
+### Visit {{var.link}} for more details;
 
 // turn to target(doc_to/en/test.md)
+---
+link https://github.com/talentAN/md2md
+---
 ### This is md2md;
+### Visit https://github.com/talentAN/md2md for more details;
 ```
 
 ### Fragment
@@ -98,13 +106,13 @@ num of weeklyDownoad : {{var.weeklyDownoad}}
   "var":{
     "name":"md2md",
     "keyWords":["markdown", "converter", "easy use"],
-    "weeklyDownoad":300
+    "weeklyDownoad":500
 }}
 
 // turn to target (doc_to/en/md2md/introduction.md)
 the name is : md2md;
 the keyWords is : ["markdown", "converter", "easy use"]
-num of weeklyDownoad : 300
+num of weeklyDownoad : 500
 ```
 
 ## Catalog
@@ -126,7 +134,13 @@ num of weeklyDownoad : 300
 ```bash
 ├── en
 │   ├── fragment
+│   │   ├── fragment1.md
+│   │   ├── fragment2.md
+│   │   ├── ...
 │   ├── template
+│   │   ├── template1.md
+│   │   ├── template2.md
+│   │   ├── ...
 │   ├── variables.json
 │   ├── [doc directories]
 │   ├── ...
