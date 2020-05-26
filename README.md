@@ -157,6 +157,7 @@ const {
   clearWatcher,
   markdownToString,
   templateToString,
+  register,
 } = require("md2md");
 
 // watch directory configed in m2m.config.js.
@@ -173,6 +174,16 @@ const target_md = markdownToString(path_from);
 
 // get transfered markdownFile from json file use template
 const target_json = templateToString(path_from);
+
+// register your own rule like var and fragment
+register(key, fn);
+/**
+ * key is the mark you use as {{key}} to mark the position in markdown file
+ * fn: (content, path_from)=> target
+ * @param {String} content: the content converted by default rules
+ * @param {String}  path_from: the absolute path of original file, offen used to get variables and fragments
+ * @return {string} target: the final content converted by custom rules
+ */
 ```
 
 ## FAQ
@@ -187,11 +198,13 @@ A: We've tried about that. But the gramma of each language might be different, w
 
 ## Change Log
 
-### 20200525 v0.2.12@alpha.0
-- support register custom rull(see api and demos)
+### 20200526 v0.2.12@alpha.1
+
+- support register custom rule
 - bugfix
-  - fix not filter variables.json
-  - fix .json + template.md => target.md
+  - filter variables.json
+  - invalid type when convert template
+
 ### 20200525 v0.2.11
 
 - Add api templateToString
