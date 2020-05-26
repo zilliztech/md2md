@@ -76,6 +76,13 @@ const initialScan = () => {
     Logger.warn(`Documents is Empty`);
   }
 };
+const _customParse = (content, path_from) => {
+  Object.keys(map_rule).forEach((key) => {
+    const fn = map_rule[key];
+    content = fn(path_from, content);
+  });
+  return content;
+};
 const onFileAdd = (path_from) => {
   Logger.start(`Origin file ${path_from} is edited.`);
   const type_file = getFileType(path_from);
@@ -102,10 +109,7 @@ const onFileAdd = (path_from) => {
       default:
         break;
     }
-    Object.keys(map_rule).forEach((key) => {
-      const fn = map_rule[key];
-      content = fn(path_from, content);
-    });
+    content = _customParse(content, path_from);
     writeFile(path_to, content);
     Logger.end(`Target File ${path_to} is updated.`);
   }
@@ -194,8 +198,10 @@ module.exports = {
   clearWatcher,
   clearAllWatcher,
 
-  markdownToString,
-  templateToString,
+  markdownToString: (path_from) =>
+    _customParse(markdownToString(path_from), path_from),
+  templateToString: (path_from) =>
+    _customParse(templateToString(path_from), path_from),
 
   register,
 };
