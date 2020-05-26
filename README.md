@@ -198,7 +198,7 @@ A: We've tried about that. But the gramma of each language might be different, w
 
 ## Change Log
 
-### 20200526 v0.3.0
+### 20200526 v0.3.1
 
 - support register custom rule
 - bugfix
