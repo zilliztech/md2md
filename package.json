@@ -1,6 +1,6 @@
 {
   "name": "md2md",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "main": "index.js",
   "repository": "git@github.com:talentAN/md2md.git",
   "author": "zhen.an <adam_an02@163.com>",
