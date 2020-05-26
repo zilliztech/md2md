@@ -25,8 +25,10 @@ const plugins = require("./src/plugin/index");
 
 // helpers
 const _genID = () => Math.random().toString().substring(2, 32);
-const _logStart = () => console.log(`Documents convention Start`, "\n\n\n");
-const _logEnd = () => console.log(`Documents convention Finish`, "\n\n\n");
+const Logger = {
+  start: (message) => console.log("=>", message),
+  end: (message) => console.log("=>", message, "\n\n"),
+};
 // consts
 const map_watcher = {};
 const map_rule = {};
@@ -58,28 +60,24 @@ const _copyDir = (path_from) => {
 };
 // callbacks
 const initialScan = () => {
-  // register default plugins
-  Object.keys(plugins).forEach((key) => {
-    const { mark, fn } = plugins[key];
-    register(mark, fn);
-  });
   // copy directories without files from doc_from
   const path_from = path.resolve(getRootPath(), `${name_dir_from}/`);
   const path_to = getTargetPath(path_from);
   if (!fs.existsSync(path_to)) {
     fs.mkdirSync(path_to);
   }
-  _logStart();
+  Logger.start("Documents convention Start.");
   const res = fs.readdirSync(path_from) || [];
   const paths_langs = res.map((item) => `${path_from}/${item}`);
   if (paths_langs.length) {
     _copyDir(path_from);
-    _logEnd();
+    Logger.end("Documents convention Finish.");
   } else {
-    console.warn(`Documents is Empty`);
+    Logger.warn(`Documents is Empty`);
   }
 };
 const onFileAdd = (path_from) => {
+  Logger.start(`Origin file ${path_from} is edited.`);
   const type_file = getFileType(path_from);
   if (_isFiltered(path_from)) {
     switch (type_file) {
@@ -109,6 +107,7 @@ const onFileAdd = (path_from) => {
       content = fn(path_from, content);
     });
     writeFile(path_to, content);
+    Logger.end(`Target File ${path_to} is updated.`);
   }
 };
 const onFileRemove = (path_from) => {
@@ -145,6 +144,11 @@ const onDirRemove = (path_from) => {
 };
 // exports
 const _setDirWatcher = (path_from) => {
+  // register default plugins
+  Object.keys(plugins).forEach((key) => {
+    const { mark, fn } = plugins[key];
+    register(mark, fn);
+  });
   const watcher = chokidar.watch(path_from);
   watcher
     .on("ready", initialScan)
