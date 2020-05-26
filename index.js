@@ -21,6 +21,7 @@ const {
   getTargetPath,
   getRootPath,
 } = require("./src/helpers/Path");
+const plugins = require("./src/plugin/index");
 
 // helpers
 const _genID = () => Math.random().toString().substring(2, 32);
@@ -28,6 +29,7 @@ const _logStart = () => console.log(`Documents convention Start`, "\n\n\n");
 const _logEnd = () => console.log(`Documents convention Finish`, "\n\n\n");
 // consts
 const map_watcher = {};
+const map_rule = {};
 const _isFiltered = (path_abs) => {
   const self_filtered = all_filtered.some((name_f) =>
     isTypeFile(path_abs, name_f)
@@ -56,6 +58,12 @@ const _copyDir = (path_from) => {
 };
 // callbacks
 const initialScan = () => {
+  // register default plugins
+  Object.keys(plugins).forEach((key) => {
+    const { mark, fn } = plugins[key];
+    register(mark, fn);
+  });
+  // copy directories without files from doc_from
   const path_from = path.resolve(getRootPath(), `${name_dir_from}/`);
   const path_to = getTargetPath(path_from);
   if (!fs.existsSync(path_to)) {
@@ -96,6 +104,10 @@ const onFileAdd = (path_from) => {
       default:
         break;
     }
+    Object.keys(map_rule).forEach((key) => {
+      const fn = map_rule[key];
+      content = fn(path_from, content);
+    });
     writeFile(path_to, content);
   }
 };
@@ -168,6 +180,9 @@ const clearAllWatcher = () => {
     clearWatcher(key);
   });
 };
+const register = (mark, fn) => {
+  map_rule[mark] = fn;
+};
 
 module.exports = {
   setDirWatcher,
@@ -177,4 +192,6 @@ module.exports = {
 
   markdownToString,
   templateToString,
+
+  register,
 };
