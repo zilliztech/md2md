@@ -83,13 +83,14 @@ const onFileAdd = (path_from) => {
         break;
     }
   } else {
-    const path_to = getTargetPath(path_from);
+    let path_to = getTargetPath(path_from);
     let content = "";
     switch (type_file) {
       case FileType.normalDoc:
         content = markdownToString(path_from);
         break;
       case FileType.templateVar:
+        path_to = path_to.replace(".json", ".md");
         content = templateToString(path_from);
         break;
       default:
