@@ -3,7 +3,7 @@ const fs = require("fs");
 const { name_dir_fragment } = require("../Consts");
 
 const {
-  _getMarkdownVariable,
+  getMarkdownVariable,
   _getVariable,
   getLanguage,
   _replaceFragment,
@@ -12,9 +12,9 @@ const {
 const getAbsPath = (relativePath) => process.cwd() + relativePath;
 
 cases(
-  "_getMarkdownVariable",
+  "getMarkdownVariable",
   (opts) => {
-    expect(_getMarkdownVariable(opts.path_abs)).toStrictEqual(opts.res);
+    expect(getMarkdownVariable(opts.path_abs)).toStrictEqual(opts.res);
   },
   [
     {
@@ -32,7 +32,7 @@ cases(
 );
 
 cases(
-  "_getMarkdownVariable",
+  "getMarkdownVariable",
   (opts) => {
     expect(_getVariable(opts.path_abs)).toStrictEqual(opts.res);
   },
