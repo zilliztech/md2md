@@ -21,7 +21,7 @@ const _isMarkdownFile = (path_abs) => {
 const parseJsonFile = (path_abs) => {
   return JSON.parse(fs.readFileSync(path_abs).toString() || "{}");
 };
-const _getMarkdownVariable = (path_abs) => {
+const getMarkdownVariable = (path_abs) => {
   const res = {};
   const content = fs.readFileSync(path_abs).toString();
   const regex = /^\-\-\-[\s\S]*\-\-\-/gi;
@@ -54,7 +54,7 @@ const _getVariable = (path_abs) => {
   }
   // if is markdownfile, get variables in itself
   if (_isMarkdownFile(path_abs)) {
-    res = merge(res, _getMarkdownVariable(path_abs));
+    res = merge(res, getMarkdownVariable(path_abs));
   }
   return res;
 };
@@ -214,7 +214,7 @@ module.exports = {
   templateToString,
 
   // for test use
-  _getMarkdownVariable,
+  getMarkdownVariable,
   _getVariable,
   _replaceFragment,
 };

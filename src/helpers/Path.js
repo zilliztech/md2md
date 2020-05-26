@@ -7,7 +7,9 @@ const getTargetPath = (path_from) => {
   return path_from.replace(from, to);
 };
 const getChildrenPath = (path_father) => {
-  return fs.readdirSync(path_father).map((item) => `${path_father}/${item}`);
+  return fs
+    .readdirSync(path_father)
+    .map((name_child) => `${path_father}/${name_child}`);
 };
 
 const getRootPath = () =>
