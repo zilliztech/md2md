@@ -32,6 +32,11 @@ const Logger = {
 // consts
 const map_watcher = {};
 const map_rule = {};
+// register default plugins
+Object.keys(plugins).forEach((key) => {
+  const { mark, fn } = plugins[key];
+  register(mark, fn);
+});
 const _isFiltered = (path_abs) => {
   const self_filtered = all_filtered.some((name_f) =>
     isTypeFile(path_abs, name_f)
@@ -148,11 +153,6 @@ const onDirRemove = (path_from) => {
 };
 // exports
 const _setDirWatcher = (path_from) => {
-  // register default plugins
-  Object.keys(plugins).forEach((key) => {
-    const { mark, fn } = plugins[key];
-    register(mark, fn);
-  });
   const watcher = chokidar.watch(path_from);
   watcher
     .on("ready", initialScan)
