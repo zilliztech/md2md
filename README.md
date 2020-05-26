@@ -187,6 +187,11 @@ A: We've tried about that. But the gramma of each language might be different, w
 
 ## Change Log
 
+### 20200525 v0.2.12@alpha.0
+- support register custom rull(see api and demos)
+- bugfix
+  - fix not filter variables.json
+  - fix .json + template.md => target.md
 ### 20200525 v0.2.11
 
 - Add api templateToString
