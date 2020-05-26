@@ -1,6 +1,6 @@
 ---
-a lalala
-b hahaha
+a: lalala
+b:hahaha
 ---
 
 {{fragment/head.md}}

@@ -30,8 +30,8 @@ const getMarkdownVariable = (path_abs) => {
     const str_var = arr[0].split("---")[1];
     str_var.split("\n").forEach((str_key_value) => {
       if (str_key_value) {
-        const [key, value] = str_key_value.split(" ");
-        res[key] = value;
+        const [key, value] = str_key_value.split(":");
+        res[key.trim()] = value.trim();
       }
     });
   }
