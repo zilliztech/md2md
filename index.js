@@ -32,6 +32,9 @@ const Logger = {
 // consts
 const map_watcher = {};
 const map_rule = {};
+const register = (mark, fn) => {
+  map_rule[mark] = fn;
+};
 // register default plugins
 Object.keys(plugins).forEach((key) => {
   const { mark, fn } = plugins[key];
@@ -187,9 +190,6 @@ const clearAllWatcher = () => {
   Object.keys(map_watcher).forEach((key) => {
     clearWatcher(key);
   });
-};
-const register = (mark, fn) => {
-  map_rule[mark] = fn;
 };
 
 module.exports = {

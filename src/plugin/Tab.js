@@ -8,7 +8,7 @@ const mark = "tab";
 const cache = {};
 const parseTab = (path_from, content) => {
   const regex_mark = `\{\{${mark}\}\}`;
-  const regex = new RegExp(regex_mark, "i");
+  const regex = new RegExp(regex_mark, "ig");
   // get target content from path_from;
   const arr = path_from.split("/");
   const path_dir = arr.slice(0, arr.length - 1).join("/");
