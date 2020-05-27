@@ -1,8 +1,8 @@
 {
   "name": "md2md",
-  "version": "0.3.1",
+  "version": "0.3.2-alpha.0",
   "main": "index.js",
-  "repository": "git@github.com:talentAN/md2md.git",
+  "repository": "git@github.com:zilliztech/md2md.git",
   "author": "zhen.an <adam_an02@163.com>",
   "license": "MIT",
   "keywords": [
@@ -14,6 +14,9 @@
     "markdown to html",
     "template markdown"
   ],
+  "bin": {
+    "md2md": "./bin/md2md.js"
+  },
   "scripts": {
     "test": "jest",
     "start": "node index.js"
