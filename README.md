@@ -197,7 +197,7 @@ A: We've tried about that. But the gramma of each language might be different, w
 - support register custom rule, like {{tab}}
 
 ## Change Log
-### 20200527 v0.3.3
+### 20200527 v0.3.4
 
 - add bin goover and md2md
 

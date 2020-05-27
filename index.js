@@ -81,7 +81,7 @@ const initialScan = () => {
     _copyDir(path_from);
     Logger.end("Documents convention Finish.");
   } else {
-    Logger.warn(`Documents is Empty`);
+    Logger.end(`Documents is Empty`);
   }
 };
 const _customParse = (content, path_from) => {
@@ -206,10 +206,10 @@ const goOver = () => {
     if (paths_langs.length) {
       _copyDir(path_from);
       Logger.end("Documents go over Finished.");
-      process.exit();
     } else {
-      Logger.warn(`Documents is Empty`);
+      Logger.end(`Documents is Empty`);
     }
+    process.exit();
   };
   watcher
     .on("ready", _onReady)
