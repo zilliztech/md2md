@@ -191,12 +191,41 @@ const clearAllWatcher = () => {
     clearWatcher(key);
   });
 };
+const goOver = () => {
+  const path_from = path.resolve(getRootPath(), `${name_dir_from}/`);
+  const watcher = chokidar.watch(path_from);
+  const _onReady = () => {
+    // copy directories without files from doc_from
+    const path_from = path.resolve(getRootPath(), `${name_dir_from}/`);
+    const path_to = getTargetPath(path_from);
+    if (!fs.existsSync(path_to)) {
+      fs.mkdirSync(path_to);
+    }
+    const res = fs.readdirSync(path_from) || [];
+    const paths_langs = res.map((item) => `${path_from}/${item}`);
+    if (paths_langs.length) {
+      _copyDir(path_from);
+      Logger.end("Documents go over Finished.");
+      process.exit();
+    } else {
+      Logger.warn(`Documents is Empty`);
+    }
+  };
+  watcher
+    .on("ready", _onReady)
+    .on("add", onFileAdd)
+    .on("change", onFileAdd)
+    .on("unlink", onFileRemove)
+    .on("addDir", onAddDir)
+    .on("unlinkDir", onDirRemove);
+};
 
 module.exports = {
   setDirWatcher,
   setFileWatcher,
   clearWatcher,
   clearAllWatcher,
+  goOver,
 
   markdownToString: (path_from) =>
     _customParse(markdownToString(path_from), path_from),

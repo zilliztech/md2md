@@ -15,7 +15,8 @@
     "template markdown"
   ],
   "bin": {
-    "md2md": "./bin/md2md.js"
+    "md2md": "./bin/md2md.js",
+    "goover":"./bin/goover.js"
   },
   "scripts": {
     "test": "jest",
