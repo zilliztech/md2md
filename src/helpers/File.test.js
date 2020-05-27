@@ -32,7 +32,7 @@ cases(
 );
 
 cases(
-  "getMarkdownVariable",
+  "_getVariable",
   (opts) => {
     expect(_getVariable(opts.path_abs)).toStrictEqual(opts.res);
   },

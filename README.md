@@ -35,14 +35,14 @@ Defined in variables.json or on the top of markdown, can be used in markdownfile
 
 // origin docFile (doc_from/en/test.md):
 ---
-link https://github.com/talentAN/md2md
+link: https://github.com/talentAN/md2md
 ---
 ### This is {{var.name}};
 ### Visit {{var.link}} for more details;
 
 // turn to target(doc_to/en/test.md)
 ---
-link https://github.com/talentAN/md2md
+link: https://github.com/talentAN/md2md
 ---
 ### This is md2md;
 ### Visit https://github.com/talentAN/md2md for more details;
@@ -198,7 +198,7 @@ A: We've tried about that. But the gramma of each language might be different, w
 
 ## Change Log
 
-### 20200526 v0.2.13
+### 20200526 v0.3.1
 
 - support register custom rule
 - bugfix
@@ -213,15 +213,15 @@ A: We've tried about that. But the gramma of each language might be different, w
 ```javascript
 // origin docFile (doc_from/en/test.md):
 ---
-name Tom
-age 11
+name: Tom
+age: 11
 ---
 ### This is {{var.name}}, his age is {{var.age}};
 
 // target docFile (doc_from/en/test.md)
 ---
-name Tom
-age 11
+name: Tom
+age: 11
 ---
 ### This is Tom, his age is 11;
 

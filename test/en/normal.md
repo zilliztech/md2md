@@ -1,6 +1,6 @@
 ---
-a aha
-b bha
+a:      aha     
+b: bha
 ---
 
 this is normal markdownfile
