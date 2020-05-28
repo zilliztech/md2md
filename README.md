@@ -198,7 +198,13 @@ A: We've tried about that. But the gramma of each language might be different, w
 
 ## Change Log
 ### 20200527 v0.3.4
+- support config name_dir_from in process.env 
+```javascript
+// before require md2md, run: 
+process.env.name_dir_from = "your name of origin dir"
+```
 
+### 20200527 v0.3.4
 - add bin goover and md2md
 
 ### 20200526 v0.3.1
