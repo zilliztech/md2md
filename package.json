@@ -1,6 +1,6 @@
 {
   "name": "md2md",
-  "version": "0.3.2",
+  "version": "0.3.4",
   "main": "index.js",
   "repository": "git@github.com:zilliztech/md2md.git",
   "author": "zhen.an <adam_an02@163.com>",
@@ -15,7 +15,8 @@
     "template markdown"
   ],
   "bin": {
-    "md2md": "./bin/md2md.js"
+    "md2md": "./bin/md2md.js",
+    "goover":"./bin/goover.js"
   },
   "scripts": {
     "test": "jest",
