@@ -7,7 +7,8 @@ let config = {};
 if (fs.existsSync(path_config)) {
   config = require(path_config);
 }
-const name_dir_from = config.name_dir_from || "doc_from";
+const name_dir_from =
+  process.env.name_dir_from || config.name_dir_from || "doc_from";
 const name_dir_to = config.name_dir_to || "doc_to";
 const name_dir_fragment = config.name_dir_fragment || "fragment";
 const name_dir_template = config.name_dir_template || "template";
