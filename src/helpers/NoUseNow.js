@@ -4,7 +4,7 @@ function convert(
   map_fragment = {},
   map_variable = {}
 ) {
-  // 获取目录[fragment, template, variable.json, ....]
+  // 获取目录[fragments, template, variable.json, ....]
   const res = fs.readdirSync(path_from) || [];
   const paths_child = [];
   let variableFile;
@@ -127,7 +127,7 @@ const _genPageFromTemplate = (
     .split(`${__dirname}/${name_dir_from}/`)[1]
     .split("/")[0];
   let content = fileToString(path_template);
-  // replace fragment
+  // replace fragments
   content = replaceFragment(content, map_fragment, language);
   // replace var
   const var_json = JSON.parse(fileToString(path_jsonFile));

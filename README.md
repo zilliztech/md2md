@@ -27,10 +27,10 @@ try [Demo Repo](https://github.com/talentAN/md2md-demo) directely
 
 ### Variable
 
-Defined in variables.json or on the top of markdown, can be used in markdownfile, fragments and templates.
+Defined in Variables.json or on the top of markdown, can be used in markdownfile, fragments and templates.
 
 ```javascript
-// variabeFile (doc_from/en/variables.json)
+// variabeFile (doc_from/en/Variables.json)
 {"name":"md2md"}
 
 // origin docFile (doc_from/en/test.md):
@@ -50,10 +50,10 @@ link: https://github.com/talentAN/md2md
 
 ### Fragment
 
-Defined in fragment directory. Fragment let you split the markdown into independent, reusable pieces, and think about each piece in isolation. you can use fragment in fragment.
+Defined in fragments directory. Fragment let you split the markdown into independent, reusable pieces, and think about each piece in isolation. you can use fragment in fragment.
 
 ```javascript
-// root variableFile (doc_from/en/variables.json)
+// root variableFile (doc_from/en/Variables.json)
 {
   "auth":{
     "name":"talentAN",
@@ -61,20 +61,20 @@ Defined in fragment directory. Fragment let you split the markdown into independ
     }
 }
 
-// fragment file (doc_from/en/fragment/repo_info.md)
+// fragment file (doc_from/en/fragments/repo_info.md)
 RepoName: {{var.name}}
 github: {{var.github}}
 Auth: {{var.auth.name}}
 Email: {{var.auth.email}}
 
-// child variableFile (doc_from/en/md2md/variables.json)
+// child variableFile (doc_from/en/md2md/Variables.json)
 {
   "name":"md2md",
   "github":"https://github.com/talentAN/md2md"
 }
 
 // origin docFile  (doc_from/en/md2md/index.md)
-{{fragment/repo_info.md}}
+{{fragments/repo_info.md}}
 
 ## belows are custom info
 ## !@#$%^&*()......
@@ -133,7 +133,7 @@ num of weeklyDownoad : 500
 
 ```bash
 ├── en
-│   ├── fragment
+│   ├── fragments
 │   │   ├── fragment1.md
 │   │   ├── fragment2.md
 │   │   ├── ...
@@ -141,7 +141,7 @@ num of weeklyDownoad : 500
 │   │   ├── template1.md
 │   │   ├── template2.md
 │   │   ├── ...
-│   ├── variables.json
+│   ├── Variables.json
 │   ├── [doc directories]
 │   ├── ...
 │   ├── [doc files]
@@ -188,30 +188,42 @@ register(key, fn);
 
 ## FAQ
 
-##### Q: Why don't let all language use one fragment, one template folder?
+##### Q: Why don't let all language use one fragments, one template folder?
 
-A: We've tried about that. But the gramma of each language might be different, which can lead to the postions of variables to be a total mess. Consider that, we think each language has its own fragment folder and template folder is better.
+A: We've tried about that. But the gramma of each language might be different, which can lead to the postions of variables to be a total mess. Consider that, we think each language has its own fragments folder and template folder is better.
 
 ## Forward
 
 - support register custom rule, like {{tab}}
 
 ## Change Log
-### 20200527 v0.3.4
-- support config name_dir_from in process.env 
+
+### 20200529 v0.4.0-alpha
+
+- support tip in markdown
+- rename
+  - fragment => fragments
+  - template => templates
+  - variable.json => Variables.json
+
+### 20200528 v0.3.4
+
+- support config name_dir_from in process.env
+
 ```javascript
-// before require md2md, run: 
-process.env.name_dir_from = "your name of origin dir"
+// before require md2md, run:
+process.env.name_dir_from = "your name of origin dir";
 ```
 
 ### 20200527 v0.3.4
+
 - add bin goover and md2md
 
 ### 20200526 v0.3.1
 
 - support register custom rule
 - bugfix
-  - filter variables.json
+  - filter Variables.json
   - invalid type when convert template
 
 ### 20200525 v0.2.11
@@ -237,4 +249,4 @@ age: 11
 ```
 
 - Add test cases
-- bugfix parse fragment in fragment
+- bugfix parse fragment in fragments

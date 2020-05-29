@@ -9,9 +9,9 @@ if (fs.existsSync(path_config)) {
 const name_dir_from =
   process.env.name_dir_from || config.name_dir_from || "doc_from";
 const name_dir_to = config.name_dir_to || "doc_to";
-const name_dir_fragment = config.name_dir_fragment || "fragment";
+const name_dir_fragment = config.name_dir_fragment || "fragments";
 const name_dir_template = config.name_dir_template || "template";
-const name_file_variable = config.name_file_variable || "variables.json";
+const name_file_variable = config.name_file_variable || "Variables.json";
 const name_file_tip = config.name_file_tip || "tip.json";
 
 const ignore_files = config.ignore_files || [];
