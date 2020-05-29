@@ -4,7 +4,7 @@ b: bha
 ---
 
 this is normal markdownfile
-{{milvus::tip.milvus.introduce}}
+{{milvus::tips.milvus.introduce}}
 asasd
 sf
 
@@ -12,5 +12,5 @@ sf
 s
 df
 
-{{milvus::tip.milvus.fsdfsfsdf}}
+{{milvus::tips.milvus.fsdfsfsdf}}
 sdfsd

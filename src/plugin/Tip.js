@@ -11,14 +11,14 @@ const parseTip = (path_from, content) => {
   if (fs.existsSync(path_tips)) {
     const Tips = parseJsonFile(path_tips);
     // get matches
-    const regex_tip = /\{\{.{0,10000}\:\:tip\..{0,10000}\}\}/gi;
+    const regex_tip = /\{\{.{0,10000}\:\:tips\..{0,10000}\}\}/gi;
     const matches = content.match(regex_tip);
     // replace matches
     if (matches && matches.length) {
       matches.forEach((match) => {
         const [header, keyChain] = match
           .substring(2, match.length - 2)
-          .split("::tip.");
+          .split("::tips.");
         const arr_key = keyChain.split(".");
         let tip;
         if (Array.isArray(arr_key)) {
@@ -29,9 +29,9 @@ const parseTip = (path_from, content) => {
             tip = tip[arr_key[i]];
             i++;
           }
-          const content_replace = `<span class="tip" data-tip=${
+          const content_replace = `<span class="tip" data-tip="${
             tip || ""
-          }>${header}</span>`;
+          }">${header}</span>`;
           content = content.replace(match, content_replace);
         }
       });

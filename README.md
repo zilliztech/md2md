@@ -195,8 +195,6 @@ A: We've tried about that. But the gramma of each language might be different, w
 
 ## Forward
 
-- support register custom rule, like {{tab}}
-
 ## Change Log
 
 ### 20200529 v0.4.0-alpha
