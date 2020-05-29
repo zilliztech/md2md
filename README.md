@@ -91,10 +91,10 @@ Email: adam_an02@163.com
 
 ### Template
 
-Defined in template directory. Template is used to generate markdown file from json file directely;
+Defined in templates directory. Template is used to generate markdown file from json file directely;
 
 ```javascript
-// templateFile (doc_from/en/template/introduce.md)
+// templateFile (doc_from/en/templates/introduce.md)
 the name is : {{var.name}};
 the keyWords is : {{var.keyWords}}
 num of weeklyDownoad : {{var.weeklyDownoad}}
@@ -102,7 +102,7 @@ num of weeklyDownoad : {{var.weeklyDownoad}}
 // origin jsonFile  (doc_from/en/md2md/introduction.json)
 {
   "useTemplate":true,
-  "path":"template/introduce.md",
+  "path":"templates/introduce.md",
   "var":{
     "name":"md2md",
     "keyWords":["markdown", "converter", "easy use"],
@@ -137,7 +137,7 @@ num of weeklyDownoad : 500
 │   │   ├── fragment1.md
 │   │   ├── fragment2.md
 │   │   ├── ...
-│   ├── template
+│   ├── templates
 │   │   ├── template1.md
 │   │   ├── template2.md
 │   │   ├── ...
@@ -188,7 +188,7 @@ register(key, fn);
 
 ## FAQ
 
-##### Q: Why don't let all language use one fragments, one template folder?
+##### Q: Why don't let all language use one fragments, one templates folder?
 
 A: We've tried about that. But the gramma of each language might be different, which can lead to the postions of variables to be a total mess. Consider that, we think each language has its own fragments folder and template folder is better.
 
