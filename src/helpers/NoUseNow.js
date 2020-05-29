@@ -9,11 +9,11 @@ function convert(
   const paths_child = [];
   let variableFile;
   res.forEach((name) => {
-    const isContent = name !== name_dir_fragment && name !== name_file_variable;
+    const isContent = name !== name_dir_fragments && name !== name_file_variables;
     if (isContent) {
       paths_child.push(_getAbsPath(target, name));
     }
-    if (name === name_file_variable) {
+    if (name === name_file_variables) {
       variableFile = name;
     }
   });
@@ -81,11 +81,11 @@ const _replaceVariable = (content = "", variable) => {
   const regex = /\{\{var\..{0,1000}\}\}/gi;
   const matches = content.match(regex);
   if (matches) {
-    matches.forEach((name_dir_fragment) => {
-      const keyChain = name_dir_fragment
+    matches.forEach((name_dir_fragments) => {
+      const keyChain = name_dir_fragments
         .split(" ")
         .join("")
-        .slice(2, name_dir_fragment.length - 2)
+        .slice(2, name_dir_fragments.length - 2)
         .split(".");
       keyChain.shift();
       let target = variable[keyChain[0]];
@@ -94,7 +94,7 @@ const _replaceVariable = (content = "", variable) => {
         target = target[key];
         i++;
       }
-      content = replaceContent(name_dir_fragment, target, content);
+      content = replaceContent(name_dir_fragments, target, content);
     });
   }
   return content;

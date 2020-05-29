@@ -3,9 +3,9 @@ const path = require("path");
 const merge = require("lodash/merge");
 const {
   name_dir_from,
-  name_dir_template,
-  name_dir_fragment,
-  name_file_variable,
+  name_dir_templates,
+  name_dir_fragments,
+  name_file_variables,
   FileType,
 } = require("../Consts");
 const { getRootPath } = require("./Path");
@@ -45,7 +45,7 @@ const _getVariable = (path_abs) => {
   let i = 0;
   while (i < paths_child.length) {
     path_pre = `${path_pre}/${paths_child[i]}`;
-    const path_var_next = path_pre + "/" + name_file_variable;
+    const path_var_next = path_pre + "/" + name_file_variables;
     if (fs.existsSync(path_var_next)) {
       const var_next = parseJsonFile(path_var_next);
       res = merge(res, var_next);
@@ -87,15 +87,15 @@ const replaceContent = (match, target = "", content) => {
 };
 const _replaceFragment = (content, language) => {
   // TODO: 默认一级菜单是语言, 这部分日后决定是否修改.
-  const str_declare_fragment = `\{\{${name_dir_fragment}\/.{0,1000}\}\}`;
+  const str_declare_fragment = `\{\{${name_dir_fragments}\/.{0,1000}\}\}`;
   const regex = new RegExp(str_declare_fragment, "ig");
   let matches = content.match(regex);
   while (matches && matches.length) {
-    matches.forEach((name_dir_fragment) => {
-      const key = name_dir_fragment
+    matches.forEach((name_dir_fragments) => {
+      const key = name_dir_fragments
         .split(" ")
         .join("")
-        .slice(2, name_dir_fragment.length - 2);
+        .slice(2, name_dir_fragments.length - 2);
       const path_abs = path.resolve(
         getRootPath(),
         name_dir_from,
@@ -103,7 +103,7 @@ const _replaceFragment = (content, language) => {
         key
       );
       const content_f = fileToString(path_abs);
-      content = replaceContent(name_dir_fragment, content_f, content);
+      content = replaceContent(name_dir_fragments, content_f, content);
     });
     matches = content.match(regex);
   }
@@ -113,11 +113,11 @@ const _replaceVariable = (content = "", map_variable) => {
   const regex = /\{\{var\..{0,1000}\}\}/gi;
   const matches = content.match(regex);
   if (matches) {
-    matches.forEach((name_dir_fragment) => {
-      const keyChain = name_dir_fragment
+    matches.forEach((name_dir_fragments) => {
+      const keyChain = name_dir_fragments
         .split(" ")
         .join("")
-        .slice(2, name_dir_fragment.length - 2)
+        .slice(2, name_dir_fragments.length - 2)
         .split(".");
       keyChain.shift();
       let target = map_variable[keyChain[0]];
@@ -127,7 +127,7 @@ const _replaceVariable = (content = "", map_variable) => {
         target = target[key];
         i++;
       }
-      content = replaceContent(name_dir_fragment, target, content);
+      content = replaceContent(name_dir_fragments, target, content);
     });
   }
   return content;
@@ -182,15 +182,15 @@ const isTypeFile = (path_from, file_name) => {
   return regex.test(path_from);
 };
 const getFileType = (path_from) => {
-  const is_template = isDirChild(path_from, name_dir_template);
+  const is_template = isDirChild(path_from, name_dir_templates);
   if (is_template) {
     return FileType.template;
   }
-  const is_fragment = isDirChild(path_from, name_dir_fragment);
+  const is_fragment = isDirChild(path_from, name_dir_fragments);
   if (is_fragment) {
     return FileType.fragment;
   }
-  const is_variable = isTypeFile(path_from, name_file_variable);
+  const is_variable = isTypeFile(path_from, name_file_variables);
   if (is_variable) {
     return FileType.variable;
   }

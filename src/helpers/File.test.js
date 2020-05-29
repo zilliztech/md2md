@@ -1,6 +1,6 @@
 const cases = require("jest-in-case");
 const fs = require("fs");
-const { name_dir_fragment } = require("../Consts");
+const { name_dir_fragments } = require("../Consts");
 
 const {
   getMarkdownVariable,
@@ -66,7 +66,7 @@ cases(
 );
 
 const _isFragmentExit = (content) => {
-  const str_declare_fragment = `\{\{${name_dir_fragment}\/.{0,1000}\}\}`;
+  const str_declare_fragment = `\{\{${name_dir_fragments}\/.{0,1000}\}\}`;
   const regex = new RegExp(str_declare_fragment, "ig");
   return regex.test(content);
 };
