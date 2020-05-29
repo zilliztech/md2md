@@ -142,6 +142,7 @@ num of weeklyDownoad : 500
 │   │   ├── template2.md
 │   │   ├── ...
 │   ├── Variables.json
+│   ├── Tips.json
 │   ├── [doc directories]
 │   ├── ...
 │   ├── [doc files]
