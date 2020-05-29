@@ -5,7 +5,6 @@ const {
 } = require("../helpers/Path");
 const { getMarkdownVariable } = require("../helpers/File");
 const mark = "tab";
-// const cache = {};
 const parseTab = (path_from, content) => {
   const regex_mark = `\{\{${mark}\}\}`;
   const regex = new RegExp(regex_mark, "ig");
@@ -14,9 +13,6 @@ const parseTab = (path_from, content) => {
   const path_dir = arr.slice(0, arr.length - 1).join("/");
   // get tabs
   let tabs = [];
-  // if (cache[path_dir]) {
-  //   tabs = cache[path_dir];
-  // } else {
   const paths_child = getChildrenPath(path_dir).filter((p) => {
     return /\.md$/i.test(p);
   });
@@ -27,11 +23,6 @@ const parseTab = (path_from, content) => {
       tabs.push({ label, order, link });
     }
   });
-  //   if (tabs.length) {
-  //     cache[path_dir] = tabs;
-  //   }
-  // }
-  // get content_replace from tab
   const content_link = tabs
     .sort((a, b) => Number.parseInt(a.order) > Number.parseInt(b.order))
     .map((tab) => {
