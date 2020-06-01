@@ -109,28 +109,28 @@ const _replaceFragment = (content, language) => {
   }
   return content;
 };
-const _replaceVariable = (content = "", map_variable) => {
-  const regex = /\{\{var\..{0,1000}\}\}/gi;
+const replaceStandardMark = (mark, content, map) => {
+  const regex_str = `\{\{${mark}\..{0,1000}\}\}`;
+  const regex = new RegExp(regex_str, "ig");
   const matches = content.match(regex);
   if (matches) {
-    matches.forEach((name_dir_fragments) => {
-      const keyChain = name_dir_fragments
-        .split(" ")
-        .join("")
-        .slice(2, name_dir_fragments.length - 2)
-        .split(".");
+    matches.forEach((str_match) => {
+      const keyChain = str_match.substring(2, str_match.length - 2).split(`.`);
       keyChain.shift();
-      let target = map_variable[keyChain[0]];
+      let target = map[keyChain[0]];
       let i = 1;
       while (i < keyChain.length && target) {
         const key = keyChain[i];
         target = target[key];
         i++;
       }
-      content = replaceContent(name_dir_fragments, target, content);
+      content = replaceContent(str_match, target, content);
     });
   }
   return content;
+};
+const _replaceVariable = (content = "", map_variable) => {
+  return replaceStandardMark("var", content, map_variable);
 };
 const _ensureDirExist = (path_abs) => {
   var dirname = path.dirname(path_abs);
@@ -208,6 +208,7 @@ module.exports = {
   getLanguage,
   replaceContent,
   fileToString,
+  replaceStandardMark,
 
   getFileType,
   markdownToString,

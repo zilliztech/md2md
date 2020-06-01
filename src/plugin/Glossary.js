@@ -1,8 +1,13 @@
 const fs = require("fs");
-const { getLanguage, parseJsonFile } = require("../helpers/File");
+const {
+  getLanguage,
+  parseJsonFile,
+  replaceStandardMark,
+} = require("../helpers/File");
 const { getRootPath } = require("../helpers/Path");
 const { name_dir_from } = require("../Consts");
 const mark = "Glossary";
+// Glossary can be used as Variables or Tips, so we need two parser in it;
 const parseGlossary = (path_from, content) => {
   // get tips
   const path_glossary = `${getRootPath()}/${name_dir_from}/${getLanguage(
@@ -10,10 +15,10 @@ const parseGlossary = (path_from, content) => {
   )}/${mark}.json`;
   if (fs.existsSync(path_glossary)) {
     const Glossary = parseJsonFile(path_glossary);
-    // get matches
+    // get matches like {{aaaaa ::glossary.test}}
     const regex_tip = /\{\{.{0,10000}\:\:glossary\..{0,10000}\}\}/gi;
     const matches = content.match(regex_tip);
-    // replace matches
+    // replace matches like {{aaaaa ::glossary.test}}
     if (matches && matches.length) {
       matches.forEach((match) => {
         const [header, keyChain] = match
@@ -36,6 +41,7 @@ const parseGlossary = (path_from, content) => {
         }
       });
     }
+    content = replaceStandardMark("glossary", content, Glossary);
   }
   return content;
 };
