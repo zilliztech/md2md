@@ -142,7 +142,7 @@ num of weeklyDownoad : 500
 │   │   ├── template2.md
 │   │   ├── ...
 │   ├── Variables.json
-│   ├── Tips.json
+│   ├── Glossary.json
 │   ├── [doc directories]
 │   ├── ...
 │   ├── [doc files]
@@ -197,7 +197,11 @@ A: We've tried about that. But the gramma of each language might be different, w
 
 ## Change Log
 
-### 20200529 v0.4.0-alpha
+### 20200601 v0.5.0
+
+- rename Tips.json => Glosssary.json
+
+### 20200529 v0.4.0
 
 - support tip in markdown
 - rename

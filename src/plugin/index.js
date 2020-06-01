@@ -1,7 +1,7 @@
 const parseTab = require("./Tab");
-const parseTip = require("./Tip");
+const parseGlossary = require("./Glossary");
 
 module.exports = {
   parseTab,
-  parseTip,
+  parseGlossary,
 };
