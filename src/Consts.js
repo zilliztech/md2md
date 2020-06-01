@@ -12,11 +12,11 @@ const name_dir_to = config.name_dir_to || "doc_to";
 const name_dir_fragments = config.name_dir_fragments || "fragments";
 const name_dir_templates = config.name_dir_templates || "templates";
 const name_file_variables = config.name_file_variables || "Variables.json";
-const name_file_tip = config.name_file_tip || "tip.json";
+const name_file_glossary = config.name_file_glossary || "Glossary.json";
 
 const ignore_files = config.ignore_files || [];
 const ignore_directories = config.ignore_directories || [];
-const file_filtered = [name_file_variables, name_file_tip, ...ignore_files];
+const file_filtered = [name_file_variables, name_file_glossary, ...ignore_files];
 const dir_filtered = [
   name_dir_fragments,
   name_dir_templates,
