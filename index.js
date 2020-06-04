@@ -69,14 +69,14 @@ const _copyDir = (path_from) => {
 // callbacks
 const initialScan = () => {
   // copy directories without files from doc_from
-  const path_from = path.resolve(getRootPath(), `${name_dir_from}/`);
+  const path_from = path.resolve(getRootPath(), `${name_dir_from}${path.sep}`);
   const path_to = getTargetPath(path_from);
   if (!fs.existsSync(path_to)) {
     fs.mkdirSync(path_to);
   }
   Logger.start("Documents convention Start.");
   const res = fs.readdirSync(path_from) || [];
-  const paths_langs = res.map((item) => `${path_from}/${item}`);
+  const paths_langs = res.map((item) => `${path_from}${path.sep}${item}`);
   if (paths_langs.length) {
     _copyDir(path_from);
     Logger.end("Documents convention Finish.");
@@ -169,7 +169,7 @@ const _setDirWatcher = (path_from) => {
   return id;
 };
 const setDirWatcher = () => {
-  return _setDirWatcher(path.resolve(getRootPath(), `${name_dir_from}/`));
+  return _setDirWatcher(path.resolve(getRootPath(), `${name_dir_from}${path.sep}`));
 };
 const setFileWatcher = (path_from) => {
   const watcher = chokidar.watch(path_from);
@@ -192,17 +192,17 @@ const clearAllWatcher = () => {
   });
 };
 const goOver = () => {
-  const path_from = path.resolve(getRootPath(), `${name_dir_from}/`);
+  const path_from = path.resolve(getRootPath(), `${name_dir_from}${path.sep}`);
   const watcher = chokidar.watch(path_from);
   const _onReady = () => {
     // copy directories without files from doc_from
-    const path_from = path.resolve(getRootPath(), `${name_dir_from}/`);
+    const path_from = path.resolve(getRootPath(), `${name_dir_from}${path.sep}`);
     const path_to = getTargetPath(path_from);
     if (!fs.existsSync(path_to)) {
       fs.mkdirSync(path_to);
     }
     const res = fs.readdirSync(path_from) || [];
-    const paths_langs = res.map((item) => `${path_from}/${item}`);
+    const paths_langs = res.map((item) => `${path_from}${path.sep}${item}`);
     if (paths_langs.length) {
       _copyDir(path_from);
       Logger.end("Documents go over Finished.");
