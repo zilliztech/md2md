@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path_config = `${
   (process.env && process.env.PATH_ROOT) || process.cwd()
-}/m2m.config.js`;
+}${path.sep}m2m.config.js`;
 let config = {};
 if (fs.existsSync(path_config)) {
   config = require(path_config);
