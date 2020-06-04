@@ -197,6 +197,10 @@ A: We've tried about that. But the gramma of each language might be different, w
 
 ## Change Log
 
+### 20200604 v0.5.3
+
+- Support both Linux and Windows
+
 ### 20200601 v0.5.0
 
 - rename Tips.json => Glosssary.json
