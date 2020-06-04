@@ -6,6 +6,7 @@ const getTargetPath = (path_from) => {
   const to = `${path.sep}${name_dir_to}${path.sep}`;
   return path_from.replace(from, to);
 };
+
 const getChildrenPath = (path_father) => {
   return fs
     .readdirSync(path_father)
