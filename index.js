@@ -67,23 +67,6 @@ const _copyDir = (path_from) => {
   }
 };
 // callbacks
-const initialScan = () => {
-  // copy directories without files from doc_from
-  const path_from = path.resolve(getRootPath(), `${name_dir_from}/`);
-  const path_to = getTargetPath(path_from);
-  if (!fs.existsSync(path_to)) {
-    fs.mkdirSync(path_to);
-  }
-  Logger.start("Documents convention Start.");
-  const res = fs.readdirSync(path_from) || [];
-  const paths_langs = res.map((item) => `${path_from}/${item}`);
-  if (paths_langs.length) {
-    _copyDir(path_from);
-    Logger.end("Documents convention Finish.");
-  } else {
-    Logger.end(`Documents is Empty`);
-  }
-};
 const _customParse = (content, path_from) => {
   Object.keys(map_rule).forEach((key) => {
     const fn = map_rule[key];
@@ -128,13 +111,13 @@ const onFileRemove = (path_from) => {
     fs.unlinkSync(path_target);
   }
 };
-const onAddDir = (path_from) => {
-  if (!_isFiltered(path_from)) {
-    const path_to = getTargetPath(path_from);
-    !fs.existsSync(path_to) &&
-      fs.mkdirSync(path_to, { recursive: true }, (err) => {});
-  }
-};
+// const onAddDir = (path_from) => {
+//   if (!_isFiltered(path_from)) {
+//     const path_to = getTargetPath(path_from);
+//     !fs.existsSync(path_to) &&
+//       fs.mkdirSync(path_to, { recursive: true }, (err) => {});
+//   }
+// };
 const _rmDir = (path_target) => {
   if (fs.existsSync(path_target)) {
     let files = fs.readdirSync(path_target);
@@ -154,22 +137,26 @@ const onDirRemove = (path_from) => {
   const path_target = getTargetPath(path_from);
   _rmDir(path_target);
 };
+const _goOverDone = () => {
+  Logger.end(`Documents go over done.`);
+};
 // exports
 const _setDirWatcher = (path_from) => {
   const watcher = chokidar.watch(path_from);
   watcher
-    .on("ready", initialScan)
+    .on("ready", _goOverDone)
     .on("add", onFileAdd)
     .on("change", onFileAdd)
     .on("unlink", onFileRemove)
-    .on("addDir", onAddDir)
     .on("unlinkDir", onDirRemove);
   const id = _genID();
   map_watcher[id] = watcher;
   return id;
 };
 const setDirWatcher = () => {
-  return _setDirWatcher(path.resolve(getRootPath(), `${name_dir_from}/`));
+  return _setDirWatcher(
+    path.resolve(getRootPath(), `${name_dir_from}${path.sep}`)
+  );
 };
 const setFileWatcher = (path_from) => {
   const watcher = chokidar.watch(path_from);
@@ -192,31 +179,16 @@ const clearAllWatcher = () => {
   });
 };
 const goOver = () => {
-  const path_from = path.resolve(getRootPath(), `${name_dir_from}/`);
+  const path_from = path.resolve(getRootPath(), `${name_dir_from}${path.sep}`);
   const watcher = chokidar.watch(path_from);
-  const _onReady = () => {
-    // copy directories without files from doc_from
-    const path_from = path.resolve(getRootPath(), `${name_dir_from}/`);
-    const path_to = getTargetPath(path_from);
-    if (!fs.existsSync(path_to)) {
-      fs.mkdirSync(path_to);
-    }
-    const res = fs.readdirSync(path_from) || [];
-    const paths_langs = res.map((item) => `${path_from}/${item}`);
-    if (paths_langs.length) {
-      _copyDir(path_from);
-      Logger.end("Documents go over Finished.");
-    } else {
-      Logger.end(`Documents is Empty`);
-    }
-    process.exit();
-  };
   watcher
-    .on("ready", _onReady)
+    .on("ready", () => {
+      _goOverDone();
+      process.exit();
+    })
     .on("add", onFileAdd)
     .on("change", onFileAdd)
     .on("unlink", onFileRemove)
-    .on("addDir", onAddDir)
     .on("unlinkDir", onDirRemove);
 };
 

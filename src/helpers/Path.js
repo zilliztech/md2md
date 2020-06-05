@@ -1,15 +1,17 @@
 const fs = require("fs");
+const path = require("path");
 const { name_dir_from, name_dir_to } = require("../Consts");
 
 const getTargetPath = (path_from) => {
-  const from = `/${name_dir_from}/`;
-  const to = `/${name_dir_to}/`;
+  const from = `${path.sep}${name_dir_from}${path.sep}`;
+  const to = `${path.sep}${name_dir_to}${path.sep}`;
   return path_from.replace(from, to);
 };
+
 const getChildrenPath = (path_father) => {
   return fs
     .readdirSync(path_father)
-    .map((name_child) => `${path_father}/${name_child}`);
+    .map((name_child) => `${path_father}${path.sep}${name_child}`);
 };
 
 const getRootPath = () =>

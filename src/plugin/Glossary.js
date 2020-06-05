@@ -1,3 +1,4 @@
+const path = require('path');
 const fs = require("fs");
 const {
   getLanguage,
@@ -10,9 +11,9 @@ const mark = "Glossary";
 // Glossary can be used as Variables or Tips, so we need two parser in it;
 const parseGlossary = (path_from, content) => {
   // get tips
-  const path_glossary = `${getRootPath()}/${name_dir_from}/${getLanguage(
-    path_from
-  )}/${mark}.json`;
+  const path_glossary = `${getRootPath()}${path.sep}${name_dir_from}${
+    path.sep
+  }${getLanguage(path_from)}${path.sep}${mark}.json`;
   if (fs.existsSync(path_glossary)) {
     const Glossary = parseJsonFile(path_glossary);
     // get matches like {{aaaaa ::glossary.test}}

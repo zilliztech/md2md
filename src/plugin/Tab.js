@@ -1,3 +1,4 @@
+const path = require('path')
 const {
   getChildrenPath,
   getTargetPath,
@@ -9,8 +10,8 @@ const parseTab = (path_from, content) => {
   const regex_mark = `\{\{${mark}\}\}`;
   const regex = new RegExp(regex_mark, "ig");
   // get target content from path_from;
-  const arr = path_from.split("/");
-  const path_dir = arr.slice(0, arr.length - 1).join("/");
+  const arr = path_from.split(path.sep);
+  const path_dir = arr.slice(0, arr.length - 1).join(path.sep);
   // get tabs
   let tabs = [];
   const paths_child = getChildrenPath(path_dir).filter((p) => {
