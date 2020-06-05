@@ -197,9 +197,9 @@ A: We've tried about that. But the gramma of each language might be different, w
 
 ## Change Log
 
-### 20200604 v0.5.4
+### 20200604 v0.5.5
 
-- Support both Linux and Windows
+- Support both Linux and Windows file path
 - fix error when watch file
 
 ### 20200601 v0.5.0
