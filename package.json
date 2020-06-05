@@ -16,7 +16,7 @@
   ],
   "bin": {
     "md2md": "./bin/md2md.js",
-    "goover":"./bin/goover.js"
+    "goover": "./bin/goover.js"
   },
   "scripts": {
     "test": "jest",
@@ -24,7 +24,8 @@
   },
   "dependencies": {
     "chokidar": "^3.4.0",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "slash": "^3.0.0"
   },
   "devDependencies": {
     "jest": "^26.0.1",

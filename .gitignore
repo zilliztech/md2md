@@ -2,3 +2,4 @@ node_modules/
 yarn.lock
 doc_to/
 doc_from/
+package-lock.json

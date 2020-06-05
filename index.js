@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const chokidar = require("chokidar");
+const slash = require('slash')
 const {
   dir_filtered,
   name_dir_from,
@@ -41,6 +42,7 @@ Object.keys(plugins).forEach((key) => {
   register(mark, fn);
 });
 const _isFiltered = (path_abs) => {
+  path_abs = slash(path_abs);
   const self_filtered = all_filtered.some((name_f) =>
     isTypeFile(path_abs, name_f)
   );
@@ -50,6 +52,7 @@ const _isFiltered = (path_abs) => {
   return self_filtered || father_filtered;
 };
 const _copyDir = (path_from) => {
+  path_from = slash(path_from);
   if (_isFiltered(path_from)) {
     return false;
   }
@@ -68,6 +71,7 @@ const _copyDir = (path_from) => {
 };
 // callbacks
 const _customParse = (content, path_from) => {
+  path_from = slash(path_from);
   Object.keys(map_rule).forEach((key) => {
     const fn = map_rule[key];
     content = fn(path_from, content);
@@ -76,6 +80,7 @@ const _customParse = (content, path_from) => {
 };
 const onFileAdd = (path_from) => {
   Logger.start(`Origin file ${path_from} is edited.`);
+  path_from = slash(path_from);
   const type_file = getFileType(path_from);
   if (_isFiltered(path_from)) {
     switch (type_file) {
@@ -106,6 +111,7 @@ const onFileAdd = (path_from) => {
   }
 };
 const onFileRemove = (path_from) => {
+  path_from = slash(path_from);
   const path_target = getTargetPath(path_from);
   if (fs.existsSync(path_target)) {
     fs.unlinkSync(path_target);
@@ -119,6 +125,7 @@ const onFileRemove = (path_from) => {
 //   }
 // };
 const _rmDir = (path_target) => {
+  path_target = slash(path_target);
   if (fs.existsSync(path_target)) {
     let files = fs.readdirSync(path_target);
     for (var i = 0; i < files.length; i++) {
@@ -134,6 +141,7 @@ const _rmDir = (path_target) => {
   }
 };
 const onDirRemove = (path_from) => {
+  path_from = slash(path_from);
   const path_target = getTargetPath(path_from);
   _rmDir(path_target);
 };
@@ -142,6 +150,7 @@ const _goOverDone = () => {
 };
 // exports
 const _setDirWatcher = (path_from) => {
+  path_from = slash(path_from);
   const watcher = chokidar.watch(path_from);
   watcher
     .on("ready", _goOverDone)
@@ -155,10 +164,11 @@ const _setDirWatcher = (path_from) => {
 };
 const setDirWatcher = () => {
   return _setDirWatcher(
-    path.resolve(getRootPath(), `${name_dir_from}${path.sep}`)
+    path.resolve(getRootPath(), `${name_dir_from}/`)
   );
 };
 const setFileWatcher = (path_from) => {
+  path_from = slash(path_from);
   const watcher = chokidar.watch(path_from);
   watcher
     .on("ready", () => console.log(`start wartch file : ${path_from}`))
@@ -179,7 +189,7 @@ const clearAllWatcher = () => {
   });
 };
 const goOver = () => {
-  const path_from = path.resolve(getRootPath(), `${name_dir_from}${path.sep}`);
+  const path_from = path.resolve(getRootPath(), `${name_dir_from}/`);
   const watcher = chokidar.watch(path_from);
   watcher
     .on("ready", () => {
@@ -199,10 +209,13 @@ module.exports = {
   clearAllWatcher,
   goOver,
 
-  markdownToString: (path_from) =>
-    _customParse(markdownToString(path_from), path_from),
-  templateToString: (path_from) =>
-    _customParse(templateToString(path_from), path_from),
-
+  markdownToString: (path_from) => {
+    path_from = slash(path_from);
+    return _customParse(markdownToString(path_from), path_from);
+  },
+  templateToString: (path_from) => {
+    path_from = slash(path_from);
+    return _customParse(templateToString(path_from), path_from);
+  },
   register,
 };
