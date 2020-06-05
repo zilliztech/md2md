@@ -1,5 +1,6 @@
 const cases = require("jest-in-case");
 const fs = require("fs");
+const slash = require('slash')
 const { name_dir_fragments } = require("../Consts");
 
 const {
@@ -9,7 +10,7 @@ const {
   _replaceFragment,
 } = require("./File.js");
 
-const getAbsPath = (relativePath) => process.cwd() + relativePath;
+const getAbsPath = (relativePath) => slash(process.cwd()) + relativePath
 
 cases(
   "getMarkdownVariable",
