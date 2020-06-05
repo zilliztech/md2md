@@ -197,9 +197,10 @@ A: We've tried about that. But the gramma of each language might be different, w
 
 ## Change Log
 
-### 20200604 v0.5.3
+### 20200604 v0.5.4
 
 - Support both Linux and Windows
+- fix error when watch file
 
 ### 20200601 v0.5.0
 
