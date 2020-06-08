@@ -197,6 +197,10 @@ A: We've tried about that. But the gramma of each language might be different, w
 
 ## Change Log
 
+### 20200604 v0.5.6
+
+- support move other files
+
 ### 20200604 v0.5.5
 
 - Support both Linux and Windows file path
