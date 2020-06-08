@@ -34,8 +34,8 @@ const getMarkdownVariable = (path_abs) => {
   const arr = content.match(regex);
   if (arr) {
     const str_var = arr[0].split("---")[1];
-    const isWindows = str_var.indexOf('\r\n') > -1;
-    str_var.split(isWindows ? '\r\n' : "\n").forEach((str_key_value) => {
+    const isWindows = str_var.indexOf("\r\n") > -1;
+    str_var.split(isWindows ? "\r\n" : "\n").forEach((str_key_value) => {
       if (str_key_value) {
         const [key, value] = str_key_value.split(":");
         res[key.trim()] = value.trim();
@@ -48,9 +48,7 @@ const getMarkdownVariable = (path_abs) => {
 const _getVariable = (path_abs) => {
   let res = {};
   const path_dir_root = getRootPath();
-  const paths_child = path_abs
-    .split(path_dir_root + "/")[1]
-    .split("/");
+  const paths_child = path_abs.split(path_dir_root + "/")[1].split("/");
   let path_pre = path_dir_root;
   let i = 0;
   while (i < paths_child.length) {
@@ -177,9 +175,9 @@ const templateToString = (path_from) => {
     const variable = json_var.var || {};
     const map_variable = merge(_getVariable(path_from), variable);
     const language = getLanguage(path_from);
-    const path_template = `${getRootPath()}${"/"}${name_dir_from}${
-      "/"
-      }${language}${"/"}${json_var.path}`;
+    const path_template = `${getRootPath()}${"/"}${name_dir_from}${"/"}${language}${"/"}${
+      json_var.path
+    }`;
     let content = fileToString(path_template);
     content = _replaceFragment(content, language);
     return _replaceVariable(content, map_variable);
@@ -203,6 +201,14 @@ const isTypeFile = (path_from, file_name) => {
   const regex = new RegExp(reg, "i");
   return regex.test(path_from);
 };
+const _isTemplateJson = (path_from) => {
+  const is_json = path_from.indexOf(".json") > -1;
+  if (!is_json) {
+    return false;
+  }
+  const content = parseJsonFile(path_from);
+  return content.useTemplate && content.path;
+};
 
 const getFileType = (path_from) => {
   const is_template = isDirChild(path_from, name_dir_templates);
@@ -217,9 +223,15 @@ const getFileType = (path_from) => {
   if (is_variable) {
     return FileType.variable;
   }
-  return path_from.indexOf(".md") > -1
-    ? FileType.normalDoc
-    : FileType.templateVar;
+  const is_markdown = path_from.indexOf(".md") > -1;
+  if (is_markdown) {
+    return FileType.normalDoc;
+  }
+  const is_template_json = _isTemplateJson(path_from);
+  if (is_template_json) {
+    return FileType.templateVar;
+  }
+  return FileType.others;
 };
 
 module.exports = {

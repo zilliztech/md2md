@@ -17,7 +17,11 @@ const name_file_glossary = config.name_file_glossary || "Glossary.json";
 
 const ignore_files = config.ignore_files || [];
 const ignore_directories = config.ignore_directories || [];
-const file_filtered = [name_file_variables, name_file_glossary, ...ignore_files];
+const file_filtered = [
+  name_file_variables,
+  name_file_glossary,
+  ...ignore_files,
+];
 const dir_filtered = [
   name_dir_fragments,
   name_dir_templates,
@@ -30,7 +34,8 @@ const FileType = {
   fragment: "fragment",
   variable: "variable",
   normalDoc: "normalDoc",
-  templateVar: "templateVar",
+  templateVar: "templateVar", // json file who use template
+  others: "others", // other common files
 };
 
 module.exports = {

@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const chokidar = require("chokidar");
-const slash = require('slash')
+const slash = require("slash");
 const {
   dir_filtered,
   name_dir_from,
@@ -84,6 +84,7 @@ const onFileAdd = (path_from) => {
   const type_file = getFileType(path_from);
   if (_isFiltered(path_from)) {
     switch (type_file) {
+      // rewrite related file, to do later
       case FileType.template:
       case FileType.fragment:
       case FileType.variable:
@@ -96,16 +97,16 @@ const onFileAdd = (path_from) => {
     let content = "";
     switch (type_file) {
       case FileType.normalDoc:
-        content = markdownToString(path_from);
+        content = _customParse(markdownToString(path_from), path_from);
         break;
       case FileType.templateVar:
         path_to = path_to.replace(".json", ".md");
-        content = templateToString(path_from);
+        content = _customParse(templateToString(path_from), path_from);
         break;
       default:
+        content = fs.readFileSync(path_from);
         break;
     }
-    content = _customParse(content, path_from);
     writeFile(path_to, content);
     Logger.end(`Target File ${path_to} is updated.`);
   }
@@ -163,9 +164,7 @@ const _setDirWatcher = (path_from) => {
   return id;
 };
 const setDirWatcher = () => {
-  return _setDirWatcher(
-    path.resolve(getRootPath(), `${name_dir_from}/`)
-  );
+  return _setDirWatcher(path.resolve(getRootPath(), `${name_dir_from}/`));
 };
 const setFileWatcher = (path_from) => {
   path_from = slash(path_from);
