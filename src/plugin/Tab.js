@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require("path");
 const {
   getChildrenPath,
   getTargetPath,
@@ -6,6 +6,11 @@ const {
 } = require("../helpers/Path");
 const { getMarkdownVariable } = require("../helpers/File");
 const mark = "tab";
+
+// tab can be used in two ways:
+// 1. All files in one directory use same tab ;
+// 2. Files might display different tabs by special group;
+
 const parseTab = (path_from, content) => {
   const regex_mark = `\{\{${mark}\}\}`;
   const regex = new RegExp(regex_mark, "ig");
@@ -13,15 +18,18 @@ const parseTab = (path_from, content) => {
   const arr = path_from.split("/");
   const path_dir = arr.slice(0, arr.length - 1).join("/");
   // get tabs
+  const group_this = getMarkdownVariable(path_from).group;
   let tabs = [];
-  const paths_child = getChildrenPath(path_dir).filter((p) => {
-    return /\.md$/i.test(p);
-  });
-  paths_child.forEach((path_child) => {
-    const { label, order = 0 } = getMarkdownVariable(path_child);
-    const link = getTargetPath(path_child).split(getRootPath())[1];
-    if (label) {
-      tabs.push({ label, order, link });
+  const regex_md = /\.md$/i;
+  getChildrenPath(path_dir).forEach((path_child) => {
+    const isMarkdownFile = regex_md.test(path_child);
+    if (isMarkdownFile) {
+      const { label, order = 0, group = "" } = getMarkdownVariable(path_child);
+      const link = getTargetPath(path_child).split(getRootPath())[1];
+      const shoud_show = !group_this || group_this === group;
+      if (label && shoud_show) {
+        tabs.push({ label, order, link });
+      }
     }
   });
   const content_link = tabs

@@ -197,6 +197,10 @@ A: We've tried about that. But the gramma of each language might be different, w
 
 ## Change Log
 
+### 20200629 v0.5.7
+
+- refactor tabs => support show special tabs by different group
+
 ### 20200604 v0.5.6
 
 - support move other files
@@ -259,6 +263,3 @@ age: 11
 ### This is Tom, his age is 11;
 
 ```
-
-- Add test cases
-- bugfix parse fragment in fragments
