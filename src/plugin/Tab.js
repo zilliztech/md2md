@@ -36,8 +36,10 @@ const parseTab = (path_from, content) => {
     .sort((a, b) => Number.parseInt(a.order) > Number.parseInt(b.order))
     .map((tab) => {
       const { label, link } = tab;
+      const arrRelLink = link.split("/");
+      const relLink = arrRelLink[arrRelLink.length - 1];
       const isActive = getTargetPath(path_from).indexOf(link) !== -1;
-      return `<a href="${link}" ${
+      return `<a href="${relLink}" ${
         isActive ? "class='active'" : ""
       }>${label}</a>`;
     })
