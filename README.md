@@ -115,6 +115,54 @@ the keyWords is : ["markdown", "converter", "easy use"]
 num of weeklyDownoad : 500
 ```
 
+## Tab
+
+Defined in normal markdown file, turn to special HTML element later;
+
+```javascript
+// tabFile1 (doc_from/en/tabs/tab1.md)
+---
+label: centOS
+order: 0
+group: system
+--- 
+label: tab处理后展示的文字
+order: tab展示顺序
+group: tab分组，　如果没有分组会展示当前文件同级目录下所有tab，　如果有分组，只展示当前文件同级目录下相同分组的tab
+
+{{tab}}
+
+// tabFile1 (doc_from/en/tabs/tab2.md)
+---
+label: ubuntu
+order: 1
+group: system
+--- 
+
+{{tab}}
+
+// turn to target (doc_to/en/tabs/tab1.md)
+label: tab处理后展示的文字
+order: tab展示顺序
+group: tab分组，　如果没有分组会展示当前文件同级目录下所有tab，　如果有分组，只展示当前文件同级目录下相同分组的tab
+
+<div class="tab-wrapper"><a href="/doc_to/en/tabs/tab1.md" class='active'>centOS</a><a href="/doc_to/en/test-tab/ubuntu.md" >ubuntu</a></div>
+
+// turn to target (doc_to/en/tabs/tab2.md)
+<div class="tab-wrapper"><a href="/doc_to/en/tabs/tab1.md">centOS</a><a href="/doc_to/en/test-tab/ubuntu.md" class='active' >ubuntu</a></div>
+```
+
+## Glossary
+Defined in normal markdown file, turn to special HTML element later;
+
+```javascript
+// tabFile1 (doc_from/en/test-glossary.md)
+this is normal markdownfile. {{milvus::glossary.milvus.introduce}}
+
+// turn to target (doc_to/en/test-glossary.md)
+this is normal markdownfile. <span class="tip" data-tip="Milvus is easy-to-use, highly reliable, scalable, robust, and blazing fast.">milvus</span>
+```
+
 ## Catalog
 
 ```bash
