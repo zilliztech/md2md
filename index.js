@@ -33,6 +33,7 @@ const Logger = {
 // consts
 const map_watcher = {};
 const map_rule = {};
+const errors = [];
 const register = (mark, fn) => {
   map_rule[mark] = fn;
 };
@@ -93,22 +94,27 @@ const onFileAdd = (path_from) => {
         break;
     }
   } else {
-    let path_to = getTargetPath(path_from);
-    let content = "";
-    switch (type_file) {
-      case FileType.normalDoc:
-        content = _customParse(markdownToString(path_from), path_from);
-        break;
-      case FileType.templateVar:
-        path_to = path_to.replace(".json", ".md");
-        content = _customParse(templateToString(path_from), path_from);
-        break;
-      default:
-        content = fs.readFileSync(path_from);
-        break;
+    try {
+      let path_to = getTargetPath(path_from);
+      let content = "";
+      switch (type_file) {
+        case FileType.normalDoc:
+          content = _customParse(markdownToString(path_from), path_from);
+          break;
+        case FileType.templateVar:
+          path_to = path_to.replace(".json", ".md");
+          content = _customParse(templateToString(path_from), path_from);
+          break;
+        default:
+          content = fs.readFileSync(path_from);
+          break;
+      }
+      writeFile(path_to, content);
+      Logger.end(`Target File ${path_to} is updated.`);
+    } catch (error) {
+      errors.push(error);
+      Logger.end(`Target File ${path_to} has ${error}.`);
     }
-    writeFile(path_to, content);
-    Logger.end(`Target File ${path_to} is updated.`);
   }
 };
 const onFileRemove = (path_from) => {
@@ -147,6 +153,10 @@ const onDirRemove = (path_from) => {
   _rmDir(path_target);
 };
 const _goOverDone = () => {
+  if (errors.length) {
+    errors.forEach((v) => console.log(v));
+    throw new Error("Some documents transform fails.");
+  }
   Logger.end(`Documents go over done.`);
 };
 // exports
