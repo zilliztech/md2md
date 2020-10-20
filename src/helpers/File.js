@@ -223,7 +223,10 @@ const getFileType = (path_from) => {
   if (is_variable) {
     return FileType.variable;
   }
-  const is_markdown = path_from.indexOf(".md") > -1;
+  const is_markdown =
+    path_from.indexOf(".md") > -1 ||
+    path_from.includes("menuStructure/en.json");
+
   if (is_markdown) {
     return FileType.normalDoc;
   }
