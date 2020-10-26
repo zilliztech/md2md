@@ -125,7 +125,7 @@ Defined in normal markdown file, turn to special HTML element later;
 label: centOS
 order: 0
 group: system
---- 
+---
 label: tab处理后展示的文字
 order: tab展示顺序
 group: tab分组，　如果没有分组会展示当前文件同级目录下所有tab，　如果有分组，只展示当前文件同级目录下相同分组的tab
@@ -137,7 +137,8 @@ group: tab分组，　如果没有分组会展示当前文件同级目录下所�
 label: ubuntu
 order: 1
 group: system
---- 
+icon: tab-cpu
+---
 
 {{tab}}
 
@@ -145,6 +146,7 @@ group: system
 label: tab处理后展示的文字
 order: tab展示顺序
 group: tab分组，　如果没有分组会展示当前文件同级目录下所有tab，　如果有分组，只展示当前文件同级目录下相同分组的tab
+icon: tab icon
 
 <div class="tab-wrapper"><a href="/doc_to/en/tabs/tab1.md" class='active'>centOS</a><a href="/doc_to/en/test-tab/ubuntu.md" >ubuntu</a></div>
 
@@ -153,6 +155,7 @@ group: tab分组，　如果没有分组会展示当前文件同级目录下所�
 ```
 
 ## Glossary
+
 Defined in normal markdown file, turn to special HTML element later;
 
 ```javascript
@@ -207,7 +210,7 @@ const {
   markdownToString,
   templateToString,
   register,
-} = require("md2md");
+} = require('md2md');
 
 // watch directory configed in m2m.config.js.
 const watcher_dir = setDirWatcher();
@@ -276,7 +279,7 @@ A: We've tried about that. But the gramma of each language might be different, w
 
 ```javascript
 // before require md2md, run:
-process.env.name_dir_from = "your name of origin dir";
+process.env.name_dir_from = 'your name of origin dir';
 ```
 
 ### 20200527 v0.3.4

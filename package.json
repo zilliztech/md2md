@@ -1,9 +1,9 @@
 {
-  "name": "md2md",
-  "version": "0.5.8",
+  "name": "mdtomd",
+  "version": "1.0.1",
   "main": "index.js",
   "repository": "git@github.com:zilliztech/md2md.git",
-  "author": "zhen.an <adam_an02@163.com>",
+  "author": "nameczz <nameczz@126.com>",
   "license": "MIT",
   "keywords": [
     "documentation",

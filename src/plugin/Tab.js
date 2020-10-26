@@ -1,11 +1,11 @@
-const path = require("path");
+const path = require('path');
 const {
   getChildrenPath,
   getTargetPath,
   getRootPath,
-} = require("../helpers/Path");
-const { getMarkdownVariable } = require("../helpers/File");
-const mark = "tab";
+} = require('../helpers/Path');
+const { getMarkdownVariable } = require('../helpers/File');
+const mark = 'tab';
 
 // tab can be used in two ways:
 // 1. All files in one directory use same tab ;
@@ -13,10 +13,10 @@ const mark = "tab";
 
 const parseTab = (path_from, content) => {
   const regex_mark = `\{\{${mark}\}\}`;
-  const regex = new RegExp(regex_mark, "ig");
+  const regex = new RegExp(regex_mark, 'ig');
   // get target content from path_from;
-  const arr = path_from.split("/");
-  const path_dir = arr.slice(0, arr.length - 1).join("/");
+  const arr = path_from.split('/');
+  const path_dir = arr.slice(0, arr.length - 1).join('/');
   // get tabs
   const group_this = getMarkdownVariable(path_from).group;
   let tabs = [];
@@ -24,26 +24,28 @@ const parseTab = (path_from, content) => {
   getChildrenPath(path_dir).forEach((path_child) => {
     const isMarkdownFile = regex_md.test(path_child);
     if (isMarkdownFile) {
-      const { label, order = 0, group = "" } = getMarkdownVariable(path_child);
+      const { label, order = 0, group = '', icon = '' } = getMarkdownVariable(
+        path_child
+      );
       const link = getTargetPath(path_child).split(getRootPath())[1];
       const shoud_show = !group_this || group_this === group;
       if (label && shoud_show) {
-        tabs.push({ label, order, link });
+        tabs.push({ label, order, link, icon });
       }
     }
   });
   const content_link = tabs
     .sort((a, b) => Number.parseInt(a.order) > Number.parseInt(b.order))
     .map((tab) => {
-      const { label, link } = tab;
-      const arrRelLink = link.split("/");
+      const { label, link, icon } = tab;
+      const arrRelLink = link.split('/');
       const relLink = arrRelLink[arrRelLink.length - 1];
       const isActive = getTargetPath(path_from).indexOf(link) !== -1;
       return `<a href="${relLink}" ${
-        isActive ? "class='active'" : ""
+        isActive ? `class='active ${icon}'` : icon
       }>${label}</a>`;
     })
-    .join("");
+    .join('');
   const content_replace = `<div class="tab-wrapper">${content_link}</div>`;
   // replace matches
   let matches = content.match(regex);
