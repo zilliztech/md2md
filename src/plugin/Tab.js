@@ -42,7 +42,7 @@ const parseTab = (path_from, content) => {
       const relLink = arrRelLink[arrRelLink.length - 1];
       const isActive = getTargetPath(path_from).indexOf(link) !== -1;
       return `<a href="${relLink}" ${
-        isActive ? `class='active ${icon}'` : icon
+        isActive ? `class='active ${icon}'` : `class='${icon}'`
       }>${label}</a>`;
     })
     .join('');
