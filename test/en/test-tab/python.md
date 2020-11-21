@@ -1,6 +1,6 @@
 ---
 label: python
-order: 1
+order: 0
 group: language
 ---
 
