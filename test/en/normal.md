@@ -4,7 +4,10 @@ b: bha
 ---
 
 this is normal markdownfile
-{{milvus::glossary.milvus.introduce}}
+
+<!-- {{milvus::glossary.milvus.introduce}}
 {{var.a}}
 
-{{glossary.milvus.introduce}}
+{{glossary.milvus.introduce}} -->
+
+image([{{images.Assets/demo.gif}}])

@@ -166,6 +166,20 @@ this is normal markdownfile. {{milvus::glossary.milvus.introduce}}
 this is normal markdownfile. <span class="tip" data-tip="Milvus is easy-to-use, highly reliable, scalable, robust, and blazing fast.">milvus</span>
 ```
 
+## Image Path Solution
+
+write:
+
+image desc([{{images.Assets/images/about-1.jpg}}])
+
+will transfer to:
+image desc([../../../../Assets/images/about-1.jpg])
+
+Assets/images/about-1.jpg is where you store your image.
+And this plugin will help to find path.relative(doc_path,image_path) and replace the target.
+
+````
+
 ## Catalog
 
 ```bash
@@ -176,7 +190,7 @@ this is normal markdownfile. <span class="tip" data-tip="Milvus is easy-to-use, 
 │   │   │── ......  
 │   ├── doc_to
 │   ├── m2m.config.js
-```
+````
 
 - doc_from: where you edit your origin doc files in. it's First-level subdirectory must be language;
 - doc_to: the final doc file you need will be here; the level of subdirectory will be same as doc_from. you don't need to edit this directory.
