@@ -23,8 +23,10 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^7.11.0",
     "chokidar": "^3.4.0",
     "lodash": "^4.17.15",
+    "minimist": "^1.2.5",
     "slash": "^3.0.0"
   },
   "devDependencies": {
