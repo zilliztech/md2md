@@ -1,7 +1,14 @@
 const { Client } = require('@elastic/elasticsearch');
 const { getMarkdownVariable } = require('../helpers/File');
 
-const esClient = new Client({ node: 'http://localhost:9200' });
+const esClient = new Client({
+  node: process.env.ES_URL || 'http://127.0.0.1:9200',
+  auth: {
+    username: process.env.ES_USER,
+    password: process.env.ES_PASS,
+  },
+});
+
 const mark = 'Elasticsearch';
 
 const updateElastic = async (path_from, content) => {
@@ -17,8 +24,7 @@ const updateElastic = async (path_from, content) => {
     remove_variable_regx,
     ''
   );
-
-  const index = 'zilliz-doc-v0.10.0';
+  const index = process.env.ES_INDEX || 'zilliz-docs-v0.10.0';
 
   const res = await esClient.exists({
     id: fileId,
@@ -28,6 +34,7 @@ const updateElastic = async (path_from, content) => {
   const isIdExist = res.body;
   try {
     let res = null;
+
     if (isIdExist) {
       res = await esClient.update({
         id: fileId,
@@ -40,6 +47,7 @@ const updateElastic = async (path_from, content) => {
       });
       return content;
     }
+
     res = await esClient.index({
       index,
       id: fileId,
