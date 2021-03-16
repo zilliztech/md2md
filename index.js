@@ -158,33 +158,46 @@ const _goOverDone = () => {
 // exports
 const _setDirWatcher = (path_from) => {
   path_from = slash(path_from);
-  const watcher = chokidar.watch(path_from);
-  watcher
-    .on("ready", _goOverDone)
-    .on("add", onFileAdd)
-    .on("change", onFileAdd)
-    .on("unlink", onFileRemove)
-    .on("unlinkDir", onDirRemove);
-  const id = _genID();
-  map_watcher[id] = watcher;
-  return id;
+  const p = new Promise((resolve, rej) => {
+    const watcher = chokidar.watch(path_from);
+    const id = _genID();
+
+    watcher
+      .on("ready", () => {
+        _goOverDone();
+        resolve(id);
+      })
+      .on("add", onFileAdd)
+      .on("change", onFileAdd)
+      .on("unlink", onFileRemove)
+      .on("unlinkDir", onDirRemove);
+    map_watcher[id] = watcher;
+  });
+
+  return p;
 };
+
 const setDirWatcher = () => {
   const { name_dir_from } = getConfigs();
   return _setDirWatcher(path.resolve(getRootPath(), `${name_dir_from}/`));
 };
+
 const setFileWatcher = (path_from) => {
   path_from = slash(path_from);
-  const watcher = chokidar.watch(path_from);
-  watcher
-    .on("ready", () => console.log(`start wartch file : ${path_from}`))
-    .on("add", onFileAdd)
-    .on("change", onFileAdd)
-    .on("unlink", onFileRemove);
-  const id = _genID();
-  map_watcher[id] = watcher;
-  return id;
+  const p = new Promise((resolve, rej) => {
+    const watcher = chokidar.watch(path_from);
+    watcher
+      .on("ready", () => console.log(`start wartch file : ${path_from}`))
+      .on("add", onFileAdd)
+      .on("change", onFileAdd)
+      .on("unlink", onFileRemove);
+    const id = _genID();
+    map_watcher[id] = watcher;
+  });
+
+  return p;
 };
+
 const clearWatcher = (key) => {
   const watcher = map_watcher[key];
   watcher.close().then(() => console.log("watcher closed"));
