@@ -1,6 +1,6 @@
 {
   "name": "mdtomd",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "main": "index.js",
   "repository": "git@github.com:zilliztech/md2md.git",
   "author": "nameczz <nameczz@126.com>",

@@ -1,11 +1,12 @@
-const fs = require('fs');
-const slash = require('slash');
-const path = require('path');
-const { name_dir_from, name_dir_to } = require('../Consts');
+const fs = require("fs");
+const slash = require("slash");
+const path = require("path");
+const { getConfigs } = require("../Consts");
 
 const getTargetPath = (path_from) => {
-  const from = `${'/'}${name_dir_from}${'/'}`;
-  const to = `${'/'}${name_dir_to}${'/'}`;
+  const { name_dir_from, name_dir_to } = getConfigs();
+  const from = `${"/"}${name_dir_from}${"/"}`;
+  const to = `${"/"}${name_dir_to}${"/"}`;
   return path_from.replace(from, to);
 };
 

@@ -1,16 +1,17 @@
 const fs = require("fs");
 const path = require("path");
 const merge = require("lodash/merge");
+const { getConfigs } = require("../Consts");
 const {
-  name_dir_from,
   name_dir_templates,
   name_dir_fragments,
   name_file_variables,
   FileType,
-} = require("../Consts");
+} = getConfigs();
 const { getRootPath } = require("./Path");
 
 const getLanguage = (path_abs) => {
+  const { name_dir_from } = getConfigs();
   return path_abs
     .split(`${getRootPath()}${"/"}${name_dir_from}${"/"}`)[1]
     .split("/")[0];
@@ -98,6 +99,8 @@ const replaceContent = (match, target = "", content) => {
 };
 
 const _replaceFragment = (content, language) => {
+  const { name_dir_from } = getConfigs();
+
   // TODO: 默认一级菜单是语言, 这部分日后决定是否修改.
   const str_declare_fragment = `\{\{${name_dir_fragments}\/.{0,1000}\}\}`;
   const regex = new RegExp(str_declare_fragment, "ig");
@@ -171,6 +174,8 @@ const markdownToString = (path_from) => {
 
 const templateToString = (path_from) => {
   const json_var = parseJsonFile(path_from);
+  const { name_dir_from } = getConfigs();
+
   if (json_var.useTemplate) {
     const variable = json_var.var || {};
     const map_variable = merge(_getVariable(path_from), variable);

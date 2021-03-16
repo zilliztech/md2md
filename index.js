@@ -1,13 +1,9 @@
-const fs = require('fs');
-const path = require('path');
-const chokidar = require('chokidar');
-const slash = require('slash');
-const {
-  dir_filtered,
-  name_dir_from,
-  all_filtered,
-  FileType,
-} = require('./src/Consts');
+const fs = require("fs");
+const path = require("path");
+const chokidar = require("chokidar");
+const slash = require("slash");
+const { getConfigs } = require("./src/Consts");
+const { dir_filtered, all_filtered, FileType } = getConfigs();
 const {
   writeFile,
   markdownToString,
@@ -16,19 +12,19 @@ const {
   isDirChild,
   isTypeFile,
   getFileType,
-} = require('./src/helpers/File');
+} = require("./src/helpers/File");
 const {
   getChildrenPath,
   getTargetPath,
   getRootPath,
-} = require('./src/helpers/Path');
-const plugins = require('./src/plugin/index');
+} = require("./src/helpers/Path");
+const plugins = require("./src/plugin/index");
 
 // helpers
 const _genID = () => Math.random().toString().substring(2, 32);
 const Logger = {
-  start: (message) => console.log('=>', message),
-  end: (message) => console.log('=>', message, '\n\n'),
+  start: (message) => console.log("=>", message),
+  end: (message) => console.log("=>", message, "\n\n"),
 };
 // consts
 const map_watcher = {};
@@ -96,13 +92,13 @@ const onFileAdd = (path_from) => {
   } else {
     try {
       let path_to = getTargetPath(path_from);
-      let content = '';
+      let content = "";
       switch (type_file) {
         case FileType.normalDoc:
           content = _customParse(markdownToString(path_from), path_from);
           break;
         case FileType.templateVar:
-          path_to = path_to.replace('.json', '.md');
+          path_to = path_to.replace(".json", ".md");
           content = _customParse(templateToString(path_from), path_from);
           break;
         default:
@@ -155,7 +151,7 @@ const onDirRemove = (path_from) => {
 const _goOverDone = () => {
   if (errors.length) {
     errors.forEach((v) => console.log(v));
-    throw new Error('Some documents transform fails.');
+    throw new Error("Some documents transform fails.");
   }
   Logger.end(`Documents go over done.`);
 };
@@ -164,33 +160,34 @@ const _setDirWatcher = (path_from) => {
   path_from = slash(path_from);
   const watcher = chokidar.watch(path_from);
   watcher
-    .on('ready', _goOverDone)
-    .on('add', onFileAdd)
-    .on('change', onFileAdd)
-    .on('unlink', onFileRemove)
-    .on('unlinkDir', onDirRemove);
+    .on("ready", _goOverDone)
+    .on("add", onFileAdd)
+    .on("change", onFileAdd)
+    .on("unlink", onFileRemove)
+    .on("unlinkDir", onDirRemove);
   const id = _genID();
   map_watcher[id] = watcher;
   return id;
 };
 const setDirWatcher = () => {
+  const { name_dir_from } = getConfigs();
   return _setDirWatcher(path.resolve(getRootPath(), `${name_dir_from}/`));
 };
 const setFileWatcher = (path_from) => {
   path_from = slash(path_from);
   const watcher = chokidar.watch(path_from);
   watcher
-    .on('ready', () => console.log(`start wartch file : ${path_from}`))
-    .on('add', onFileAdd)
-    .on('change', onFileAdd)
-    .on('unlink', onFileRemove);
+    .on("ready", () => console.log(`start wartch file : ${path_from}`))
+    .on("add", onFileAdd)
+    .on("change", onFileAdd)
+    .on("unlink", onFileRemove);
   const id = _genID();
   map_watcher[id] = watcher;
   return id;
 };
 const clearWatcher = (key) => {
   const watcher = map_watcher[key];
-  watcher.close().then(() => console.log('watcher closed'));
+  watcher.close().then(() => console.log("watcher closed"));
 };
 const clearAllWatcher = () => {
   Object.keys(map_watcher).forEach((key) => {
@@ -198,17 +195,23 @@ const clearAllWatcher = () => {
   });
 };
 const goOver = () => {
+  const { name_dir_from } = getConfigs();
+
   const path_from = path.resolve(getRootPath(), `${name_dir_from}/`);
   const watcher = chokidar.watch(path_from);
-  watcher
-    .on('ready', () => {
-      _goOverDone();
-      process.exit();
-    })
-    .on('add', onFileAdd)
-    .on('change', onFileAdd)
-    .on('unlink', onFileRemove)
-    .on('unlinkDir', onDirRemove);
+  const p = new Promise((resolve, rej) => {
+    watcher
+      .on("ready", () => {
+        _goOverDone();
+        resolve("done");
+        process.exit();
+      })
+      .on("add", onFileAdd)
+      .on("change", onFileAdd)
+      .on("unlink", onFileRemove)
+      .on("unlinkDir", onDirRemove);
+  });
+  return p;
 };
 
 module.exports = {
