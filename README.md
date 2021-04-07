@@ -166,7 +166,7 @@ Required env:
 
 Config file:
 
-1. elastic: open elastic search
+1. elastic: open elastic search (if you not run in cmd, use function to run md2md, you need set this)
 2. index_name: index
 
 Then all markdown files will index to ElasticSearch after md2md done.
