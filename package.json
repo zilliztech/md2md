@@ -23,7 +23,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^7.11.0",
+    "axios": "^0.21.1",
     "chokidar": "^3.4.0",
     "lodash": "^4.17.15",
     "minimist": "^1.2.5",
@@ -33,7 +33,7 @@
     "jest": "^26.0.1",
     "jest-in-case": "^1.0.2"
   },
-   "publishConfig": {
+  "publishConfig": {
     "access": "public"
   }
 }

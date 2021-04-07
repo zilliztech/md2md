@@ -157,17 +157,17 @@ icon: tab icon
 ## ElasticSearch
 
 Open Plugin: default -> false
-Need add cmd param: node ./bin/goover.js --es=true
+if use cmd and not change config, we can use:
+node ./bin/goover.js --es=true to open elastic
 
 Required env:
 
-1. ES_URL
-2. ES_INDEX
+1. URL
 
-Optional env:
+Config file:
 
-1. ES_USER
-2. ES_PASS
+1. elastic: open elastic search
+2. index_name: index
 
 Then all markdown files will index to ElasticSearch after md2md done.
 
@@ -241,7 +241,7 @@ const {
   markdownToString,
   templateToString,
   register,
-} = require('md2md');
+} = require("md2md");
 
 // watch directory configed in m2m.config.js.
 const watcher_dir = setDirWatcher();
@@ -310,7 +310,7 @@ A: We've tried about that. But the gramma of each language might be different, w
 
 ```javascript
 // before require md2md, run:
-process.env.name_dir_from = 'your name of origin dir';
+process.env.name_dir_from = "your name of origin dir";
 ```
 
 ### 20200527 v0.3.4

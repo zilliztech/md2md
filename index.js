@@ -186,13 +186,9 @@ const _setDirWatcher = (path_from) => {
 };
 
 const setDirWatcher = () => {
-  const { name_dir_from, elastic, indexName } = getConfigs();
+  const { name_dir_from, elastic } = getConfigs();
   if (elastic) {
-    const { mark, fn } = plugins.elasticsearch;
-    const addArgFn = (path, content) => {
-      fn(path, content, indexName);
-    };
-    register(mark, addArgFn);
+    register(mark, fn);
   }
   return _setDirWatcher(path.resolve(getRootPath(), `${name_dir_from}/`));
 };
