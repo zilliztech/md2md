@@ -1,6 +1,6 @@
 {
-  "name": "mdtomd",
-  "version": "1.0.4",
+  "name": "@zilliz/mdtomd",
+  "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:zilliztech/md2md.git",
   "author": "nameczz <nameczz@126.com>",
@@ -32,5 +32,8 @@
   "devDependencies": {
     "jest": "^26.0.1",
     "jest-in-case": "^1.0.2"
+  },
+   "publishConfig": {
+    "access": "public"
   }
 }
