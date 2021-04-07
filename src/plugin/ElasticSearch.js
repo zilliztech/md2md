@@ -3,7 +3,7 @@ const { getConfigs } = require("../Consts");
 const axios = require("axios");
 
 const CREATE_INDEX_URL = `${
-  process.env.URL ||
+  process.env.ES_URL ||
   "http://127.0.0.1:1337/strapi-plugin-elasticsearch/create-update-index"
 }`;
 
