@@ -18,6 +18,9 @@ const getConfigs = () => {
   const name_file_variables = config.name_file_variables || "Variables.json";
   const name_file_glossary = config.name_file_glossary || "Glossary.json";
 
+  const elastic = config.elastic;
+  const index_name = config.index_name;
+
   const ignore_files = config.ignore_files || [];
   const ignore_directories = config.ignore_directories || [];
   const file_filtered = [
@@ -47,6 +50,9 @@ const getConfigs = () => {
     name_dir_templates,
     name_dir_images,
     name_file_variables,
+
+    elastic,
+    index_name,
 
     file_filtered,
     dir_filtered,

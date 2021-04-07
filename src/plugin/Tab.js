@@ -35,17 +35,20 @@ const parseTab = (path_from, content) => {
     }
   });
   const content_link = tabs
-    .sort((a, b) => Number.parseInt(a.order) > Number.parseInt(b.order) ? 1 : -1)
+    .sort((a, b) =>
+      Number.parseInt(a.order) > Number.parseInt(b.order) ? 1 : -1
+    )
     .map((tab) => {
       const { label, link, icon } = tab;
       const arrRelLink = link.split('/');
       const relLink = arrRelLink[arrRelLink.length - 1];
       const isActive = getTargetPath(path_from).indexOf(link) !== -1;
-      return `<a href="${relLink}" ${isActive ? `class='active ${icon}'` : `class='${icon}'`
-        }>${label}</a>`;
+      return `<a href="${relLink}" ${
+        isActive ? `class='active ${icon}'` : `class='${icon}'`
+      }>${label}</a>`;
     })
     .join('');
-  console.log(tabs.sort((a, b) => Number.parseInt(a.order) > Number.parseInt(b.order)))
+
   const content_replace = `<div class="tab-wrapper">${content_link}</div>`;
   // replace matches
   let matches = content.match(regex);

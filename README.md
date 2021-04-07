@@ -154,6 +154,23 @@ icon: tab icon
 <div class="tab-wrapper"><a href="/doc_to/en/tabs/tab1.md">centOS</a><a href="/doc_to/en/test-tab/ubuntu.md" class='active' >ubuntu</a></div>
 ```
 
+## ElasticSearch
+
+Open Plugin: default -> false
+if use cmd and not change config, we can use:
+node ./bin/goover.js --es=true to open elastic
+
+Required env:
+
+1. URL
+
+Config file:
+
+1. elastic: open elastic search
+2. index_name: index
+
+Then all markdown files will index to ElasticSearch after md2md done.
+
 ## Glossary
 
 Defined in normal markdown file, turn to special HTML element later;
@@ -224,7 +241,7 @@ const {
   markdownToString,
   templateToString,
   register,
-} = require('md2md');
+} = require("md2md");
 
 // watch directory configed in m2m.config.js.
 const watcher_dir = setDirWatcher();
@@ -293,7 +310,7 @@ A: We've tried about that. But the gramma of each language might be different, w
 
 ```javascript
 // before require md2md, run:
-process.env.name_dir_from = 'your name of origin dir';
+process.env.name_dir_from = "your name of origin dir";
 ```
 
 ### 20200527 v0.3.4

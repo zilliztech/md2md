@@ -19,6 +19,8 @@ const {
   getRootPath,
 } = require("./src/helpers/Path");
 const plugins = require("./src/plugin/index");
+const minimist = require("minimist");
+const cmdParams = minimist(process.argv.slice(2));
 
 // helpers
 const _genID = () => Math.random().toString().substring(2, 32);
@@ -36,8 +38,12 @@ const register = (mark, fn) => {
 // register default plugins
 Object.keys(plugins).forEach((key) => {
   const { mark, fn } = plugins[key];
+  if (mark === "Elasticsearch" && cmdParams.es !== "true") {
+    return;
+  }
   register(mark, fn);
 });
+console.log("----- Plugins loaded ------", Object.keys(map_rule));
 const _isFiltered = (path_abs) => {
   path_abs = slash(path_abs);
   const self_filtered = all_filtered.some((name_f) =>
@@ -67,15 +73,17 @@ const _copyDir = (path_from) => {
   }
 };
 // callbacks
-const _customParse = (content, path_from) => {
+const _customParse = async (content, path_from) => {
   path_from = slash(path_from);
-  Object.keys(map_rule).forEach((key) => {
-    const fn = map_rule[key];
-    content = fn(path_from, content);
-  });
+  const keys = Object.keys(map_rule);
+  for (let k of keys) {
+    const fn = map_rule[k];
+    content = await fn(path_from, content);
+  }
+
   return content;
 };
-const onFileAdd = (path_from) => {
+const onFileAdd = async (path_from) => {
   Logger.start(`Origin file ${path_from} is edited.`);
   path_from = slash(path_from);
   const type_file = getFileType(path_from);
@@ -95,11 +103,11 @@ const onFileAdd = (path_from) => {
       let content = "";
       switch (type_file) {
         case FileType.normalDoc:
-          content = _customParse(markdownToString(path_from), path_from);
+          content = await _customParse(markdownToString(path_from), path_from);
           break;
         case FileType.templateVar:
           path_to = path_to.replace(".json", ".md");
-          content = _customParse(templateToString(path_from), path_from);
+          content = await _customParse(templateToString(path_from), path_from);
           break;
         default:
           content = fs.readFileSync(path_from);
@@ -108,7 +116,7 @@ const onFileAdd = (path_from) => {
       writeFile(path_to, content);
       Logger.end(`Target File ${path_to} is updated.`);
     } catch (error) {
-      errors.push(error);
+      errors.push(`${path_from}:  ${error}`);
       Logger.end(`Target File has ${error}.`);
     }
   }
@@ -178,7 +186,10 @@ const _setDirWatcher = (path_from) => {
 };
 
 const setDirWatcher = () => {
-  const { name_dir_from } = getConfigs();
+  const { name_dir_from, elastic } = getConfigs();
+  if (elastic) {
+    register(mark, fn);
+  }
   return _setDirWatcher(path.resolve(getRootPath(), `${name_dir_from}/`));
 };
 
