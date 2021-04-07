@@ -7,6 +7,7 @@ const CREATE_INDEX_URL = `${
   "http://127.0.0.1:1337/strapi-plugin-elasticsearch/create-update-index"
 }`;
 
+console.log("--- ES URL ----", CREATE_INDEX_URL);
 // const esClient = new Client({
 //   node: process.env.ES_URL || "http://127.0.0.1:9200",
 //   auth: {
