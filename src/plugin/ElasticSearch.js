@@ -36,16 +36,14 @@ const updateElastic = async (path_from, content) => {
   }
 
   try {
-    console.log("start----", index_name);
     const res = await axios.post(CREATE_INDEX_URL, {
       content: contentWithoutVariables,
       fileId,
       index: index_name,
     });
-    console.log(res);
+    console.log("---- update index ----", res);
     return content;
   } catch (error) {
-    console.log("----error", error);
     throw error;
   }
 
