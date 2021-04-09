@@ -185,11 +185,9 @@ const _setDirWatcher = (path_from) => {
 
 const setDirWatcher = () => {
   const { name_dir_from } = getConfigs();
-  
+
   return _setDirWatcher(path.resolve(getRootPath(), `${name_dir_from}/`));
 };
-
-const 
 
 const setFileWatcher = (path_from) => {
   path_from = slash(path_from);
