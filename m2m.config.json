@@ -1,15 +1,10 @@
 {
   "name_dir_from": "test",
   "name_dir_to": "doc_to",
-
   "name_dir_fragments": "fragments",
   "name_dir_templates": "templates",
   "name_file_variables": "Variables.json",
   "name_file_glossary": "Glossary.json",
-  
-  "elastic": false,
-  "index_name": "",
-  
   "ignore_files": [],
   "ignore_directories": []
 }

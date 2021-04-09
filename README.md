@@ -154,23 +154,6 @@ icon: tab icon
 <div class="tab-wrapper"><a href="/doc_to/en/tabs/tab1.md">centOS</a><a href="/doc_to/en/test-tab/ubuntu.md" class='active' >ubuntu</a></div>
 ```
 
-## ElasticSearch
-
-Open Plugin: default -> false
-if use cmd and not change config, we can use:
-node ./bin/goover.js --es=true to open elastic
-
-Required env:
-
-1. URL
-
-Config file:
-
-1. elastic: open elastic search (if you not run in cmd, use function to run md2md, you need set this)
-2. index_name: index
-
-Then all markdown files will index to ElasticSearch after md2md done.
-
 ## Glossary
 
 Defined in normal markdown file, turn to special HTML element later;
