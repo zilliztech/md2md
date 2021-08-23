@@ -170,10 +170,10 @@ this is normal markdownfile. <span class="tip" data-tip="Milvus is easy-to-use, 
 
 write:
 
-image desc([{{images.Assets/images/about-1.jpg}}])
+![image]({{images.assets/images/about-1.jpg}})
 
 will transfer to:
-image desc([../../../../Assets/images/about-1.jpg])
+![image](../../assets/images/about-1.jpg)
 
 Assets/images/about-1.jpg is where you store your image.
 And this plugin will help to find path.relative(doc_path,image_path) and replace the target.

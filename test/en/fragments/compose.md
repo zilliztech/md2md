@@ -4,4 +4,4 @@
 
 {{fragments/tail.md}}
 
-image([{{images.Assets/images/about-1.jpg}}])
+![image]({{images.assets/images/about-1.jpg}})

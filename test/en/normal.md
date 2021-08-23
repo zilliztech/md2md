@@ -11,6 +11,6 @@ this is normal
 
 {{glossary.milvus.introduce}} -->
 
-image([{{images.Assets/demo.gif}}])
+![image]({{images.assets/demo.gif}})
 
 <div>this is new div</div>

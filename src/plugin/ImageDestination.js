@@ -17,8 +17,10 @@ const parseImagePath = (path_from, content) => {
         .split(" ")
         .join("")
         .slice(9, image.length - 2);
+      const from = path_from.split("/");
+      from.pop();
       const doc_relative_image = path.relative(
-        path_from,
+        from.join("/"),
         `${getRootPath()}/${imagePath}`
       );
       content = content.replace(image, doc_relative_image);
