@@ -126,7 +126,7 @@ const _replaceFragment = (content, language) => {
 };
 
 const replaceStandardMark = (mark, content, map) => {
-  const regex_str = `\{\{${mark}\..{0,1000}\}\}`;
+  const regex_str = `\{\{${mark}\.(.*?)\}\}`;
   const regex = new RegExp(regex_str, "ig");
   const matches = content.match(regex);
   if (matches) {
