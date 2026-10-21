@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "name": "unclosed",
+  "requirements": [
+    "BLOCK_UNCLOSED"
+  ],
+  "input": {
+    "file": "page.md",
+    "content": "Text\n<!-- doc:block:start id=\"x\" -->\na"
+  },
+  "options": {
+    "sourceName": "page.md",
+    "isFragment": false
+  },
+  "expected": {
+    "parse": {
+      "ok": false,
+      "blocks": [],
+      "errors": [
+        {
+          "code": "BLOCK_UNCLOSED",
+          "line": 2,
+          "file": "page.md",
+          "message": "Block \"x\" has no end marker."
+        }
+      ]
+    },
+    "strip": null
+  },
+  "dependencies": []
+}

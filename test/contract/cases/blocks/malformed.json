@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "name": "malformed",
+  "requirements": [
+    "T01",
+    "BLOCK_MALFORMED"
+  ],
+  "input": {
+    "file": "page.md",
+    "content": "<!-- doc:block:start id=X -->"
+  },
+  "options": {
+    "sourceName": "page.md",
+    "isFragment": false
+  },
+  "expected": {
+    "parse": {
+      "ok": false,
+      "blocks": [],
+      "errors": [
+        {
+          "code": "BLOCK_MALFORMED",
+          "line": 1,
+          "file": "page.md",
+          "message": "Expected a standalone <!-- doc:block:start|end id=\"lowercase-id\" --> marker."
+        }
+      ]
+    },
+    "strip": null
+  },
+  "dependencies": []
+}

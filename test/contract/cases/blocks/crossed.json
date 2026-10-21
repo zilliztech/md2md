@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "name": "crossed",
+  "requirements": [
+    "T01",
+    "BLOCK_CROSSED"
+  ],
+  "input": {
+    "file": "page.md",
+    "content": "<!-- doc:block:start id=\"x\" -->\na\n<!-- doc:block:end id=\"y\" -->"
+  },
+  "options": {
+    "sourceName": "page.md",
+    "isFragment": false
+  },
+  "expected": {
+    "parse": {
+      "ok": false,
+      "blocks": [],
+      "errors": [
+        {
+          "code": "BLOCK_CROSSED",
+          "line": 3,
+          "file": "page.md",
+          "message": "End marker \"y\" does not match open block \"x\"."
+        }
+      ]
+    },
+    "strip": null
+  },
+  "dependencies": []
+}

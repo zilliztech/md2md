@@ -1,0 +1,979 @@
+{
+  "schema_version": 1,
+  "generated_by": "tools/export_requirements.py",
+  "source": {
+    "prd": "docs/prd.md",
+    "plan": "docs/phase-1.md",
+    "errors": "docs/design/09-error-catalog.md",
+    "prd_commit": "9c67c36a1fad2006f63bc51296c41ee462c209cc"
+  },
+  "behaviours": [
+    {
+      "id": "1-1",
+      "scenario": 1,
+      "scenario_title": "把产品名和连接值写成变量",
+      "phase": "Phase 1a",
+      "text": "Cloud 只读 zdoc 的 `Variables.json`，不合并、不回退到 Milvus 的值"
+    },
+    {
+      "id": "1-2",
+      "scenario": 1,
+      "scenario_title": "把产品名和连接值写成变量",
+      "phase": "Phase 1a",
+      "text": "正文、片段、代码块和 Cloud 内容文件中的变量都按 Cloud 的值替换"
+    },
+    {
+      "id": "1-3",
+      "scenario": 1,
+      "scenario_title": "把产品名和连接值写成变量",
+      "phase": "Phase 1a",
+      "text": "变量值原样插入，不再当作变量或片段展开"
+    },
+    {
+      "id": "1-4",
+      "scenario": 1,
+      "scenario_title": "把产品名和连接值写成变量",
+      "phase": "Phase 1a",
+      "text": "`{{var.…}}`、`{{fragments/…}}` 之外的 `{{…}}`（如代码中的模板语法 `{{ doc.content }}`）原样保留"
+    },
+    {
+      "id": "1-5",
+      "scenario": 1,
+      "scenario_title": "把产品名和连接值写成变量",
+      "phase": "Phase 1a",
+      "text": "原文和 Cloud 内容文件中的 `{{fragments/xxx.md}}`，只能引用同一版本 milvus-docs 中 `site/en/fragments/` 里的文件；zdoc 中没有 Cloud 自己的片段目录"
+    },
+    {
+      "id": "1-6",
+      "scenario": 1,
+      "scenario_title": "把产品名和连接值写成变量",
+      "phase": "Phase 1a",
+      "text": "生成后的 Cloud 页面中，出现检查规则中的写法、又不在放行清单中时，这一页生成失败，报错指出页面、版本和所在的原文位置；Prod 与 UAT 的版本分别检查"
+    },
+    {
+      "id": "2-1",
+      "scenario": 2,
+      "scenario_title": "在 Milvus 原文中标出 Cloud 要改的一段",
+      "phase": "Phase 1a",
+      "text": "标记不出现在任何网站上，也不出现在 web-content 的 Markdown 和提供给大模型读取的内容中"
+    },
+    {
+      "id": "2-2",
+      "scenario": 2,
+      "scenario_title": "在 Milvus 原文中标出 Cloud 要改的一段",
+      "phase": "Phase 1a",
+      "text": "同一篇原文加标记前后，Milvus 站点的输出逐字相同"
+    },
+    {
+      "id": "2-3",
+      "scenario": 2,
+      "scenario_title": "在 Milvus 原文中标出 Cloud 要改的一段",
+      "phase": "Phase 1a",
+      "text": "milvus-docs 的 PR 检查校验标记，写错时检查失败、不能合并；报错指出文件、行号、原因"
+    },
+    {
+      "id": "2-4",
+      "scenario": 2,
+      "scenario_title": "在 Milvus 原文中标出 Cloud 要改的一段",
+      "phase": "Phase 1a",
+      "text": "Cloud 生成时用同一套规则再校验一次；漏过的错误让这一页生成失败，不带着错误上线"
+    },
+    {
+      "id": "2-5",
+      "scenario": 2,
+      "scenario_title": "在 Milvus 原文中标出 Cloud 要改的一段",
+      "phase": "Phase 1a",
+      "text": "工具按原文结构判断命名块的类型和其中的语言，作者不用声明"
+    },
+    {
+      "id": "2-6",
+      "scenario": 2,
+      "scenario_title": "在 Milvus 原文中标出 Cloud 要改的一段",
+      "phase": "Phase 1a",
+      "text": "Cloud 的标签页由工具按代码块和 Tabs 规则重新生成，不使用切换栏的内容"
+    },
+    {
+      "id": "3-1",
+      "scenario": 3,
+      "scenario_title": "接入一页",
+      "phase": "Phase 1a",
+      "text": "新页面没有 `lock.yaml` 时，工具取 milvus-docs 跟踪分支（目前是 `v3.0.x`）的最新提交写入，`current` 与 `next` 相同，并提交到同一个 PR"
+    },
+    {
+      "id": "3-2",
+      "scenario": 3,
+      "scenario_title": "接入一页",
+      "phase": "Phase 1a",
+      "text": "功能还没上线的页面，`lock.yaml` 照常写入；整页只在 UAT 显示，由飞书表格的 `Release Channel` 决定（[场景 6](#场景-6让内容先只在-uat-显示)）"
+    },
+    {
+      "id": "3-3",
+      "scenario": 3,
+      "scenario_title": "接入一页",
+      "phase": "Phase 1a",
+      "text": "每个修改 `shared-docs/` 的 PR 都完整生成一遍页面来校验，不通过不能合并"
+    },
+    {
+      "id": "3-4",
+      "scenario": 3,
+      "scenario_title": "接入一页",
+      "phase": "Phase 1a",
+      "text": "生成的页面中，多语言代码 Tabs 完整、可以切换，语言顺序与必选语言按 Tabs 规则；变量换成 Cloud 的值；链接、锚点与图片可用（[场景 5](#场景-5链接与图片)）"
+    },
+    {
+      "id": "3-5",
+      "scenario": 3,
+      "scenario_title": "接入一页",
+      "phase": "Phase 1a",
+      "text": "标题、描述按手册加后缀，如 `\\| Cloud`、`\\| BYOC`"
+    },
+    {
+      "id": "3-6",
+      "scenario": 3,
+      "scenario_title": "接入一页",
+      "phase": "Phase 1a",
+      "text": "**接入不等于上线**：合并后网站上仍是飞书版，激活后才换成 Git 版（[场景 9](#场景-9从飞书切换到-git激活)）"
+    },
+    {
+      "id": "3-7",
+      "scenario": 3,
+      "scenario_title": "接入一页",
+      "phase": "Phase 1a",
+      "text": "迁移后页面的 URL 不变"
+    },
+    {
+      "id": "4-1",
+      "scenario": 4,
+      "scenario_title": "写 Cloud 的差异",
+      "phase": "Phase 1b",
+      "text": "先校验全部变换，再生成页面；任何一条不成立，这一页生成失败，不跳过"
+    },
+    {
+      "id": "4-2",
+      "scenario": 4,
+      "scenario_title": "写 Cloud 的差异",
+      "phase": "Phase 1b",
+      "text": "命名块的类型和语言按原文结构判断；Markdown 块上只能做整块操作"
+    },
+    {
+      "id": "4-3",
+      "scenario": 4,
+      "scenario_title": "写 Cloud 的差异",
+      "phase": "Phase 1b",
+      "text": "代码行的缩进按上述规则自动处理，生成结果中不留多余空行"
+    },
+    {
+      "id": "4-4",
+      "scenario": 4,
+      "scenario_title": "写 Cloud 的差异",
+      "phase": "Phase 1b",
+      "text": "代码 Tabs 按 Tabs 规则重新生成，语言顺序、显示名和默认语言全站统一。多语言代码组必须有 Python；其他语言原文或变换中有就显示，没有就不显示，不加占位"
+    },
+    {
+      "id": "4-5",
+      "scenario": 4,
+      "scenario_title": "写 Cloud 的差异",
+      "phase": "Phase 1b",
+      "text": "Cloud 内容文件与原文经过同样的处理：变量、片段、产品过滤、组件转换"
+    },
+    {
+      "id": "4-6",
+      "scenario": 4,
+      "scenario_title": "写 Cloud 的差异",
+      "phase": "Phase 1b",
+      "text": "Milvus 站点的输出与原文一致，不受 zdoc 中任何变换影响"
+    },
+    {
+      "id": "5-1",
+      "scenario": 5,
+      "scenario_title": "链接与图片",
+      "phase": "Phase 1a",
+      "text": "链接按上述规则处理，处理不了的一律报错，不原样放过"
+    },
+    {
+      "id": "5-2",
+      "scenario": 5,
+      "scenario_title": "链接与图片",
+      "phase": "Phase 1a",
+      "text": "映射表全站一份，每个 Milvus 页面只登记一次，所有共享页共用"
+    },
+    {
+      "id": "5-7",
+      "scenario": 5,
+      "scenario_title": "链接与图片",
+      "phase": "Phase 1a",
+      "text": "生成时不按标题或相似度自动猜测对应页；它们只用来生成初始映射表的候选，以及查不到时报错中附带的候选，采用前都经人确认"
+    },
+    {
+      "id": "5-3",
+      "scenario": 5,
+      "scenario_title": "链接与图片",
+      "phase": "Phase 1a",
+      "text": "已存的图片不会被覆盖或自动清理，只要还有已发布或可以恢复的页面引用它"
+    },
+    {
+      "id": "5-4",
+      "scenario": 5,
+      "scenario_title": "链接与图片",
+      "phase": "Phase 1a",
+      "text": "Milvus 换图会让图片地址变化，出现在上游更新 PR 中，审核后才进入 Cloud"
+    },
+    {
+      "id": "5-5",
+      "scenario": 5,
+      "scenario_title": "链接与图片",
+      "phase": "Phase 1a",
+      "text": "校验时只算出地址、不上传；合并后的正式发布才上传还没有的图片"
+    },
+    {
+      "id": "5-6",
+      "scenario": 5,
+      "scenario_title": "链接与图片",
+      "phase": "Phase 1a",
+      "text": "已采用的版本中，每张图片以第一次转存的内容为准，重新生成或恢复时不因原地址的内容变化而改变"
+    },
+    {
+      "id": "6-1",
+      "scenario": 6,
+      "scenario_title": "让内容先只在 UAT 显示",
+      "phase": "Phase 1b",
+      "text": "两个版本相同时，生成的页面与只有一个版本时逐字相同"
+    },
+    {
+      "id": "6-2",
+      "scenario": 6,
+      "scenario_title": "让内容先只在 UAT 显示",
+      "phase": "Phase 1b",
+      "text": "不同的部分按段落、整个列表、表格、提示框、整个代码组为单位成对输出，不在句子中间切分"
+    },
+    {
+      "id": "6-3",
+      "scenario": 6,
+      "scenario_title": "让内容先只在 UAT 显示",
+      "phase": "Phase 1b",
+      "text": "Cloud 的规则在两个版本上分别校验；失败时指出是哪个版本"
+    },
+    {
+      "id": "6-4",
+      "scenario": 6,
+      "scenario_title": "让内容先只在 UAT 显示",
+      "phase": "Phase 1b",
+      "text": "未上线的内容不出现在 Prod，也不出现在搜索、`llms.txt` 等产物中"
+    },
+    {
+      "id": "6-5",
+      "scenario": 6,
+      "scenario_title": "让内容先只在 UAT 显示",
+      "phase": "Phase 1b",
+      "text": "整页只在 UAT 存在、或只在 Prod 存在时，沿用 zdoc 现有的整页通道，即飞书表格的 `Release Channel`，导航与搜索随之处理"
+    },
+    {
+      "id": "6-6",
+      "scenario": 6,
+      "scenario_title": "让内容先只在 UAT 显示",
+      "phase": "Phase 1b",
+      "text": "front matter 不能按通道区分；两个版本不同时用 Prod 的版本，并在记录中注明"
+    },
+    {
+      "id": "6-7",
+      "scenario": 6,
+      "scenario_title": "让内容先只在 UAT 显示",
+      "phase": "Phase 1b",
+      "text": "`<NextChannel>` 包住列表、提示框和代码 Tabs 时都能正确显示；整页通道在各语言译文中同样生效"
+    },
+    {
+      "id": "7-1",
+      "scenario": 7,
+      "scenario_title": "审核上游更新",
+      "phase": "Phase 1b",
+      "text": "每天检查一次 milvus-docs 跟踪分支，一天内的多个提交一并处理；也可以手动触发，并指定页面与提交"
+    },
+    {
+      "id": "7-2",
+      "scenario": 7,
+      "scenario_title": "审核上游更新",
+      "phase": "Phase 1b",
+      "text": "上游修改只开 PR，不自动采用；PR 合并前，生成结果不进入正式发布"
+    },
+    {
+      "id": "7-3",
+      "scenario": 7,
+      "scenario_title": "审核上游更新",
+      "phase": "Phase 1b",
+      "text": "合并后新版本先在 UAT 显示，Prod 要等提升"
+    },
+    {
+      "id": "7-4",
+      "scenario": 7,
+      "scenario_title": "审核上游更新",
+      "phase": "Phase 1b",
+      "text": "每页一个 PR：这一页已有未合并的上游更新 PR 时，更新它，不另开"
+    },
+    {
+      "id": "7-5",
+      "scenario": 7,
+      "scenario_title": "审核上游更新",
+      "phase": "Phase 1b",
+      "text": "同一批提交中互相依赖的几页（例如一页改了标题，另一页的链接指向它）合进同一个 PR"
+    },
+    {
+      "id": "7-6",
+      "scenario": 7,
+      "scenario_title": "审核上游更新",
+      "phase": "Phase 1b",
+      "text": "一页暂缓不影响其他页面"
+    },
+    {
+      "id": "7-7",
+      "scenario": 7,
+      "scenario_title": "审核上游更新",
+      "phase": "Phase 1b",
+      "text": "内容没有变化的页面不开 PR；同样的输入得到同样的结果"
+    },
+    {
+      "id": "7-8",
+      "scenario": 7,
+      "scenario_title": "审核上游更新",
+      "phase": "Phase 1b",
+      "text": "这一页提升后，还开着的上游更新 PR 在下一次运行时按新的版本重建"
+    },
+    {
+      "id": "7-9",
+      "scenario": 7,
+      "scenario_title": "审核上游更新",
+      "phase": "Phase 1b",
+      "text": "飞书表格中为 `RETIRE-IN-NEXT` 或已删除记录的页面不再检查；还开着的上游更新 PR 被关闭并写明原因"
+    },
+    {
+      "id": "7-10",
+      "scenario": 7,
+      "scenario_title": "审核上游更新",
+      "phase": "Phase 1b",
+      "text": "社区在 milvus-docs 中的 PR 不运行 zdoc 的任何代码，也拿不到 Cloud 的凭据"
+    },
+    {
+      "id": "8-1",
+      "scenario": 8,
+      "scenario_title": "功能上线时提升",
+      "phase": "Phase 1b",
+      "text": "一次提升只开一个 PR；只有对 zdoc 有写权限的人能运行这个工作流，审核仍走 PR"
+    },
+    {
+      "id": "8-2",
+      "scenario": 8,
+      "scenario_title": "功能上线时提升",
+      "phase": "Phase 1b",
+      "text": "合并后，Prod 显示的内容与提升前 UAT 显示的一致，页面中不再有工具生成的通道标记"
+    },
+    {
+      "id": "8-3",
+      "scenario": 8,
+      "scenario_title": "功能上线时提升",
+      "phase": "Phase 1b",
+      "text": "合并后，在下一次发布运行时进入网站（时延见[第 7 节](#7-待确认的问题)）"
+    },
+    {
+      "id": "8-4",
+      "scenario": 8,
+      "scenario_title": "功能上线时提升",
+      "phase": "Phase 1b",
+      "text": "这些页面还开着的上游更新 PR，在下一次运行时按新的版本重建"
+    },
+    {
+      "id": "9-1",
+      "scenario": 9,
+      "scenario_title": "从飞书切换到 Git（激活）",
+      "phase": "Phase 1b",
+      "text": "比较时，以及激活后的每次 Fetch，工具都检查：能生成；图片与链接都能解析；飞书表格记录的发布目标、路径与页面配置一致。比较时不通过，就不应激活；Fetch 中不通过，这一页保留网站上现有的版本并通知，不退回飞书重新生成"
+    },
+    {
+      "id": "9-2",
+      "scenario": 9,
+      "scenario_title": "从飞书切换到 Git（激活）",
+      "phase": "Phase 1b",
+      "text": "激活后的第一次 Fetch，在同一个提交中写入这一页的正文、导航与 `active.json`，不会出现只切换了一半的状态"
+    },
+    {
+      "id": "9-3",
+      "scenario": 9,
+      "scenario_title": "从飞书切换到 Git（激活）",
+      "phase": "Phase 1b",
+      "text": "已在 `active.json` 中的页面，表格中的 placement type 被改回其他值时，Fetch 失败并通知，页面保持 Git 版"
+    },
+    {
+      "id": "9-4",
+      "scenario": 9,
+      "scenario_title": "从飞书切换到 Git（激活）",
+      "phase": "Phase 1b",
+      "text": "激活后，飞书的任何任务（全量抓取、旧缓存、删除清单、恢复）都不能改写或删除这一页的页面与译文；未迁移的页面照常从飞书更新"
+    },
+    {
+      "id": "9-5",
+      "scenario": 9,
+      "scenario_title": "从飞书切换到 Git（激活）",
+      "phase": "Phase 1b",
+      "text": "同一个地址既有飞书页面又有 Git 页面时，生成失败"
+    },
+    {
+      "id": "9-6",
+      "scenario": 9,
+      "scenario_title": "从飞书切换到 Git（激活）",
+      "phase": "Phase 1b",
+      "text": "导航位置、顺序和标签 Phase 1 仍由飞书表格和目录决定；这一页的记录与节点保留，只用来决定导航，正文和其余元数据由 Git 生成"
+    },
+    {
+      "id": "9-7",
+      "scenario": 9,
+      "scenario_title": "从飞书切换到 Git（激活）",
+      "phase": "Phase 1b",
+      "text": "激活与提升互不依赖：激活决定这一页由飞书还是 Git 生成，一页只做一次；提升决定 Prod 用哪个 Git 版本，每次发版都做。功能未上线的新页面可以先激活、只在 UAT 显示"
+    },
+    {
+      "id": "9-8",
+      "scenario": 9,
+      "scenario_title": "从飞书切换到 Git（激活）",
+      "phase": "Phase 1b",
+      "text": "网站部署在激活之后进行；部署失败时重试或回滚，编辑来源仍是 Git，不交回飞书"
+    },
+    {
+      "id": "10-1",
+      "scenario": 10,
+      "scenario_title": "下线一页",
+      "phase": "Phase 1b",
+      "text": "表格中为 `RETIRE-IN-NEXT` 时，沿用 zdoc 现有的整页通道：UAT 不显示，Prod 照常，导航与搜索随之处理"
+    },
+    {
+      "id": "10-2",
+      "scenario": 10,
+      "scenario_title": "下线一页",
+      "phase": "Phase 1b",
+      "text": "表格记录删除后，下一次 Fetch 在同一次发布中移除这一页的所有内容（页面、译文、记录），并把它从 `active.json` 中去掉"
+    },
+    {
+      "id": "10-3",
+      "scenario": 10,
+      "scenario_title": "下线一页",
+      "phase": "Phase 1b",
+      "text": "表格中为 `RETIRE-IN-NEXT` 或已删除记录的页面，不再检查上游更新；还开着的上游更新 PR 被关闭并写明原因"
+    },
+    {
+      "id": "10-4",
+      "scenario": 10,
+      "scenario_title": "下线一页",
+      "phase": "Phase 1b",
+      "text": "表格记录已删除、页面目录还在时，PR 校验与 Fetch 提示删除目录，不生成这一页"
+    }
+  ],
+  "acceptance": [
+    {
+      "id": "T01",
+      "text": "扫描与校验：无命名块的整页可以正常扫描和生成；重复、空块、交叉、伪标记、非法嵌套和只包住代码组的一部分都报错。",
+      "blocking": false
+    },
+    {
+      "id": "T02",
+      "text": "md2md 变量入口：显式产品绑定；与原有作用域兼容；缺失变量报错；两个产品并行生成时不串值；不运行 Milvus 站点插件。",
+      "blocking": false
+    },
+    {
+      "id": "T03",
+      "text": "include 与依赖：嵌套与重复引用可以追踪；循环、越界、符号链接、深度或体积超限都失败。",
+      "blocking": false
+    },
+    {
+      "id": "T04",
+      "text": "内容变换：目标存在性、类型、语言和冲突检查；多语言内容完整。以 OpenAI 的凭证参数为真实用例，在每种语言中验证代码行的 replace 与 add：缩进正确，不留多余空行，Milvus 输出与原文一致；`lines` 找不到、出现多次、超过上限或与语言项变换冲突时都失败；上游改了被定位的行时不能更新。",
+      "blocking": false
+    },
+    {
+      "id": "T05",
+      "text": "上游更新 PR：被替换的原文变化仍然提示；上游变化只生成 PR，不自动采用；PR 合并前的生成结果不进入正式发布；命名块改名或删除时校验失败，旧版本继续有效；已下线的页面不再更新。",
+      "blocking": true
+    },
+    {
+      "id": "T06",
+      "text": "MDX、路由与资源：Tabs 可切换、语言完整；锚点、导航、链接、图片和编辑入口正确；缺图、图片字节变化或未知语法都失败。",
+      "blocking": false
+    },
+    {
+      "id": "T07",
+      "text": "混源与切换：覆盖[技术设计 05b 图 1](./design/05b-cutover-and-ownership.md#切换与激活) 中的每一种情况——接入后未激活时不写 dev；标为 `git` 后检查不通过时保留现有版本；激活时 `active.json`、正文、导航、来源记录同批提交；placement type 被改回时失败；部署失败不恢复飞书写权；飞书全量抓取、旧缓存、删除清单与恢复任务都不能改变已迁移页，未迁移页照常更新；比较不写 dev；下线时 `RETIRE-IN-NEXT`、删除记录、目录残留与目录先删四种情况。",
+      "blocking": true
+    },
+    {
+      "id": "T08",
+      "text": "缓存：只有变量、Cloud 内容文件、工具、资源或归属变化时也会重新检查，不会被飞书侧的“未变化”跳过；冷热构建结果一致，损坏的缓存不会发布旧结果。",
+      "blocking": true
+    },
+    {
+      "id": "T09",
+      "text": "翻译：以最终 Cloud 正文为输入，技术内容受保护；输出不变且已有有效译文时不重译；缺译文仍按原规则处理；英文、日文和中文的边界正确。",
+      "blocking": false
+    },
+    {
+      "id": "T10",
+      "text": "恢复：临时 artifact 不可用时，能从 Git 恢复或从固定输入重建；来源记录一致；缺源或缺资源时停止；镜像回滚不恢复飞书写权。",
+      "blocking": false
+    },
+    {
+      "id": "T11",
+      "text": "Milvus 回归：新旧 md2md 默认行为兼容；真实 goover 构建通过，没有标记泄漏或内容丢失；同一篇原文加命名块前后，Milvus 侧输出逐字相同。",
+      "blocking": true
+    },
+    {
+      "id": "T12",
+      "text": "完整旅程：源 PR → 预览 → 审核 → 发布 → 采用或拒绝上游更新 → 恢复；手改生成文件，或连同来源记录一起改，都被拒绝。",
+      "blocking": true
+    },
+    {
+      "id": "T13",
+      "text": "过滤与通道：适用的正文与代码保留，不适用的被排除；Next 内容在 UAT 显示，在 Prod 和静态产物中不出现；共享页的两个通道各自显示对应版本的生成结果，Cloud 规则在两个版本上都校验，提升后不留通道标记；`<NextChannel>` 包住列表、提示框和代码 Tabs 时渲染正确；Git 页面的整页通道在各语言译文中生效；未迁移飞书页的行为不变。",
+      "blocking": false
+    },
+    {
+      "id": "T14",
+      "text": "产品名检查：漏换的产品名与连接值在两个版本中都能查出；放行的短语与 `MilvusClient` 这类更长的词不误报；报错位置指回原文或内容文件。",
+      "blocking": false
+    }
+  ],
+  "errors": [
+    {
+      "code": "BLOCK_DUPLICATE_ID",
+      "area": "命名块",
+      "when": "",
+      "area_id": "named-blocks"
+    },
+    {
+      "code": "BLOCK_UNCLOSED",
+      "area": "命名块",
+      "when": "",
+      "area_id": "named-blocks"
+    },
+    {
+      "code": "BLOCK_UNMATCHED_END",
+      "area": "命名块",
+      "when": "",
+      "area_id": "named-blocks"
+    },
+    {
+      "code": "BLOCK_CROSSED",
+      "area": "命名块",
+      "when": "",
+      "area_id": "named-blocks"
+    },
+    {
+      "code": "BLOCK_NESTED",
+      "area": "命名块",
+      "when": "",
+      "area_id": "named-blocks"
+    },
+    {
+      "code": "BLOCK_EMPTY",
+      "area": "命名块",
+      "when": "",
+      "area_id": "named-blocks"
+    },
+    {
+      "code": "BLOCK_MALFORMED",
+      "area": "命名块",
+      "when": "",
+      "area_id": "named-blocks"
+    },
+    {
+      "code": "BLOCK_IN_FRAGMENT",
+      "area": "命名块",
+      "when": "",
+      "area_id": "named-blocks"
+    },
+    {
+      "code": "BLOCK_PARTIAL_CODE_GROUP",
+      "area": "命名块",
+      "when": "",
+      "area_id": "named-blocks"
+    },
+    {
+      "code": "VAR_MISSING",
+      "area": "变量与片段",
+      "when": "",
+      "area_id": "variables-and-fragments"
+    },
+    {
+      "code": "VAR_NOT_SCALAR",
+      "area": "变量与片段",
+      "when": "",
+      "area_id": "variables-and-fragments"
+    },
+    {
+      "code": "FRAGMENT_NOT_FOUND",
+      "area": "变量与片段",
+      "when": "",
+      "area_id": "variables-and-fragments"
+    },
+    {
+      "code": "FRAGMENT_OUT_OF_ROOT",
+      "area": "变量与片段",
+      "when": "",
+      "area_id": "variables-and-fragments"
+    },
+    {
+      "code": "FRAGMENT_SYMLINK",
+      "area": "变量与片段",
+      "when": "",
+      "area_id": "variables-and-fragments"
+    },
+    {
+      "code": "FRAGMENT_CYCLE",
+      "area": "变量与片段",
+      "when": "",
+      "area_id": "variables-and-fragments"
+    },
+    {
+      "code": "LIMIT_EXCEEDED",
+      "area": "变量与片段",
+      "when": "",
+      "area_id": "variables-and-fragments"
+    },
+    {
+      "code": "UNSUPPORTED_MARK",
+      "area": "变量与片段",
+      "when": "",
+      "area_id": "variables-and-fragments"
+    },
+    {
+      "code": "CONFIG_PAGE_ID_INVALID",
+      "area": "页面配置",
+      "when": "页面目录名不符合 slug 规则",
+      "area_id": "page-config"
+    },
+    {
+      "code": "CONFIG_FIELD_MISSING",
+      "area": "页面配置",
+      "when": "缺少必填字段",
+      "area_id": "page-config"
+    },
+    {
+      "code": "CONFIG_FIELD_UNKNOWN",
+      "area": "页面配置",
+      "when": "未知的字段、动作或 `schema_version`",
+      "area_id": "page-config"
+    },
+    {
+      "code": "CONFIG_SOURCE_NOT_FOUND",
+      "area": "页面配置",
+      "when": "`source.file` 在该版本中不存在，包括上游改名或删除了原文",
+      "area_id": "page-config"
+    },
+    {
+      "code": "CONFIG_MANUAL_UNKNOWN",
+      "area": "页面配置",
+      "when": "`publish[].manual` 不是 zdoc 已有的手册",
+      "area_id": "page-config"
+    },
+    {
+      "code": "CONFIG_BETA_INVALID",
+      "area": "页面配置",
+      "when": "`metadata.beta` 不是 zdoc 标签定义中的值，或写了 `BYOC`",
+      "area_id": "page-config"
+    },
+    {
+      "code": "TRANSFORM_TARGET_NOT_FOUND",
+      "area": "变换",
+      "when": "目标命名块或语言不存在，包括上游改名或删除了命名块",
+      "area_id": "transforms"
+    },
+    {
+      "code": "TRANSFORM_TARGET_KIND",
+      "area": "变换",
+      "when": "在 Markdown 块上写了 `language`，或 `lines` 没有 `language`",
+      "area_id": "transforms"
+    },
+    {
+      "code": "TRANSFORM_LANGUAGE_EXISTS",
+      "area": "变换",
+      "when": "给代码组增加的语言已经存在",
+      "area_id": "transforms"
+    },
+    {
+      "code": "TRANSFORM_LANGUAGE_ABSENT",
+      "area": "变换",
+      "when": "替换或删除的语言不存在",
+      "area_id": "transforms"
+    },
+    {
+      "code": "TRANSFORM_POSITION_MISSING",
+      "area": "变换",
+      "when": "块旁或代码行旁的 `add` 没写 `position`",
+      "area_id": "transforms"
+    },
+    {
+      "code": "TRANSFORM_POSITION_UNEXPECTED",
+      "area": "变换",
+      "when": "给代码组增加语言、`replace`、`remove` 时写了 `position`",
+      "area_id": "transforms"
+    },
+    {
+      "code": "TRANSFORM_CONTENT_UNEXPECTED",
+      "area": "变换",
+      "when": "`remove` 提供了内容",
+      "area_id": "transforms"
+    },
+    {
+      "code": "TRANSFORM_CONTENT_NOT_FOUND",
+      "area": "变换",
+      "when": "内容文件不存在，或路径在页面目录之外",
+      "area_id": "transforms"
+    },
+    {
+      "code": "TRANSFORM_CONTENT_MARKUP",
+      "area": "变换",
+      "when": "内容文件中有命名块标记或手写的 Cloud 组件",
+      "area_id": "transforms"
+    },
+    {
+      "code": "TRANSFORM_CONFLICT",
+      "area": "变换",
+      "when": "同一通道中同一目标被多次变换，或不同级别的变换重叠",
+      "area_id": "transforms"
+    },
+    {
+      "code": "TRANSFORM_ON_INSERTED",
+      "area": "变换",
+      "when": "对本轮刚插入的内容再做变换",
+      "area_id": "transforms"
+    },
+    {
+      "code": "TRANSFORM_CHANNEL_INVALID",
+      "area": "变换",
+      "when": "`channel` 不是 `current` 或 `next`，或页面在该通道中不存在",
+      "area_id": "transforms"
+    },
+    {
+      "code": "LINE_NOT_FOUND",
+      "area": "变换",
+      "when": "`lines` 在目标语言中找不到",
+      "area_id": "transforms"
+    },
+    {
+      "code": "LINE_AMBIGUOUS",
+      "area": "变换",
+      "when": "`lines` 出现多次",
+      "area_id": "transforms"
+    },
+    {
+      "code": "LINE_TOO_MANY",
+      "area": "变换",
+      "when": "`lines` 超过 5 行",
+      "area_id": "transforms"
+    },
+    {
+      "code": "LINE_INVALID",
+      "area": "变换",
+      "when": "`lines` 或 `content.lines` 中有空行、三个反引号或命名块标记",
+      "area_id": "transforms"
+    },
+    {
+      "code": "LINK_UNRESOLVED",
+      "area": "链接与图片",
+      "when": "Milvus 站内页面查不到 Cloud 的对应页",
+      "area_id": "links-and-images"
+    },
+    {
+      "code": "LINK_ROOT_PATH",
+      "area": "链接与图片",
+      "when": "出现以 `/` 开头的站内路径",
+      "area_id": "links-and-images"
+    },
+    {
+      "code": "LINK_UNKNOWN_FORM",
+      "area": "链接与图片",
+      "when": "链接不属于任何一类，如漏写 `.md`",
+      "area_id": "links-and-images"
+    },
+    {
+      "code": "LINK_TARGET_ABSENT",
+      "area": "链接与图片",
+      "when": "链接指向的共享页在这个版本中不存在",
+      "area_id": "links-and-images"
+    },
+    {
+      "code": "ANCHOR_NOT_FOUND",
+      "area": "链接与图片",
+      "when": "指向共享页标题的锚点找不到对应标题",
+      "area_id": "links-and-images"
+    },
+    {
+      "code": "IMAGE_FETCH_FAILED",
+      "area": "链接与图片",
+      "when": "外部图片下载失败或不存在",
+      "area_id": "links-and-images"
+    },
+    {
+      "code": "IMAGE_NOT_IN_COMMIT",
+      "area": "链接与图片",
+      "when": "仓库内的图片在该版本中不存在",
+      "area_id": "links-and-images"
+    },
+    {
+      "code": "IMAGE_CHANGED_DURING_READ",
+      "area": "链接与图片",
+      "when": "同一图片两次读取内容不同",
+      "area_id": "links-and-images"
+    },
+    {
+      "code": "LOCK_INVALID",
+      "area": "版本记录与两版合并",
+      "when": "没有 `lock.yaml`，或字段缺失、格式不对",
+      "area_id": "lock-and-merge"
+    },
+    {
+      "code": "LOCK_COMMIT_NOT_FOUND",
+      "area": "版本记录与两版合并",
+      "when": "commit 不存在，或不在跟踪分支的历史上（如分支历史被改写）",
+      "area_id": "lock-and-merge"
+    },
+    {
+      "code": "LOCK_ORDER",
+      "area": "版本记录与两版合并",
+      "when": "`current` 不是 `next` 的祖先",
+      "area_id": "lock-and-merge"
+    },
+    {
+      "code": "LOCK_NONE_UNSUPPORTED",
+      "area": "版本记录与两版合并",
+      "when": "`current` 或 `next` 写了 `none`（Phase 1 不启用）",
+      "area_id": "lock-and-merge"
+    },
+    {
+      "code": "LOCK_FORK_PR",
+      "area": "版本记录与两版合并",
+      "when": "接入 PR 来自 fork，工具无法写入",
+      "area_id": "lock-and-merge"
+    },
+    {
+      "code": "MERGE_NESTED_CHANNEL",
+      "area": "版本记录与两版合并",
+      "when": "Cloud 内容文件中手写的 `<NextChannel>` 落在工具生成的成对区域内",
+      "area_id": "lock-and-merge"
+    },
+    {
+      "code": "PRODUCT_NAME_FOUND",
+      "area": "产品名",
+      "when": "生成的页面中出现 `check` 中的写法，且不在 `allow` 中",
+      "area_id": "product-names"
+    },
+    {
+      "code": "PRODUCT_NAMES_INVALID",
+      "area": "产品名",
+      "when": "`product-names.yaml` 格式不对，或 `allow` 中有单个词",
+      "area_id": "product-names"
+    },
+    {
+      "code": "PROMOTE_PAGE_NOT_FOUND",
+      "area": "提升",
+      "when": "运行摘要中列出，不算错误",
+      "area_id": "promotion"
+    },
+    {
+      "code": "PROMOTE_NOTHING_TO_DO",
+      "area": "提升",
+      "when": "运行摘要中列出，不算错误",
+      "area_id": "promotion"
+    },
+    {
+      "code": "TABS_UNKNOWN_LANGUAGE",
+      "area": "站点适配",
+      "when": "代码组中有 Tabs 规则中没有的语言",
+      "area_id": "site-adaptation"
+    },
+    {
+      "code": "TABS_REQUIRED_MISSING",
+      "area": "站点适配",
+      "when": "多语言代码组缺少必须有的语言，或变换删除了它",
+      "area_id": "site-adaptation"
+    },
+    {
+      "code": "TABS_RULES_INVALID",
+      "area": "站点适配",
+      "when": "Tabs 规则文件格式不对",
+      "area_id": "site-adaptation"
+    },
+    {
+      "code": "ADAPT_UNSUPPORTED_MARKUP",
+      "area": "站点适配",
+      "when": "提示框写法不在支持范围内，或出现 Milvus 站点专用的版式 `div`",
+      "area_id": "site-adaptation"
+    },
+    {
+      "code": "ADAPT_MDX_INVALID",
+      "area": "站点适配",
+      "when": "修补后仍不能编译为 MDX",
+      "area_id": "site-adaptation"
+    },
+    {
+      "code": "PUBLISH_IMAGE_UPLOAD_FAILED",
+      "area": "发布与切换",
+      "when": "图片上传或上传后的摘要核对失败",
+      "area_id": "publish-and-cutover"
+    },
+    {
+      "code": "PUBLISH_REGEN_MISMATCH",
+      "area": "发布与切换",
+      "when": "重新生成的结果与记录文件不一致，或有 PR 修改了 dev 中的生成结果",
+      "area_id": "publish-and-cutover"
+    },
+    {
+      "code": "RECOVER_INPUT_MISSING",
+      "area": "发布与切换",
+      "when": "恢复时源、配置或图片缺失",
+      "area_id": "publish-and-cutover"
+    },
+    {
+      "code": "OWNERSHIP_DUPLICATE_PATH",
+      "area": "发布与切换",
+      "when": "同一个输出路径既有飞书页面又有 Git 页面",
+      "area_id": "publish-and-cutover"
+    },
+    {
+      "code": "OWNERSHIP_PATH_MISMATCH",
+      "area": "发布与切换",
+      "when": "飞书记录的发布目标或路径与 `publish` 不一致",
+      "area_id": "publish-and-cutover"
+    },
+    {
+      "code": "OWNERSHIP_WRITE_DENIED",
+      "area": "发布与切换",
+      "when": "飞书任务试图改写或删除已切换的页面",
+      "area_id": "publish-and-cutover"
+    },
+    {
+      "code": "ACTIVATE_CHECK_FAILED",
+      "area": "发布与切换",
+      "when": "比较时，或标为 `git` 后的 Fetch 中，激活前的检查不通过；`detail` 中列出是哪一项",
+      "area_id": "publish-and-cutover"
+    },
+    {
+      "code": "OWNERSHIP_CONFIG_MISSING",
+      "area": "发布与切换",
+      "when": "飞书表格标为 `git`，但没有对应的页面目录",
+      "area_id": "publish-and-cutover"
+    },
+    {
+      "code": "OWNERSHIP_REVERTED",
+      "area": "发布与切换",
+      "when": "`active.json` 中的页面，placement type 被改回其他值",
+      "area_id": "publish-and-cutover"
+    },
+    {
+      "code": "RETIRE_DIR_LEFTOVER",
+      "area": "发布与切换",
+      "when": "表格记录已删除，页面目录还在",
+      "area_id": "publish-and-cutover"
+    },
+    {
+      "code": "IMAGE_SOURCE_CHANGED",
+      "area": "发布与切换",
+      "when": "已记录的图片在原地址的内容变了（同名覆盖）",
+      "area_id": "publish-and-cutover"
+    }
+  ]
+}

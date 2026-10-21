@@ -1,0 +1,17 @@
+{
+  "1-2": "WP2",
+  "1-3": "WP2",
+  "1-4": "WP2",
+  "1-5": "WP2",
+  "T02": "WP2",
+  "T03": "WP2",
+  "T11": "WP2",
+  "VAR_MISSING": "WP2",
+  "VAR_NOT_SCALAR": "WP2",
+  "FRAGMENT_NOT_FOUND": "WP2",
+  "FRAGMENT_OUT_OF_ROOT": "WP2",
+  "FRAGMENT_SYMLINK": "WP2",
+  "FRAGMENT_CYCLE": "WP2",
+  "LIMIT_EXCEEDED": "WP2",
+  "UNSUPPORTED_MARK": "WP2"
+}

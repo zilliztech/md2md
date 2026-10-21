@@ -2,6 +2,8 @@ const fs = require("fs");
 const path = require("path");
 const chokidar = require("chokidar");
 const slash = require("slash");
+const { parseBlocks, stripBlockMarkers } = require("./src/blocks");
+const { checkDirectory, formatError } = require("./src/blocks/files");
 const { getConfigs } = require("./src/Consts");
 const { dir_filtered, all_filtered, FileType } = getConfigs();
 const {
@@ -81,7 +83,7 @@ const _customParse = async (content, path_from) => {
 
   return content;
 };
-const onFileAdd = async (path_from) => {
+const onFileAdd = async (path_from, { checkBlocks = false } = {}) => {
   Logger.start(`Origin file ${path_from} is edited.`);
   path_from = slash(path_from);
   const type_file = getFileType(path_from);
@@ -110,6 +112,11 @@ const onFileAdd = async (path_from) => {
         default:
           content = fs.readFileSync(path_from);
           break;
+      }
+      if (checkBlocks && (type_file === FileType.normalDoc || type_file === FileType.templateVar)) {
+        const result = parseBlocks(content, { sourceName: path_from });
+        if (!result.ok) throw new Error(result.errors.map(formatError).join("\n"));
+        content = stripBlockMarkers(content);
       }
       writeFile(path_to, content);
       Logger.end(`Target File ${path_to} is updated.`);
@@ -215,19 +222,34 @@ const clearAllWatcher = () => {
   });
 };
 const goOver = () => {
-  const { name_dir_from } = getConfigs();
+  const { name_dir_from, name_dir_fragments } = getConfigs();
 
   const path_from = path.resolve(getRootPath(), `${name_dir_from}/`);
+  // Validate the original files before fragments are filtered or expanded so
+  // diagnostics refer to their original paths and line numbers.
+  if (fs.existsSync(path_from)) {
+    const result = checkDirectory(path_from, { fragmentDirectory: name_dir_fragments });
+    if (!result.ok) throw new Error(result.errors.map(formatError).join("\n"));
+  }
+  const pending = [];
+  const publishFile = (file) => pending.push(onFileAdd(file, { checkBlocks: true }));
   const watcher = chokidar.watch(path_from);
   const p = new Promise((resolve, rej) => {
     watcher
-      .on("ready", () => {
-        _goOverDone();
-        resolve("done");
-        process.exit();
+      .on("ready", async () => {
+        try {
+          await Promise.all(pending);
+          _goOverDone();
+          resolve("done");
+          process.exit();
+        } catch (error) {
+          process.exitCode = 1;
+          await watcher.close();
+          rej(error);
+        }
       })
-      .on("add", onFileAdd)
-      .on("change", onFileAdd)
+      .on("add", publishFile)
+      .on("change", publishFile)
       .on("unlink", onFileRemove)
       .on("unlinkDir", onDirRemove);
   });

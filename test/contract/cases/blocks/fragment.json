@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "name": "fragment",
+  "requirements": [
+    "BLOCK_IN_FRAGMENT"
+  ],
+  "input": {
+    "file": "fragments/example.md",
+    "content": "<!-- doc:block:start id=\"x\" -->\na\n<!-- doc:block:end id=\"x\" -->"
+  },
+  "options": {
+    "sourceName": "fragments/example.md",
+    "isFragment": true
+  },
+  "expected": {
+    "parse": {
+      "ok": false,
+      "blocks": [],
+      "errors": [
+        {
+          "code": "BLOCK_IN_FRAGMENT",
+          "line": 1,
+          "file": "fragments/example.md",
+          "message": "Named block markers are not allowed in fragments."
+        },
+        {
+          "code": "BLOCK_IN_FRAGMENT",
+          "line": 3,
+          "file": "fragments/example.md",
+          "message": "Named block markers are not allowed in fragments."
+        }
+      ]
+    },
+    "strip": null
+  },
+  "dependencies": []
+}

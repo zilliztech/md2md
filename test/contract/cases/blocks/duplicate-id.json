@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "name": "duplicate-id",
+  "requirements": [
+    "T01",
+    "BLOCK_DUPLICATE_ID"
+  ],
+  "input": {
+    "file": "page.md",
+    "content": "<!-- doc:block:start id=\"x\" -->\na\n<!-- doc:block:end id=\"x\" -->\n<!-- doc:block:start id=\"x\" -->\nb\n<!-- doc:block:end id=\"x\" -->"
+  },
+  "options": {
+    "sourceName": "page.md",
+    "isFragment": false
+  },
+  "expected": {
+    "parse": {
+      "ok": false,
+      "blocks": [],
+      "errors": [
+        {
+          "code": "BLOCK_DUPLICATE_ID",
+          "line": 4,
+          "file": "page.md",
+          "message": "Duplicate block ID \"x\"."
+        }
+      ]
+    },
+    "strip": null
+  },
+  "dependencies": []
+}

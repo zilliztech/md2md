@@ -2,6 +2,10 @@
   "name": "@zilliz/mdtomd",
   "version": "1.2.3",
   "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./blocks.js": "./src/blocks/index.js"
+  },
   "repository": "git@github.com:zilliztech/md2md.git",
   "author": "nameczz <nameczz@126.com>",
   "license": "MIT",
@@ -16,7 +20,8 @@
   ],
   "bin": {
     "md2md": "./bin/md2md.js",
-    "goover": "./bin/goover.js"
+    "goover": "./bin/goover.js",
+    "md2md-blocks": "./bin/md2md-blocks.js"
   },
   "scripts": {
     "test": "jest",
@@ -32,6 +37,9 @@
   "devDependencies": {
     "jest": "^26.0.1",
     "jest-in-case": "^1.0.2"
+  },
+  "jest": {
+    "setupFilesAfterEnv": ["<rootDir>/test/spec/legacy-setup.js"]
   },
   "publishConfig": {
     "access": "public"

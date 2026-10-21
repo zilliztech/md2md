@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "name": "unmatched-end",
+  "requirements": [
+    "BLOCK_UNMATCHED_END"
+  ],
+  "input": {
+    "file": "page.md",
+    "content": "Text\n<!-- doc:block:end id=\"x\" -->"
+  },
+  "options": {
+    "sourceName": "page.md",
+    "isFragment": false
+  },
+  "expected": {
+    "parse": {
+      "ok": false,
+      "blocks": [],
+      "errors": [
+        {
+          "code": "BLOCK_UNMATCHED_END",
+          "line": 2,
+          "file": "page.md",
+          "message": "End marker \"x\" has no matching start."
+        }
+      ]
+    },
+    "strip": null
+  },
+  "dependencies": []
+}

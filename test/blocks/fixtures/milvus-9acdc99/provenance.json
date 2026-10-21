@@ -1,0 +1,15 @@
+{
+  "repository": "https://github.com/milvus-io/milvus-docs",
+  "commit": "9acdc99959e188a54be1df512ea3806c3110ef59",
+  "pages": [
+    "site/en/userGuide/insert-and-delete/delete-entities.md",
+    "site/en/userGuide/embeddings-reranking/embedding-function/openai.md",
+    "site/en/userGuide/search-query-get/filtered-search.md"
+  ],
+  "files": {
+    "site/en/userGuide/insert-and-delete/delete-entities.md": "6885815e09e8fafe5b2070e29bf4c8b187898fe6f100a880517f764c1854e119",
+    "site/en/userGuide/embeddings-reranking/embedding-function/openai.md": "b8ebd4d595b3f072450371908b584dd2831090230cd55ad376246ec093d678aa",
+    "site/en/userGuide/search-query-get/filtered-search.md": "17cfc7a7e7e9b1859a620fdd770c3d959476c07aa9033276c318d3192f36d38f",
+    "site/en/Variables.json": "c0fd66d3ac253cfc9b4fb00b9ac62fae7b9ef5e27b5d4a2c397cce0dfffadb1e"
+  }
+}
