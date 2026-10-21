@@ -19,7 +19,7 @@ test('requirement IDs cover this package and contain no unknown or stale pending
   ]);
   const owned = new Set([
     '1-2', '1-3', '1-4', '1-5', '2-1', '2-2', '2-3', 'T01', 'T02', 'T03', 'T11',
-    ...requirements.errors.filter((item) => ['命名块', '变量与片段'].includes(item.area)).map((item) => item.code),
+    ...requirements.errors.filter((item) => ['named-blocks', 'variables-and-fragments'].includes(item.area_id)).map((item) => item.code),
   ]);
   const covered = new Set();
   const readTags = (name) => {

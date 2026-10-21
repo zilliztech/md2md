@@ -21,9 +21,15 @@
   and missing decisions in the PR for the coordinator to resolve.
 - Run the required L1 checks before review and record commands and results,
   including anything skipped or unfinished.
-- PR descriptions use these five sections: 做了什么, 覆盖的编号, 测试,
-  基准输出的变化, 与设计不一致的地方. Reply to review comments with the changes
-  and validation performed.
+- PR descriptions use these five sections: Summary, Requirements covered, Tests,
+  Golden output changes, Deviations from the design. Reply to review comments
+  with the changes and validation performed.
+- All content intended for upstream must be in English, including code,
+  comments, test names, commit messages, `AGENTS.md`, and PR titles and
+  descriptions. Use the upstream conventional commit style for PR titles.
+  Review discussions in the fork may be in Chinese. Code must depend only on
+  requirement IDs and `area_id`, not on the Chinese descriptions retained in
+  the copied `requirements.json`.
 - WP1 does not change the existing release workflow, open upstream PRs, or
   merge PRs. Mark the fork PR ready only after verification. R1 version pinning
   is a coordinator-owned merge prerequisite.

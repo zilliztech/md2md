@@ -5,7 +5,7 @@
     "prd": "docs/prd.md",
     "plan": "docs/phase-1.md",
     "errors": "docs/design/09-error-catalog.md",
-    "prd_commit": "81f935a141443c3825ca18c30d7cfb091e1385d0"
+    "prd_commit": "9c67c36a1fad2006f63bc51296c41ee462c209cc"
   },
   "behaviours": [
     {
@@ -540,367 +540,440 @@
     {
       "code": "BLOCK_DUPLICATE_ID",
       "area": "命名块",
-      "when": ""
+      "when": "",
+      "area_id": "named-blocks"
     },
     {
       "code": "BLOCK_UNCLOSED",
       "area": "命名块",
-      "when": ""
+      "when": "",
+      "area_id": "named-blocks"
     },
     {
       "code": "BLOCK_UNMATCHED_END",
       "area": "命名块",
-      "when": ""
+      "when": "",
+      "area_id": "named-blocks"
     },
     {
       "code": "BLOCK_CROSSED",
       "area": "命名块",
-      "when": ""
+      "when": "",
+      "area_id": "named-blocks"
     },
     {
       "code": "BLOCK_NESTED",
       "area": "命名块",
-      "when": ""
+      "when": "",
+      "area_id": "named-blocks"
     },
     {
       "code": "BLOCK_EMPTY",
       "area": "命名块",
-      "when": ""
+      "when": "",
+      "area_id": "named-blocks"
     },
     {
       "code": "BLOCK_MALFORMED",
       "area": "命名块",
-      "when": ""
+      "when": "",
+      "area_id": "named-blocks"
     },
     {
       "code": "BLOCK_IN_FRAGMENT",
       "area": "命名块",
-      "when": ""
+      "when": "",
+      "area_id": "named-blocks"
     },
     {
       "code": "BLOCK_PARTIAL_CODE_GROUP",
       "area": "命名块",
-      "when": ""
+      "when": "",
+      "area_id": "named-blocks"
     },
     {
       "code": "VAR_MISSING",
       "area": "变量与片段",
-      "when": ""
+      "when": "",
+      "area_id": "variables-and-fragments"
     },
     {
       "code": "VAR_NOT_SCALAR",
       "area": "变量与片段",
-      "when": ""
+      "when": "",
+      "area_id": "variables-and-fragments"
     },
     {
       "code": "FRAGMENT_NOT_FOUND",
       "area": "变量与片段",
-      "when": ""
+      "when": "",
+      "area_id": "variables-and-fragments"
     },
     {
       "code": "FRAGMENT_OUT_OF_ROOT",
       "area": "变量与片段",
-      "when": ""
+      "when": "",
+      "area_id": "variables-and-fragments"
     },
     {
       "code": "FRAGMENT_SYMLINK",
       "area": "变量与片段",
-      "when": ""
+      "when": "",
+      "area_id": "variables-and-fragments"
     },
     {
       "code": "FRAGMENT_CYCLE",
       "area": "变量与片段",
-      "when": ""
+      "when": "",
+      "area_id": "variables-and-fragments"
     },
     {
       "code": "LIMIT_EXCEEDED",
       "area": "变量与片段",
-      "when": ""
+      "when": "",
+      "area_id": "variables-and-fragments"
     },
     {
       "code": "UNSUPPORTED_MARK",
       "area": "变量与片段",
-      "when": ""
+      "when": "",
+      "area_id": "variables-and-fragments"
     },
     {
       "code": "CONFIG_PAGE_ID_INVALID",
       "area": "页面配置",
-      "when": "页面目录名不符合 slug 规则"
+      "when": "页面目录名不符合 slug 规则",
+      "area_id": "page-config"
     },
     {
       "code": "CONFIG_FIELD_MISSING",
       "area": "页面配置",
-      "when": "缺少必填字段"
+      "when": "缺少必填字段",
+      "area_id": "page-config"
     },
     {
       "code": "CONFIG_FIELD_UNKNOWN",
       "area": "页面配置",
-      "when": "未知的字段、动作或 `schema_version`"
+      "when": "未知的字段、动作或 `schema_version`",
+      "area_id": "page-config"
     },
     {
       "code": "CONFIG_SOURCE_NOT_FOUND",
       "area": "页面配置",
-      "when": "`source.file` 在该版本中不存在，包括上游改名或删除了原文"
+      "when": "`source.file` 在该版本中不存在，包括上游改名或删除了原文",
+      "area_id": "page-config"
     },
     {
       "code": "CONFIG_MANUAL_UNKNOWN",
       "area": "页面配置",
-      "when": "`publish[].manual` 不是 zdoc 已有的手册"
+      "when": "`publish[].manual` 不是 zdoc 已有的手册",
+      "area_id": "page-config"
     },
     {
       "code": "CONFIG_BETA_INVALID",
       "area": "页面配置",
-      "when": "`metadata.beta` 不是 zdoc 标签定义中的值，或写了 `BYOC`"
+      "when": "`metadata.beta` 不是 zdoc 标签定义中的值，或写了 `BYOC`",
+      "area_id": "page-config"
     },
     {
       "code": "TRANSFORM_TARGET_NOT_FOUND",
       "area": "变换",
-      "when": "目标命名块或语言不存在，包括上游改名或删除了命名块"
+      "when": "目标命名块或语言不存在，包括上游改名或删除了命名块",
+      "area_id": "transforms"
     },
     {
       "code": "TRANSFORM_TARGET_KIND",
       "area": "变换",
-      "when": "在 Markdown 块上写了 `language`，或 `lines` 没有 `language`"
+      "when": "在 Markdown 块上写了 `language`，或 `lines` 没有 `language`",
+      "area_id": "transforms"
     },
     {
       "code": "TRANSFORM_LANGUAGE_EXISTS",
       "area": "变换",
-      "when": "给代码组增加的语言已经存在"
+      "when": "给代码组增加的语言已经存在",
+      "area_id": "transforms"
     },
     {
       "code": "TRANSFORM_LANGUAGE_ABSENT",
       "area": "变换",
-      "when": "替换或删除的语言不存在"
+      "when": "替换或删除的语言不存在",
+      "area_id": "transforms"
     },
     {
       "code": "TRANSFORM_POSITION_MISSING",
       "area": "变换",
-      "when": "块旁或代码行旁的 `add` 没写 `position`"
+      "when": "块旁或代码行旁的 `add` 没写 `position`",
+      "area_id": "transforms"
     },
     {
       "code": "TRANSFORM_POSITION_UNEXPECTED",
       "area": "变换",
-      "when": "给代码组增加语言、`replace`、`remove` 时写了 `position`"
+      "when": "给代码组增加语言、`replace`、`remove` 时写了 `position`",
+      "area_id": "transforms"
     },
     {
       "code": "TRANSFORM_CONTENT_UNEXPECTED",
       "area": "变换",
-      "when": "`remove` 提供了内容"
+      "when": "`remove` 提供了内容",
+      "area_id": "transforms"
     },
     {
       "code": "TRANSFORM_CONTENT_NOT_FOUND",
       "area": "变换",
-      "when": "内容文件不存在，或路径在页面目录之外"
+      "when": "内容文件不存在，或路径在页面目录之外",
+      "area_id": "transforms"
     },
     {
       "code": "TRANSFORM_CONTENT_MARKUP",
       "area": "变换",
-      "when": "内容文件中有命名块标记或手写的 Cloud 组件"
+      "when": "内容文件中有命名块标记或手写的 Cloud 组件",
+      "area_id": "transforms"
     },
     {
       "code": "TRANSFORM_CONFLICT",
       "area": "变换",
-      "when": "同一通道中同一目标被多次变换，或不同级别的变换重叠"
+      "when": "同一通道中同一目标被多次变换，或不同级别的变换重叠",
+      "area_id": "transforms"
     },
     {
       "code": "TRANSFORM_ON_INSERTED",
       "area": "变换",
-      "when": "对本轮刚插入的内容再做变换"
+      "when": "对本轮刚插入的内容再做变换",
+      "area_id": "transforms"
     },
     {
       "code": "TRANSFORM_CHANNEL_INVALID",
       "area": "变换",
-      "when": "`channel` 不是 `current` 或 `next`，或页面在该通道中不存在"
+      "when": "`channel` 不是 `current` 或 `next`，或页面在该通道中不存在",
+      "area_id": "transforms"
     },
     {
       "code": "LINE_NOT_FOUND",
       "area": "变换",
-      "when": "`lines` 在目标语言中找不到"
+      "when": "`lines` 在目标语言中找不到",
+      "area_id": "transforms"
     },
     {
       "code": "LINE_AMBIGUOUS",
       "area": "变换",
-      "when": "`lines` 出现多次"
+      "when": "`lines` 出现多次",
+      "area_id": "transforms"
     },
     {
       "code": "LINE_TOO_MANY",
       "area": "变换",
-      "when": "`lines` 超过 5 行"
+      "when": "`lines` 超过 5 行",
+      "area_id": "transforms"
     },
     {
       "code": "LINE_INVALID",
       "area": "变换",
-      "when": "`lines` 或 `content.lines` 中有空行、三个反引号或命名块标记"
+      "when": "`lines` 或 `content.lines` 中有空行、三个反引号或命名块标记",
+      "area_id": "transforms"
     },
     {
       "code": "LINK_UNRESOLVED",
       "area": "链接与图片",
-      "when": "Milvus 站内页面查不到 Cloud 的对应页"
+      "when": "Milvus 站内页面查不到 Cloud 的对应页",
+      "area_id": "links-and-images"
     },
     {
       "code": "LINK_ROOT_PATH",
       "area": "链接与图片",
-      "when": "出现以 `/` 开头的站内路径"
+      "when": "出现以 `/` 开头的站内路径",
+      "area_id": "links-and-images"
     },
     {
       "code": "LINK_UNKNOWN_FORM",
       "area": "链接与图片",
-      "when": "链接不属于任何一类，如漏写 `.md`"
+      "when": "链接不属于任何一类，如漏写 `.md`",
+      "area_id": "links-and-images"
     },
     {
       "code": "LINK_TARGET_ABSENT",
       "area": "链接与图片",
-      "when": "链接指向的共享页在这个版本中不存在"
+      "when": "链接指向的共享页在这个版本中不存在",
+      "area_id": "links-and-images"
     },
     {
       "code": "ANCHOR_NOT_FOUND",
       "area": "链接与图片",
-      "when": "指向共享页标题的锚点找不到对应标题"
+      "when": "指向共享页标题的锚点找不到对应标题",
+      "area_id": "links-and-images"
     },
     {
       "code": "IMAGE_FETCH_FAILED",
       "area": "链接与图片",
-      "when": "外部图片下载失败或不存在"
+      "when": "外部图片下载失败或不存在",
+      "area_id": "links-and-images"
     },
     {
       "code": "IMAGE_NOT_IN_COMMIT",
       "area": "链接与图片",
-      "when": "仓库内的图片在该版本中不存在"
+      "when": "仓库内的图片在该版本中不存在",
+      "area_id": "links-and-images"
     },
     {
       "code": "IMAGE_CHANGED_DURING_READ",
       "area": "链接与图片",
-      "when": "同一图片两次读取内容不同"
+      "when": "同一图片两次读取内容不同",
+      "area_id": "links-and-images"
     },
     {
       "code": "LOCK_INVALID",
       "area": "版本记录与两版合并",
-      "when": "没有 `lock.yaml`，或字段缺失、格式不对"
+      "when": "没有 `lock.yaml`，或字段缺失、格式不对",
+      "area_id": "lock-and-merge"
     },
     {
       "code": "LOCK_COMMIT_NOT_FOUND",
       "area": "版本记录与两版合并",
-      "when": "commit 不存在，或不在跟踪分支的历史上（如分支历史被改写）"
+      "when": "commit 不存在，或不在跟踪分支的历史上（如分支历史被改写）",
+      "area_id": "lock-and-merge"
     },
     {
       "code": "LOCK_ORDER",
       "area": "版本记录与两版合并",
-      "when": "`current` 不是 `next` 的祖先"
+      "when": "`current` 不是 `next` 的祖先",
+      "area_id": "lock-and-merge"
     },
     {
       "code": "LOCK_NONE_UNSUPPORTED",
       "area": "版本记录与两版合并",
-      "when": "`current` 或 `next` 写了 `none`（Phase 1 不启用）"
+      "when": "`current` 或 `next` 写了 `none`（Phase 1 不启用）",
+      "area_id": "lock-and-merge"
     },
     {
       "code": "LOCK_FORK_PR",
       "area": "版本记录与两版合并",
-      "when": "接入 PR 来自 fork，工具无法写入"
+      "when": "接入 PR 来自 fork，工具无法写入",
+      "area_id": "lock-and-merge"
     },
     {
       "code": "MERGE_NESTED_CHANNEL",
       "area": "版本记录与两版合并",
-      "when": "Cloud 内容文件中手写的 `<NextChannel>` 落在工具生成的成对区域内"
+      "when": "Cloud 内容文件中手写的 `<NextChannel>` 落在工具生成的成对区域内",
+      "area_id": "lock-and-merge"
     },
     {
       "code": "PRODUCT_NAME_FOUND",
       "area": "产品名",
-      "when": "生成的页面中出现 `check` 中的写法，且不在 `allow` 中"
+      "when": "生成的页面中出现 `check` 中的写法，且不在 `allow` 中",
+      "area_id": "product-names"
     },
     {
       "code": "PRODUCT_NAMES_INVALID",
       "area": "产品名",
-      "when": "`product-names.yaml` 格式不对，或 `allow` 中有单个词"
+      "when": "`product-names.yaml` 格式不对，或 `allow` 中有单个词",
+      "area_id": "product-names"
     },
     {
       "code": "PROMOTE_PAGE_NOT_FOUND",
       "area": "提升",
-      "when": "运行摘要中列出，不算错误"
+      "when": "运行摘要中列出，不算错误",
+      "area_id": "promotion"
     },
     {
       "code": "PROMOTE_NOTHING_TO_DO",
       "area": "提升",
-      "when": "运行摘要中列出，不算错误"
+      "when": "运行摘要中列出，不算错误",
+      "area_id": "promotion"
     },
     {
       "code": "TABS_UNKNOWN_LANGUAGE",
       "area": "站点适配",
-      "when": "代码组中有 Tabs 规则中没有的语言"
+      "when": "代码组中有 Tabs 规则中没有的语言",
+      "area_id": "site-adaptation"
     },
     {
       "code": "TABS_REQUIRED_MISSING",
       "area": "站点适配",
-      "when": "多语言代码组缺少必须有的语言，或变换删除了它"
+      "when": "多语言代码组缺少必须有的语言，或变换删除了它",
+      "area_id": "site-adaptation"
     },
     {
       "code": "TABS_RULES_INVALID",
       "area": "站点适配",
-      "when": "Tabs 规则文件格式不对"
+      "when": "Tabs 规则文件格式不对",
+      "area_id": "site-adaptation"
     },
     {
       "code": "ADAPT_UNSUPPORTED_MARKUP",
       "area": "站点适配",
-      "when": "提示框写法不在支持范围内，或出现 Milvus 站点专用的版式 `div`"
+      "when": "提示框写法不在支持范围内，或出现 Milvus 站点专用的版式 `div`",
+      "area_id": "site-adaptation"
     },
     {
       "code": "ADAPT_MDX_INVALID",
       "area": "站点适配",
-      "when": "修补后仍不能编译为 MDX"
+      "when": "修补后仍不能编译为 MDX",
+      "area_id": "site-adaptation"
     },
     {
       "code": "PUBLISH_IMAGE_UPLOAD_FAILED",
       "area": "发布与切换",
-      "when": "图片上传或上传后的摘要核对失败"
+      "when": "图片上传或上传后的摘要核对失败",
+      "area_id": "publish-and-cutover"
     },
     {
       "code": "PUBLISH_REGEN_MISMATCH",
       "area": "发布与切换",
-      "when": "重新生成的结果与记录文件不一致，或有 PR 修改了 dev 中的生成结果"
+      "when": "重新生成的结果与记录文件不一致，或有 PR 修改了 dev 中的生成结果",
+      "area_id": "publish-and-cutover"
     },
     {
       "code": "RECOVER_INPUT_MISSING",
       "area": "发布与切换",
-      "when": "恢复时源、配置或图片缺失"
+      "when": "恢复时源、配置或图片缺失",
+      "area_id": "publish-and-cutover"
     },
     {
       "code": "OWNERSHIP_DUPLICATE_PATH",
       "area": "发布与切换",
-      "when": "同一个输出路径既有飞书页面又有 Git 页面"
+      "when": "同一个输出路径既有飞书页面又有 Git 页面",
+      "area_id": "publish-and-cutover"
     },
     {
       "code": "OWNERSHIP_PATH_MISMATCH",
       "area": "发布与切换",
-      "when": "飞书记录的发布目标或路径与 `publish` 不一致"
+      "when": "飞书记录的发布目标或路径与 `publish` 不一致",
+      "area_id": "publish-and-cutover"
     },
     {
       "code": "OWNERSHIP_WRITE_DENIED",
       "area": "发布与切换",
-      "when": "飞书任务试图改写或删除已切换的页面"
+      "when": "飞书任务试图改写或删除已切换的页面",
+      "area_id": "publish-and-cutover"
     },
     {
       "code": "ACTIVATE_CHECK_FAILED",
       "area": "发布与切换",
-      "when": "比较时，或标为 `git` 后的 Fetch 中，激活前的检查不通过；`detail` 中列出是哪一项"
+      "when": "比较时，或标为 `git` 后的 Fetch 中，激活前的检查不通过；`detail` 中列出是哪一项",
+      "area_id": "publish-and-cutover"
     },
     {
       "code": "OWNERSHIP_CONFIG_MISSING",
       "area": "发布与切换",
-      "when": "飞书表格标为 `git`，但没有对应的页面目录"
+      "when": "飞书表格标为 `git`，但没有对应的页面目录",
+      "area_id": "publish-and-cutover"
     },
     {
       "code": "OWNERSHIP_REVERTED",
       "area": "发布与切换",
-      "when": "`active.json` 中的页面，placement type 被改回其他值"
+      "when": "`active.json` 中的页面，placement type 被改回其他值",
+      "area_id": "publish-and-cutover"
     },
     {
       "code": "RETIRE_DIR_LEFTOVER",
       "area": "发布与切换",
-      "when": "表格记录已删除，页面目录还在"
+      "when": "表格记录已删除，页面目录还在",
+      "area_id": "publish-and-cutover"
     },
     {
       "code": "IMAGE_SOURCE_CHANGED",
       "area": "发布与切换",
-      "when": "已记录的图片在原地址的内容变了（同名覆盖）"
+      "when": "已记录的图片在原地址的内容变了（同名覆盖）",
+      "area_id": "publish-and-cutover"
     }
   ]
 }
