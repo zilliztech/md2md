@@ -1,5 +1,4 @@
 ---
-id: normal.md
 a: aha
 b: bha
 ---
