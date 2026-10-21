@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "name": "empty",
+  "requirements": [
+    "T01",
+    "BLOCK_EMPTY"
+  ],
+  "input": {
+    "file": "page.md",
+    "content": "<!-- doc:block:start id=\"x\" -->\n \t\n<!-- doc:block:end id=\"x\" -->"
+  },
+  "options": {
+    "sourceName": "page.md",
+    "isFragment": false
+  },
+  "expected": {
+    "parse": {
+      "ok": false,
+      "blocks": [],
+      "errors": [
+        {
+          "code": "BLOCK_EMPTY",
+          "line": 1,
+          "file": "page.md",
+          "message": "Block \"x\" contains no content."
+        }
+      ]
+    },
+    "strip": null
+  },
+  "dependencies": []
+}

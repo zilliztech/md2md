@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "name": "single-language",
+  "requirements": [
+    "T01",
+    "2-1"
+  ],
+  "input": {
+    "file": "page.md",
+    "content": "<!-- doc:block:start id=\"x\" -->\n```python\nprint(1)\n```\n<!-- doc:block:end id=\"x\" -->\n"
+  },
+  "options": {
+    "sourceName": "page.md",
+    "isFragment": false
+  },
+  "expected": {
+    "parse": {
+      "ok": true,
+      "blocks": [
+        {
+          "id": "x",
+          "startLine": 1,
+          "endLine": 5
+        }
+      ],
+      "errors": []
+    },
+    "strip": "```python\nprint(1)\n```\n"
+  },
+  "dependencies": []
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "name": "partial-code-group",
+  "requirements": [
+    "T01",
+    "BLOCK_PARTIAL_CODE_GROUP"
+  ],
+  "input": {
+    "file": "page.md",
+    "content": "<!-- doc:block:start id=\"x\" -->\n<div class=\"multipleCode\">\n</div>\n```python\na\n```\n<!-- doc:block:end id=\"x\" -->\n```java\nb\n```"
+  },
+  "options": {
+    "sourceName": "page.md",
+    "isFragment": false
+  },
+  "expected": {
+    "parse": {
+      "ok": false,
+      "blocks": [],
+      "errors": [
+        {
+          "code": "BLOCK_PARTIAL_CODE_GROUP",
+          "line": 1,
+          "file": "page.md",
+          "message": "Block \"x\" splits a multipleCode group."
+        }
+      ]
+    },
+    "strip": null
+  },
+  "dependencies": []
+}

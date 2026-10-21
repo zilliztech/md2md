@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "name": "unmarked",
+  "requirements": [
+    "T01"
+  ],
+  "input": {
+    "file": "page.md",
+    "content": "# Heading\n"
+  },
+  "options": {
+    "sourceName": "page.md",
+    "isFragment": false
+  },
+  "expected": {
+    "parse": {
+      "ok": true,
+      "blocks": [],
+      "errors": []
+    },
+    "strip": "# Heading\n"
+  },
+  "dependencies": []
+}

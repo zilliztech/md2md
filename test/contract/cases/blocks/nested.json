@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "name": "nested",
+  "requirements": [
+    "T01",
+    "BLOCK_NESTED"
+  ],
+  "input": {
+    "file": "page.md",
+    "content": "<!-- doc:block:start id=\"x\" -->\n<!-- doc:block:start id=\"y\" -->\na\n<!-- doc:block:end id=\"y\" -->\n<!-- doc:block:end id=\"x\" -->"
+  },
+  "options": {
+    "sourceName": "page.md",
+    "isFragment": false
+  },
+  "expected": {
+    "parse": {
+      "ok": false,
+      "blocks": [],
+      "errors": [
+        {
+          "code": "BLOCK_NESTED",
+          "line": 2,
+          "file": "page.md",
+          "message": "Block \"y\" starts inside block \"x\"."
+        }
+      ]
+    },
+    "strip": null
+  },
+  "dependencies": []
+}

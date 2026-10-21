@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "name": "fenced-example",
+  "requirements": [
+    "2-1"
+  ],
+  "input": {
+    "file": "fragments/example.md",
+    "content": "~~~~md\n<!-- doc:block:start id=\"x\" -->\n<!-- doc:block:end id=X -->\n~~~~\n"
+  },
+  "options": {
+    "sourceName": "fragments/example.md",
+    "isFragment": true
+  },
+  "expected": {
+    "parse": {
+      "ok": true,
+      "blocks": [],
+      "errors": []
+    },
+    "strip": "~~~~md\n<!-- doc:block:start id=\"x\" -->\n<!-- doc:block:end id=X -->\n~~~~\n"
+  },
+  "dependencies": []
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "name": "multiple-languages",
+  "requirements": [
+    "T01",
+    "2-1"
+  ],
+  "input": {
+    "file": "page.md",
+    "content": "<!-- doc:block:start id=\"x\" -->\n<div class=\"multipleCode\">\n<a href=\"#python\">Python</a>\n<a href=\"#java\">Java</a>\n</div>\n\n```python\nprint(1)\n```\n\n~~~java\nhello();\n~~~\n<!-- doc:block:end id=\"x\" -->\n"
+  },
+  "options": {
+    "sourceName": "page.md",
+    "isFragment": false
+  },
+  "expected": {
+    "parse": {
+      "ok": true,
+      "blocks": [
+        {
+          "id": "x",
+          "startLine": 1,
+          "endLine": 14
+        }
+      ],
+      "errors": []
+    },
+    "strip": "<div class=\"multipleCode\">\n<a href=\"#python\">Python</a>\n<a href=\"#java\">Java</a>\n</div>\n\n```python\nprint(1)\n```\n\n~~~java\nhello();\n~~~\n"
+  },
+  "dependencies": []
+}

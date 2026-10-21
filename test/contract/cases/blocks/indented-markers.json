@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "name": "indented-markers",
+  "requirements": [
+    "2-1"
+  ],
+  "input": {
+    "file": "page.md",
+    "content": "    <!-- doc:block:start id=\"x\" -->\t\r\nbody\r\n\t<!-- doc:block:end id=\"x\" -->"
+  },
+  "options": {
+    "sourceName": "page.md",
+    "isFragment": false
+  },
+  "expected": {
+    "parse": {
+      "ok": true,
+      "blocks": [
+        {
+          "id": "x",
+          "startLine": 1,
+          "endLine": 3
+        }
+      ],
+      "errors": []
+    },
+    "strip": "body\r\n"
+  },
+  "dependencies": []
+}
