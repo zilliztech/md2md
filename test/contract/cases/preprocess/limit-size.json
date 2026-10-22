@@ -1,0 +1,31 @@
+{
+  "input": {
+    "content": "start\n{{fragments/a.md}}",
+    "variables": {},
+    "sourceName": "page.md",
+    "limits": {
+      "maxFragmentBytes": 3
+    }
+  },
+  "files": {
+    "fragments/a.md": "\u00e9\u00e9"
+  },
+  "expected": {
+    "ok": false,
+    "content": null,
+    "dependencies": {
+      "fragments": [],
+      "variables": []
+    },
+    "errors": [
+      {
+        "code": "LIMIT_EXCEEDED",
+        "file": "page.md",
+        "line": 2,
+        "detail": {
+          "limit": "maxFragmentBytes"
+        }
+      }
+    ]
+  }
+}

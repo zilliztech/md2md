@@ -1,0 +1,41 @@
+{
+  "input": {
+    "content": "{{fragments/a.md}}{{fragments/a.md}}\n{{fragments/b.md}}",
+    "variables": {},
+    "sourceName": "page.md",
+    "limits": {
+      "maxFragments": 1
+    }
+  },
+  "files": {
+    "fragments/a.md": "x",
+    "fragments/b.md": "y"
+  },
+  "expected": {
+    "ok": false,
+    "content": null,
+    "dependencies": {
+      "fragments": [
+        {
+          "path": "fragments/a.md",
+          "sha256": "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881",
+          "bytes": 1,
+          "includedBy": [
+            "page.md"
+          ]
+        }
+      ],
+      "variables": []
+    },
+    "errors": [
+      {
+        "code": "LIMIT_EXCEEDED",
+        "file": "page.md",
+        "line": 2,
+        "detail": {
+          "limit": "maxFragments"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "input": {
+    "content": "start\n{{tab}}\n::glossary.term\n{{glossary.term}}\n{{images/a.png}}",
+    "variables": {},
+    "sourceName": "page.md"
+  },
+  "files": {},
+  "expected": {
+    "ok": false,
+    "content": null,
+    "dependencies": {
+      "fragments": [],
+      "variables": []
+    },
+    "errors": [
+      {
+        "code": "UNSUPPORTED_MARK",
+        "file": "page.md",
+        "line": 2,
+        "detail": {}
+      },
+      {
+        "code": "UNSUPPORTED_MARK",
+        "file": "page.md",
+        "line": 3,
+        "detail": {}
+      },
+      {
+        "code": "UNSUPPORTED_MARK",
+        "file": "page.md",
+        "line": 4,
+        "detail": {}
+      },
+      {
+        "code": "UNSUPPORTED_MARK",
+        "file": "page.md",
+        "line": 5,
+        "detail": {}
+      }
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "input": {
+    "content": "start\n{{var.cloud}} {{var.list}}",
+    "variables": {
+      "cloud": {
+        "region": "eu"
+      },
+      "list": []
+    },
+    "sourceName": "page.md"
+  },
+  "files": {},
+  "expected": {
+    "ok": false,
+    "content": null,
+    "dependencies": {
+      "fragments": [],
+      "variables": [
+        {
+          "key": "cloud",
+          "usedIn": [
+            "page.md"
+          ]
+        },
+        {
+          "key": "list",
+          "usedIn": [
+            "page.md"
+          ]
+        }
+      ]
+    },
+    "errors": [
+      {
+        "code": "VAR_NOT_SCALAR",
+        "file": "page.md",
+        "line": 2,
+        "detail": {}
+      },
+      {
+        "code": "VAR_NOT_SCALAR",
+        "file": "page.md",
+        "line": 2,
+        "detail": {}
+      }
+    ]
+  }
+}

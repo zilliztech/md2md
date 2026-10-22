@@ -1,0 +1,50 @@
+{
+  "input": {
+    "content": "start\n{{fragments/a.md}}",
+    "variables": {},
+    "sourceName": "page.md"
+  },
+  "files": {
+    "fragments/a.md": "A\n{{fragments/b.md}}",
+    "fragments/b.md": "B\n{{fragments/a.md}}"
+  },
+  "expected": {
+    "ok": false,
+    "content": null,
+    "dependencies": {
+      "fragments": [
+        {
+          "path": "fragments/a.md",
+          "sha256": "969a9c3f043ee001bf42fd41802f52fcec2953431c8e390aa9b86311396d6460",
+          "bytes": 20,
+          "includedBy": [
+            "page.md"
+          ]
+        },
+        {
+          "path": "fragments/b.md",
+          "sha256": "46e35b1e013cb3a5d944aeabe34b88f8a8bc67164074dcd40e8404b343127a3d",
+          "bytes": 20,
+          "includedBy": [
+            "fragments/a.md"
+          ]
+        }
+      ],
+      "variables": []
+    },
+    "errors": [
+      {
+        "code": "FRAGMENT_CYCLE",
+        "file": "fragments/b.md",
+        "line": 2,
+        "detail": {
+          "chain": [
+            "fragments/a.md",
+            "fragments/b.md",
+            "fragments/a.md"
+          ]
+        }
+      }
+    ]
+  }
+}

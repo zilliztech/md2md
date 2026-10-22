@@ -1,0 +1,79 @@
+{
+  "input": {
+    "content": "{{var.Product}}|\n{{fragments/a.md}}{{fragments/a.md}}{{fragments/b.md}}\n{{var.literal}} {{ doc.content }}\n```js\n{{VAR.CLOUD.REGION}} {{var.zero}} {{var.enabled}}\n```\n",
+    "variables": {
+      "Product": "Zilliz Cloud",
+      "cloud": {
+        "region": "eu"
+      },
+      "literal": "{{var.product}} {{fragments/no.md}} {{tab}}",
+      "zero": 0,
+      "enabled": false
+    },
+    "sourceName": "page.md"
+  },
+  "files": {
+    "fragments/a.md": "A {{var.cloud.Region}}\n{{fragments/b.md}}",
+    "fragments/b.md": "B {{var.PRODUCT}}\n"
+  },
+  "expected": {
+    "ok": true,
+    "content": "Zilliz Cloud|\nA eu\nB Zilliz Cloud\nA eu\nB Zilliz Cloud\nB Zilliz Cloud\n\n{{var.product}} {{fragments/no.md}} {{tab}} {{ doc.content }}\n```js\neu 0 false\n```\n",
+    "dependencies": {
+      "fragments": [
+        {
+          "path": "fragments/a.md",
+          "sha256": "52dba34c4c2a7d189cb577d6b85929b7c5535660faddeeae0b47275bfb457cee",
+          "bytes": 41,
+          "includedBy": [
+            "page.md"
+          ]
+        },
+        {
+          "path": "fragments/b.md",
+          "sha256": "4b659b982d842d930fb2aadd9e9ab43c5d961632951da81d4ccfc2340749c6da",
+          "bytes": 18,
+          "includedBy": [
+            "fragments/a.md",
+            "page.md"
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "product",
+          "usedIn": [
+            "page.md",
+            "fragments/b.md"
+          ]
+        },
+        {
+          "key": "cloud.region",
+          "usedIn": [
+            "fragments/a.md",
+            "page.md"
+          ]
+        },
+        {
+          "key": "literal",
+          "usedIn": [
+            "page.md"
+          ]
+        },
+        {
+          "key": "zero",
+          "usedIn": [
+            "page.md"
+          ]
+        },
+        {
+          "key": "enabled",
+          "usedIn": [
+            "page.md"
+          ]
+        }
+      ]
+    },
+    "errors": []
+  }
+}

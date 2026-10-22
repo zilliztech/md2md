@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// Usage: node test/blocks/regression.js <milvus-checkout> <old-package> <new-output-directory>
+// Usage: node test/blocks/regression.js <milvus-checkout> <old-package> <new-output-directory> [expected-source-commit]
 // All builds run in the same private path; only the inserted marker lines vary.
 const fs = require("fs");
 const path = require("path");
@@ -34,10 +34,10 @@ function compare(left, right) {
 }
 
 function main() {
-  const [source, previousPackage, destination, ...extra] = process.argv.slice(2);
-  if (!source || !previousPackage || !destination || extra.length) throw new Error('Usage: node test/blocks/regression.js <milvus-checkout> <old-package> <new-output-directory>');
+  const [source, previousPackage, destination, expectedCommit = provenance.commit, ...extra] = process.argv.slice(2);
+  if (!source || !previousPackage || !destination || extra.length) throw new Error('Usage: node test/blocks/regression.js <milvus-checkout> <old-package> <new-output-directory> [expected-source-commit]');
   const commit = execFileSync('git', ['-C', source, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
-  if (commit !== provenance.commit) throw new Error(`Expected milvus-docs ${provenance.commit}, got ${commit}`);
+  if (commit !== expectedCommit) throw new Error(`Expected milvus-docs ${expectedCommit}, got ${commit}`);
   const output = path.resolve(destination);
   fs.mkdirSync(output); // Refuse to overwrite an earlier run.
   const run = path.join(output, 'run');
