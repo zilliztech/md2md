@@ -29,7 +29,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.34.0",
     "chokidar": "^3.4.0",
     "lodash": "^4.17.15",
     "minimist": "^1.2.5",
