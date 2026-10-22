@@ -3,7 +3,7 @@ const os = require('os');
 const path = require('path');
 
 function fixture(files = {}, symlinks = {}) {
-  const root = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'md2md-preprocess-')));
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'md2md-preprocess-'));
   for (const [file, content] of Object.entries(files)) {
     const target = path.join(root, file);
     fs.mkdirSync(path.dirname(target), { recursive: true });

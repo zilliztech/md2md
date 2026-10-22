@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-// Check the lexical route before normalization, including directories before '..'.
+// Check below the caller-supplied root before normalization, including directories before '..'.
 function fragmentPath(root, reference) {
   const suffix = reference.slice(reference.indexOf('/') + 1);
   if (path.posix.isAbsolute(suffix) || path.win32.isAbsolute(suffix) || suffix.includes('\\') ||
@@ -15,9 +15,8 @@ function fragmentPath(root, reference) {
   }
   const relative = path.posix.normalize(`fragments/${suffix}`);
   try {
-    const route = `${root}/fragments/${suffix}`;
-    let current = path.parse(root).root;
-    for (const part of route.slice(current.length).split('/')) {
+    let current = root;
+    for (const part of `fragments/${suffix}`.split('/')) {
       if (!part || part === '.') continue;
       current = path.join(current, part);
       if (fs.lstatSync(current).isSymbolicLink()) return { code: 'FRAGMENT_SYMLINK' };

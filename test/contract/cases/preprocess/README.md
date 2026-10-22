@@ -2,9 +2,10 @@
 
 Each JSON file supplies `input` arguments (without `fragmentRoot`), UTF-8 `files`
 keyed by root-relative path, optional `symlinks` mapping link paths to link targets,
-and `expected` results. Create the files in a temporary directory, canonicalize
-the temporary root itself, create the links, and pass that root as `fragmentRoot`.
-Never canonicalize the fragment paths: that would hide the symlinks under test.
+and `expected` results. Create the files and links in a temporary directory and
+pass that directory as `fragmentRoot`. The root and its ancestors may be symlinks.
+Never canonicalize paths below the root: symlinks in `fragments/` or any of its
+children must still be rejected.
 
 Compare `ok`, `content`, `dependencies`, and error `code`, `file`, `line`, `detail`
 exactly, including array order. Error messages must be nonempty but their wording

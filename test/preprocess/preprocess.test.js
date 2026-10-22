@@ -69,15 +69,13 @@ test.each(['../outside.md', 'sub/../../outside.md', '/absolute.md', 'C:/absolute
   expect(read).not.toHaveBeenCalled();
 });
 
-test('[FRAGMENT_SYMLINK] checks the file, directories, root, and paths before parent normalization', () => {
+test('[FRAGMENT_SYMLINK] checks fragment files, directories, and paths before parent normalization', () => {
   fs.symlinkSync('a.md', path.join(root, 'fragments/link.md'));
   fs.symlinkSync('.', path.join(root, 'fragments/link'));
   fs.symlinkSync('missing.md', path.join(root, 'fragments/broken.md'));
   for (const reference of ['link.md', 'link/a.md', 'link/../a.md', 'broken.md']) {
     expect(run(`{{fragments/${reference}}}`).errors[0].code).toBe('FRAGMENT_SYMLINK');
   }
-  fs.symlinkSync(root, path.join(root, 'alias'));
-  expect(run('{{fragments/a.md}}', { fragmentRoot: path.join(root, 'alias') }).errors[0].code).toBe('FRAGMENT_SYMLINK');
   fs.renameSync(path.join(root, 'fragments'), path.join(root, 'real-fragments'));
   fs.symlinkSync('real-fragments', path.join(root, 'fragments'));
   expect(run('{{fragments/a.md}}').errors[0].code).toBe('FRAGMENT_SYMLINK');
@@ -155,4 +153,31 @@ test('[LIMIT_EXCEEDED] output limits are still checked when other independent er
   const result = run('{{var.missing}}\nlong text', { limits: { maxOutputBytes: 2 } });
   expect(result.errors.map(error => error.code)).toEqual(['VAR_MISSING', 'LIMIT_EXCEEDED']);
   expect(result.content).toBeNull();
+});
+
+test('[1-5][FRAGMENT_SYMLINK] permits a symlinked parent but rejects symlinks inside fragments', () => {
+  const realRoot = path.join(root, 'real/checkout');
+  fs.mkdirSync(path.join(realRoot, 'fragments'), { recursive: true });
+  fs.writeFileSync(path.join(realRoot, 'fragments/a.md'), '{{var.product}}');
+  fs.symlinkSync('real', path.join(root, 'link'));
+  const fragmentRoot = path.join(root, 'link/checkout');
+  expect(run('{{fragments/a.md}}', { fragmentRoot })).toMatchObject({ ok: true, content: 'Cloud', errors: [] });
+  fs.symlinkSync('a.md', path.join(realRoot, 'fragments/alias.md'));
+  expect(run('{{fragments/alias.md}}', { fragmentRoot })).toMatchObject({
+    ok: false, content: null, errors: [expect.objectContaining({ code: 'FRAGMENT_SYMLINK', line: 1 })],
+  });
+});
+
+test('[1-5] permits a symlink at the caller-supplied fragment root', () => {
+  fs.symlinkSync(root, path.join(root, 'alias'));
+  expect(run('{{fragments/a.md}}', { fragmentRoot: path.join(root, 'alias') }))
+    .toMatchObject({ ok: true, content: 'Cloud', errors: [] });
+});
+
+test('[1-2][1-4] fragment prefixes are case-sensitive while variables remain case-insensitive', () => {
+  const result = run('{{Fragments/missing.md}}\n{{FRAGMENTS/a.md}}\n{{VaR.PrOdUcT}}\n{{fragments/a.md}}');
+  expect(result).toMatchObject({
+    ok: true, content: '{{Fragments/missing.md}}\n{{FRAGMENTS/a.md}}\nCloud\nCloud', errors: [],
+  });
+  expect(result.dependencies.fragments.map(fragment => fragment.path)).toEqual(['fragments/a.md']);
 });

@@ -9,8 +9,10 @@ function scan(content) {
     line += (text.match(/\n/g) || []).length;
   }
   for (const match of content.matchAll(pattern)) {
-    add(content.slice(offset, match.index), 'text');
     const mark = match[1];
+    // Unlike variable marks, fragment prefixes must be exactly lowercase.
+    if (mark && /^fragments\//i.test(mark) && !mark.startsWith('fragments/')) continue;
+    add(content.slice(offset, match.index), 'text');
     const type = !mark ? 'unsupported' : /^var\./i.test(mark) ? 'variable' : 'fragment';
     add(match[0], type, type === 'variable' ? mark.slice(4).toLowerCase() : mark);
     offset = match.index + match[0].length;
