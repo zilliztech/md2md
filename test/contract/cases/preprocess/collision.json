@@ -1,0 +1,14 @@
+{
+  "input": {
+    "content": "",
+    "variables": {
+      "cloud": {
+        "Product": "a",
+        "product": "b"
+      }
+    }
+  },
+  "expected": {
+    "throws": "TypeError"
+  }
+}

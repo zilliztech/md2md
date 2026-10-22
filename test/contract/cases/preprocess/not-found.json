@@ -1,0 +1,24 @@
+{
+  "input": {
+    "content": "start\n{{fragments/missing.md}}",
+    "variables": {},
+    "sourceName": "page.md"
+  },
+  "files": {},
+  "expected": {
+    "ok": false,
+    "content": null,
+    "dependencies": {
+      "fragments": [],
+      "variables": []
+    },
+    "errors": [
+      {
+        "code": "FRAGMENT_NOT_FOUND",
+        "file": "page.md",
+        "line": 2,
+        "detail": {}
+      }
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "input": {
+    "content": "start\n{{fragments/a.md}}\n{{var.absent}}",
+    "variables": {},
+    "sourceName": "page.md"
+  },
+  "files": {
+    "fragments/a.md": "first\n{{var.absent}}\nlast\n"
+  },
+  "expected": {
+    "ok": false,
+    "content": null,
+    "dependencies": {
+      "fragments": [
+        {
+          "path": "fragments/a.md",
+          "sha256": "dbb1f79c08ab6d9acd734c57a0ad8f1e2a9b367754fe633cead4c25d7fd25388",
+          "bytes": 26,
+          "includedBy": [
+            "page.md"
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "absent",
+          "usedIn": [
+            "fragments/a.md",
+            "page.md"
+          ]
+        }
+      ]
+    },
+    "errors": [
+      {
+        "code": "VAR_MISSING",
+        "file": "fragments/a.md",
+        "line": 2,
+        "detail": {}
+      },
+      {
+        "code": "VAR_MISSING",
+        "file": "page.md",
+        "line": 3,
+        "detail": {}
+      }
+    ]
+  }
+}

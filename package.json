@@ -1,10 +1,11 @@
 {
   "name": "@zilliz/mdtomd",
-  "version": "1.2.3",
+  "version": "1.3.0",
   "main": "index.js",
   "exports": {
     ".": "./index.js",
-    "./blocks.js": "./src/blocks/index.js"
+    "./blocks.js": "./src/blocks/index.js",
+    "./preprocess.js": "./src/preprocess/index.js"
   },
   "repository": "git@github.com:zilliztech/md2md.git",
   "author": "nameczz <nameczz@126.com>",

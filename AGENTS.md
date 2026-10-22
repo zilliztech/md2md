@@ -21,9 +21,9 @@
   and missing decisions in the PR for the coordinator to resolve.
 - Run the required L1 checks before review and record commands and results,
   including anything skipped or unfinished.
-- PR descriptions use these five sections: Summary, Requirements covered, Tests,
-  Golden output changes, Deviations from the design. Reply to review comments
-  with the changes and validation performed.
+- PR descriptions use these six sections: Summary, Requirements covered, Tests,
+  Golden output changes, Deviations from the design, How to try it.
+  Reply to review comments with the changes and validation performed.
 - All content intended for upstream must be in English, including code,
   comments, test names, commit messages, `AGENTS.md`, and PR titles and
   descriptions. Use the upstream conventional commit style for PR titles.

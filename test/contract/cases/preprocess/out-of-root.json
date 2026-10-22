@@ -1,0 +1,26 @@
+{
+  "input": {
+    "content": "start\n{{fragments/../outside.md}}",
+    "variables": {},
+    "sourceName": "page.md"
+  },
+  "files": {
+    "outside.md": "outside"
+  },
+  "expected": {
+    "ok": false,
+    "content": null,
+    "dependencies": {
+      "fragments": [],
+      "variables": []
+    },
+    "errors": [
+      {
+        "code": "FRAGMENT_OUT_OF_ROOT",
+        "file": "page.md",
+        "line": 2,
+        "detail": {}
+      }
+    ]
+  }
+}

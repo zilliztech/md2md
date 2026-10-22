@@ -16,5 +16,5 @@ jobs:
         with:
           node-version: 22
       - run: npm install --global yarn@1.22.22
-      - run: yarn install --no-lockfile --non-interactive
+      - run: yarn install --frozen-lockfile --non-interactive
       - run: yarn test

@@ -1,0 +1,29 @@
+{
+  "input": {
+    "content": "start\n{{fragments/link/real.md}}",
+    "variables": {},
+    "sourceName": "page.md"
+  },
+  "files": {
+    "fragments/dir/real.md": "inside"
+  },
+  "symlinks": {
+    "fragments/link": "dir"
+  },
+  "expected": {
+    "ok": false,
+    "content": null,
+    "dependencies": {
+      "fragments": [],
+      "variables": []
+    },
+    "errors": [
+      {
+        "code": "FRAGMENT_SYMLINK",
+        "file": "page.md",
+        "line": 2,
+        "detail": {}
+      }
+    ]
+  }
+}
